@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiang.blog.model.dao.PictureUrlMapper">
+    <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.PictureUrl">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="is_banner" jdbcType="INTEGER" property="isBanner"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+        <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="short_url" jdbcType="VARCHAR" property="shortUrl"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="file_type" jdbcType="VARCHAR" property="fileType"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="large" jdbcType="VARCHAR" property="large"/>
+        <result column="original" jdbcType="VARCHAR" property="original"/>
+        <result column="small" jdbcType="VARCHAR" property="small"/>
+        <result column="dimension_x" jdbcType="BIGINT" property="dimensionX"/>
+        <result column="dimension_y" jdbcType="BIGINT" property="dimensionY"/>
+        <result column="file_size" jdbcType="BIGINT" property="fileSize"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , is_banner, created_at, updated_at, deleted_at, url, short_url, category, file_type,
+    `path`, `large`, original, small, dimension_x, dimension_y, file_size
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from picture_url
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from picture_url
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.jiang.blog.model.pojo.PictureUrl">
+        insert into picture_url (id, is_banner, created_at,
+                                 updated_at, deleted_at, url,
+                                 short_url, category, file_type,
+                                 `path`, `large`, original,
+                                 small, dimension_x, dimension_y,
+                                 file_size)
+        values (#{id,jdbcType=INTEGER}, #{isBanner,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP},
+                #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR},
+                #{shortUrl,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR},
+                #{path,jdbcType=VARCHAR}, #{large,jdbcType=VARCHAR}, #{original,jdbcType=VARCHAR},
+                #{small,jdbcType=VARCHAR}, #{dimensionX,jdbcType=BIGINT}, #{dimensionY,jdbcType=BIGINT},
+                #{fileSize,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.PictureUrl">
+        insert into picture_url
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="isBanner != null">
+                is_banner,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="deletedAt != null">
+                deleted_at,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="shortUrl != null">
+                short_url,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="fileType != null">
+                file_type,
+            </if>
+            <if test="path != null">
+                `path`,
+            </if>
+            <if test="large != null">
+                `large`,
+            </if>
+            <if test="original != null">
+                original,
+            </if>
+            <if test="small != null">
+                small,
+            </if>
+            <if test="dimensionX != null">
+                dimension_x,
+            </if>
+            <if test="dimensionY != null">
+                dimension_y,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="isBanner != null">
+                #{isBanner,jdbcType=INTEGER},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedAt != null">
+                #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="shortUrl != null">
+                #{shortUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="fileType != null">
+                #{fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="large != null">
+                #{large,jdbcType=VARCHAR},
+            </if>
+            <if test="original != null">
+                #{original,jdbcType=VARCHAR},
+            </if>
+            <if test="small != null">
+                #{small,jdbcType=VARCHAR},
+            </if>
+            <if test="dimensionX != null">
+                #{dimensionX,jdbcType=BIGINT},
+            </if>
+            <if test="dimensionY != null">
+                #{dimensionY,jdbcType=BIGINT},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jiang.blog.model.pojo.PictureUrl">
+        update picture_url
+        <set>
+            <if test="isBanner != null">
+                is_banner = #{isBanner,jdbcType=INTEGER},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="shortUrl != null">
+                short_url = #{shortUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="fileType != null">
+                file_type = #{fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                `path` = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="large != null">
+                `large` = #{large,jdbcType=VARCHAR},
+            </if>
+            <if test="original != null">
+                original = #{original,jdbcType=VARCHAR},
+            </if>
+            <if test="small != null">
+                small = #{small,jdbcType=VARCHAR},
+            </if>
+            <if test="dimensionX != null">
+                dimension_x = #{dimensionX,jdbcType=BIGINT},
+            </if>
+            <if test="dimensionY != null">
+                dimension_y = #{dimensionY,jdbcType=BIGINT},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.PictureUrl">
+        update picture_url
+        set is_banner   = #{isBanner,jdbcType=INTEGER},
+            created_at  = #{createdAt,jdbcType=TIMESTAMP},
+            updated_at  = #{updatedAt,jdbcType=TIMESTAMP},
+            deleted_at  = #{deletedAt,jdbcType=TIMESTAMP},
+            url         = #{url,jdbcType=VARCHAR},
+            short_url   = #{shortUrl,jdbcType=VARCHAR},
+            category    = #{category,jdbcType=VARCHAR},
+            file_type   = #{fileType,jdbcType=VARCHAR},
+            `path`      = #{path,jdbcType=VARCHAR},
+            `large`     = #{large,jdbcType=VARCHAR},
+            original    = #{original,jdbcType=VARCHAR},
+            small       = #{small,jdbcType=VARCHAR},
+            dimension_x = #{dimensionX,jdbcType=BIGINT},
+            dimension_y = #{dimensionY,jdbcType=BIGINT},
+            file_size   = #{fileSize,jdbcType=BIGINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
