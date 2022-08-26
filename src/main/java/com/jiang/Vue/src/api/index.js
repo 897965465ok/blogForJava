@@ -7,19 +7,19 @@ const api = axios.create({
 // 环境的切换
 switch (process.env.NODE_ENV) {
   case "development": {
-    api.defaults.baseURL = "http://127.0.0.1:3800"
+    api.defaults.baseURL = "http://localhost:8888"
     break
   }
   case "debug": {
-    api.defaults.baseURL = "http://146.56.206.160"
+    api.defaults.baseURL = "http://146.56.206.160:8888"
     break
   }
   case "production": {
-    api.defaults.baseURL = "http://127.0.0.1:3800"
+    api.defaults.baseURL = "http://146.56.206.160:8888"
     break
   }
   default: {
-    api.defaults.baseURL = "http://127.0.0.1:3800"
+    api.defaults.baseURL = "http://localhost:8888"
   }
 }
 
@@ -28,7 +28,6 @@ api.interceptors.response.use((config) => {
     switch (status) {
       case 200: {
         if (data.code == 200) {
-
           return config
         }
       }

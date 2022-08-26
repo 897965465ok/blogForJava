@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.*;
 import java.io.IOException;
 
+//@WebFilter(filterName = "UserFilter",urlPatterns ="/*",initParams = {
+//        @WebInitParam(name = "encoding",value = "UTF-8")
+//})
 public class UserFilter implements Filter {
     public static User currentUser;
     @Autowired
@@ -35,7 +38,5 @@ public class UserFilter implements Filter {
 //            return;
 //        }
         filterChain.doFilter(servletRequest, servletResponse);
-
-
     }
 }

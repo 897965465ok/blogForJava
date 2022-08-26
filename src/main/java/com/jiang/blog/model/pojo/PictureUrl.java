@@ -1,8 +1,9 @@
 package com.jiang.blog.model.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class PictureUrl {
+public class PictureUrl implements Serializable {
     private Integer id;
 
     private Integer isBanner;

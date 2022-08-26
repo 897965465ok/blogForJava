@@ -8,6 +8,7 @@ import com.jiang.blog.model.dao.ArticleMapper;
 import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     // 根据标签查询
+    @Cacheable(value = "queryArticlesByTags")
     public PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit) {
         PageHelper.startPage(offset, limit);
         List<Article> articles = articleMapper.queryArticlesByTags(tags);
@@ -29,6 +31,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     // 查询文章
     @Override
+    @Cacheable(value = "queryManyArticle")
     public PageInfo queryManyArticle(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "id");

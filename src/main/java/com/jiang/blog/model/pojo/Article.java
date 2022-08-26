@@ -1,9 +1,10 @@
 package com.jiang.blog.model.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-
-public class Article {
+// redis 缓存需要Serializable
+public class Article implements Serializable {
     private Long id;
 
     private Date createdAt;
