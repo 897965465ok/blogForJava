@@ -8,10 +8,15 @@
     <classPathEntry
             location="F:\JAVA\Mblog\mysql-connector-java-8.0.28.jar"/>
     <context id="MysqlTables" targetRuntime="MyBatis3">
+
+
+        <!--生成mapper.xml时覆盖原文件-->
         <property name="autoDelimitKeywords" value="true"/>
         <!--可以使用``包括字段名，避免字段名与sql保留字冲突报错-->
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
+        <!--生成mapper.xml时覆盖原文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"></plugin>
         <!-- optional，旨在创建class时，对注释进行控制 -->
         <commentGenerator>
             <property name="suppressDate" value="true"/>
