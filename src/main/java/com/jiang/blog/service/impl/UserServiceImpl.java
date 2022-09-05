@@ -3,7 +3,7 @@ package com.jiang.blog.service.impl;
 
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.dao.UserMapper;
+import com.jiang.blog.model.dao.ExtendDao.ExtendUserMapper;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.UserService;
 import com.jiang.blog.utils.CryptUtils;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserMapper userMapper;
+    ExtendUserMapper userMapper;
 
     @Override
     public Integer register(String account, String password) {

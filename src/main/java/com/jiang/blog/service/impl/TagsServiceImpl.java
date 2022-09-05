@@ -2,7 +2,7 @@ package com.jiang.blog.service.impl;
 
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.dao.TagsMapper;
+import com.jiang.blog.model.dao.ExtendDao.ExtendTagsMapper;
 import com.jiang.blog.model.pojo.Tags;
 import com.jiang.blog.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 public class TagsServiceImpl implements TagsService {
 
     @Autowired
-    TagsMapper tagsMapper;
+    ExtendTagsMapper tagsMapper;
 
     @Override
     public List<Tags> queryByTags() {

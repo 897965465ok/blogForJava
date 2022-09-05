@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiang.blog.model.dao.ExtendDao.ExtendUserMapper">
+    <select id="userExists" parameterType="java.lang.String" resultType="integer">
+        SELECT EXISTS
+                   (SELECT 1 FROM user WHERE email = #{userName,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectByUserName" parameterType="string" resultType="com.jiang.blog.model.pojo.User">
+        select
+        <include refid="com.jiang.blog.model.dao.UserMapper.Base_Column_List"/>
+        from user
+        where email = #{account ,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

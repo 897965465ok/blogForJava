@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.dao.ArticleMapper;
+import com.jiang.blog.model.dao.ExtendDao.ExtendArticleMapper;
 import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
-    ArticleMapper articleMapper;
+    ExtendArticleMapper articleMapper;
 
     @Override
     // 根据标签查询

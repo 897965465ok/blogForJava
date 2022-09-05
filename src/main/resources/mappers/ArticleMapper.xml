@@ -223,16 +223,6 @@
     </update>
 
 
-    <select id="queryArticlesByTags" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"></include>
-        from article where tag = #{tags,jdbcType=VARCHAR}
-    </select>
 
-    <select id="queryArticles" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from article
-    </select>
 
 </mapper>

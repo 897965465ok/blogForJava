@@ -152,16 +152,6 @@
             `password`   = #{password,jdbcType=VARCHAR}
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <select id="userExists" parameterType="java.lang.String" resultType="integer">
-        SELECT EXISTS
-                   (SELECT 1 FROM user WHERE email = #{userName,jdbcType=VARCHAR})
-    </select>
 
-    <select id="selectByUserName" parameterType="string" resultType="com.jiang.blog.model.pojo.User">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        where email = #{account ,jdbcType=VARCHAR}
-    </select>
 
 </mapper>
