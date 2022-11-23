@@ -38,6 +38,7 @@ public class UserController {
     public ApiRestResponse userLogin(
             @NotEmpty(message = "账号不能为空") @RequestParam String account,
             @NotEmpty(message = "密码不能为空") @RequestParam String password) {
+
         Map userinfo = userService.userLogin(account, password);
 
         return ApiRestResponse.success(userinfo);

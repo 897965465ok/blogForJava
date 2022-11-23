@@ -1,12 +1,8 @@
 package com.jiang.blog.model.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jiang.blog.model.pojo.User;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(User record);
@@ -17,10 +13,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     int updateByPrimaryKeySelective(User record);
 
+    int updateByPrimaryKeyWithBLOBs(User record);
+
     int updateByPrimaryKey(User record);
-
-    Integer userExists(@Param("userName") String account);
-
-    User selectByUserName(String account);
-
 }

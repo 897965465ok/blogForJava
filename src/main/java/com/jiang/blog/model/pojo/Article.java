@@ -3,7 +3,6 @@ package com.jiang.blog.model.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-// redis 缓存需要Serializable
 public class Article implements Serializable {
     private Long id;
 
@@ -36,6 +35,8 @@ public class Article implements Serializable {
     private Long rec;
 
     private Long commentsCount;
+
+    private Long sideArticle;
 
     public Long getId() {
         return id;
@@ -163,5 +164,13 @@ public class Article implements Serializable {
 
     public void setCommentsCount(Long commentsCount) {
         this.commentsCount = commentsCount;
+    }
+
+    public Long getSideArticle() {
+        return sideArticle;
+    }
+
+    public void setSideArticle(Long sideArticle) {
+        this.sideArticle = sideArticle;
     }
 }

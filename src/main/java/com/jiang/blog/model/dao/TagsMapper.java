@@ -1,9 +1,7 @@
 package com.jiang.blog.model.dao;
 
 import com.jiang.blog.model.pojo.Tags;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface TagsMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,5 +14,4 @@ public interface TagsMapper {
     int updateByPrimaryKeySelective(Tags record);
 
     int updateByPrimaryKey(Tags record);
-
 }

@@ -1,11 +1,8 @@
 package com.jiang.blog.model.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jiang.blog.model.pojo.Comment;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CommentMapper extends BaseMapper<Comment> {
+public interface CommentMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(Comment record);

@@ -79,6 +79,4 @@ public class ApiRestResponse<T> {
     public void setResult(T result) {
         this.result = result;
     }
-
-
 }

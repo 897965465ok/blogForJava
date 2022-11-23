@@ -92,6 +92,4 @@
             article_tag = #{articleTag,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-
 </mapper>
