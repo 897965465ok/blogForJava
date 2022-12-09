@@ -6,6 +6,7 @@ import com.jiang.blog.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -55,7 +56,6 @@ public class SecurityConfig {
         return (web) -> web.ignoring().antMatchers("/static/**");
     }
 
-
     // 配置过滤规则
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -94,10 +94,17 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/v1/login")
                 // 允许匿名访问 ,登录后不能访问 anonymous()     不拦截 permitAll()
                 .anonymous()
+
+                .antMatchers(HttpMethod.GET, "/v1/articles")
+                .permitAll()
+
+                .antMatchers(HttpMethod.GET, "/v1/tags")
+                .permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest()
                 .authenticated();
