@@ -2,7 +2,7 @@
 import {useStore} from '@/stores'
 import {storeToRefs} from 'pinia';
 
-const {sideSwitch} = storeToRefs(useStore())
+const {sideSwitch} = storeToRefs(useStore());
 </script>
 <template>
   <el-container :class="[sideSwitch ? 'switch-side' : '', 'app-wrapper']">

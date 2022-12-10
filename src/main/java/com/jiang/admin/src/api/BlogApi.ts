@@ -23,7 +23,8 @@ export const getComments = async (articleId: any) => {
 };
 
 export const getArticle = async (offset: any, limit: any) => {
-  return await api.get("v1/articles", {params: {offset: offset, limit: limit}})
+  let {data} = await api.get("v1/articles", {params: {offset: offset, limit: limit}})
+  return data
 }
 
 export const comment = async (articleId: any, content: any, replyArticle: any, userName: any) => {

@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import qs from "qs";
 import {getOauthInfo} from "@/api/BlogApi";
 

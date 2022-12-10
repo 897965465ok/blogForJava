@@ -4,6 +4,7 @@ import {mapActions} from 'pinia';
 import {useStore} from '@/stores'
 import {useRoute, useRouter} from 'vue-router';
 
+
 /**
  * 仓库
  */
@@ -59,7 +60,7 @@ defineExpose({
     </div>
 
     <div class="header-right">
-      <ScreenFullvue/>
+      <ScreenFull/>
       <Lanuages/>
       <Avatar/>
     </div>

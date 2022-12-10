@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
@@ -41,7 +42,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     ScreenFull: typeof import('./src/components/ScreenFull.vue')['default']
     Side: typeof import('./src/components/side.vue')['default']
-    Table: typeof import('./src/components/table.vue')['default']
+    Table: typeof import('./src/components/Table.vue')['default']
     User: typeof import('./src/components/User.vue')['default']
   }
 }

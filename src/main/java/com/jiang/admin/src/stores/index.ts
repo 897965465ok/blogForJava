@@ -1,26 +1,21 @@
-import {ref, computed, type Ref} from 'vue'
+import {ref, computed, type Ref, reactive, Comment} from 'vue'
 import {defineStore} from 'pinia'
+import {getArticle} from '@/api/BlogApi'
 
 export const useStore = defineStore('store', () => {
+  const sideSwitch = ref(false);
+  const pageInfo = ref();
 
-  const count = ref(0)
-  const sideSwitch = ref(false)
-  const doubleCount = computed(() => count.value * 2)
-
-  async function increment() {
-    count.value++
-  }
-
-  async function setCount(number: any) {
-    count.value = count.value + number
+  async function Articles(offset: number, limit: number) {
+    pageInfo.value = await getArticle(offset, limit)
+    return pageInfo.value
   }
 
   function setSideSwitch() {
     sideSwitch.value = !sideSwitch.value
   }
 
-
-  return {count, doubleCount, sideSwitch, increment, setCount, setSideSwitch}
+  return {pageInfo, sideSwitch, setSideSwitch, Articles}
 })
 
 
