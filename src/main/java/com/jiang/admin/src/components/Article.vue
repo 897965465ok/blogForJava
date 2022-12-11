@@ -1,7 +1,8 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
+import {onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect} from 'vue';
 import {useStore} from '@/stores'
 import {useRoute, useRouter} from 'vue-router';
+import {deleteArticle} from "@/api/BlogApi"
 
 /**
  * 仓库
@@ -33,14 +34,142 @@ watchEffect(() => {
 defineExpose({
   ...toRefs(data)
 })
+
+const ArticleList = ref([]);
+const dialogTableVisible = ref(true)
+
+
+function checkButton(selectorList: any) {
+  ArticleList.value = selectorList
+}
+
+function deleteSelectorArticleList() {
+  // 删除选择中的文章
+  deleteArticle
+}
+
+function changeArticle() {
+  // 修改选中的文章
+  dialogTableVisible.value = true
+}
+
+const form = reactive({
+  name: '',
+  paragraph: '',
+  tag: '',
+  articlePath: '',
+  sideArticle: '',
+  hot: '',
+  picture: ''
+})
+
+const onSubmit = () => {
+  console.log(form)
+}
+
+
 </script>
 <template>
   <div>
-    {{ $t("menus.users") }}
+    <el-button>新增</el-button>
+    <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
+    <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
-  <TableVue></TableVue>
+  <TableVue @check="checkButton"></TableVue>
+  <el-dialog v-model="dialogTableVisible" destroy-on-close title="修改文章">
+    <template #default>
+      <el-form :model="form" label-width="100px">
+        <div class="form-header">
+          <div class="header-upload">
+            <el-upload action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" drag multiple>
+              <el-icon>
+                <upload-filled/>
+              </el-icon>
+              <div class="el-upload__text">
+                <em>图片拖放</em><br>
+                <em>点击上传</em>
+              </div>
+            </el-upload>
+          </div>
+          <div class="header-textarea">
+            <el-input v-model="form.paragraph" resize="none" type="textarea"/>
+          </div>
+        </div>
+
+        <div class="form-body">
+          <div class="form-switch">
+            <el-form-item label="热门">
+              <el-switch v-model="form.hot"/>
+            </el-form-item>
+            <el-form-item label="侧边栏文章">
+              <el-switch v-model="form.sideArticle"/>
+            </el-form-item>
+            <el-form-item label="文章名">
+              <el-input v-model="form.name"/>
+            </el-form-item>
+            <el-form-item label="分类命">
+              <el-input v-model="form.tag"/>
+            </el-form-item>
+            <el-form-item label="原始路径">
+              <el-input v-model="form.articlePath"/>
+            </el-form-item>
+          </div>
+        </div>
+
+        <!-- <el-form-item label="文章内容">
+          content:""
+        </el-form-item> -->
+
+        <el-form-item>
+          <el-button type="primary" @submit="onSubmit">修改</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+
+
+      </el-form>
+    </template>
+  </el-dialog>
 </template>
 
 
 <style lang='scss' scoped>
+.form-header {
+  display: flex;
+
+  .header-upload {
+    flex: 1 1 30%;
+
+    .el-upload-list {
+      margin: 0;
+    }
+  }
+
+  .header-textarea {
+    flex: 1 1 60%;
+    margin-left: 15px;
+
+    .el-textarea {
+      height: 100%;
+    }
+
+    :deep(.el-textarea__inner) {
+      height: 100%;
+    }
+  }
+}
+
+:deep(.el-upload-list) {
+  margin: 0;
+}
+
+.form-body {
+  display: flex;
+  margin-top: 15px;
+
+  .form-switch {
+    display: flex;
+  }
+}
+
+// .form-switch {}
 </style>

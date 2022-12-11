@@ -2,59 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.blog.model.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.User">
-    <id column="id" jdbcType="BIGINT" property="id"/>
-    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
-    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
-    <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
-    <result column="professional" jdbcType="VARCHAR" property="professional"/>
-    <result column="status" jdbcType="VARCHAR" property="status"/>
-    <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="name" jdbcType="VARCHAR" property="name"/>
-    <result column="password" jdbcType="VARCHAR" property="password"/>
-    <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber"/>
-    <result column="sex" jdbcType="CHAR" property="sex"/>
-    <result column="user_type" jdbcType="CHAR" property="userType"/>
-    <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
-    <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+      <id column="id" jdbcType="BIGINT" property="id"/>
+      <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+      <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+      <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+      <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+      <result column="professional" jdbcType="VARCHAR" property="professional"/>
+      <result column="status" jdbcType="VARCHAR" property="status"/>
+      <result column="email" jdbcType="VARCHAR" property="email"/>
+      <result column="name" jdbcType="VARCHAR" property="name"/>
+      <result column="password" jdbcType="VARCHAR" property="password"/>
+      <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber"/>
+      <result column="sex" jdbcType="CHAR" property="sex"/>
+      <result column="user_type" jdbcType="CHAR" property="userType"/>
+      <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+      <result column="create_by" jdbcType="BIGINT" property="createBy"/>
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.jiang.blog.model.pojo.User">
-    <result column="nick_name" jdbcType="LONGVARCHAR" property="nickName"/>
+      <result column="nick_name" jdbcType="LONGVARCHAR" property="nickName"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id
-    , created_at, updated_at, deleted_at, avatar, professional, `status`, email, `name`,
+      id
+      , created_at, updated_at, deleted_at, avatar, professional, `status`, email, `name`,
     `password`, phonenumber, sex, user_type, del_flag, create_by
   </sql>
   <sql id="Blob_Column_List">
     nick_name
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select
-    <include refid="Base_Column_List"/>
-    ,
-    <include refid="Blob_Column_List"/>
-    from user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete
-    from user
-    where id = #{id,jdbcType=BIGINT}
+      delete
+      from user
+      where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.jiang.blog.model.pojo.User">
-    insert into user (id, created_at, updated_at,
-                      deleted_at, avatar, professional,
-                      `status`, email, `name`,
-                      `password`, phonenumber, sex,
-                      user_type, del_flag, create_by,
-                      nick_name)
-    values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
-            #{deletedAt,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR},
-            #{status,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
-            #{password,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR},
-            #{userType,jdbcType=CHAR}, #{delFlag,jdbcType=INTEGER}, #{createBy,jdbcType=BIGINT},
-            #{nickName,jdbcType=LONGVARCHAR})
+      insert into user (id, created_at, updated_at,
+                        deleted_at, avatar, professional,
+                        `status`, email, `name`,
+                        `password`, phonenumber, sex,
+                        user_type, del_flag, create_by,
+                        nick_name)
+      values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+              #{deletedAt,jdbcType=TIMESTAMP}, #{avatar,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR},
+              #{status,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+              #{password,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR},
+              #{userType,jdbcType=CHAR}, #{delFlag,jdbcType=INTEGER}, #{createBy,jdbcType=BIGINT},
+              #{nickName,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.User">
     insert into user
@@ -211,40 +211,40 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jiang.blog.model.pojo.User">
-    update user
-    set created_at   = #{createdAt,jdbcType=TIMESTAMP},
-        updated_at   = #{updatedAt,jdbcType=TIMESTAMP},
-        deleted_at   = #{deletedAt,jdbcType=TIMESTAMP},
-        avatar       = #{avatar,jdbcType=VARCHAR},
-        professional = #{professional,jdbcType=VARCHAR},
-        `status`     = #{status,jdbcType=VARCHAR},
-        email        = #{email,jdbcType=VARCHAR},
-        `name`       = #{name,jdbcType=VARCHAR},
-        `password`   = #{password,jdbcType=VARCHAR},
-        phonenumber  = #{phonenumber,jdbcType=VARCHAR},
-        sex          = #{sex,jdbcType=CHAR},
-        user_type    = #{userType,jdbcType=CHAR},
-        del_flag     = #{delFlag,jdbcType=INTEGER},
-        create_by    = #{createBy,jdbcType=BIGINT},
-        nick_name    = #{nickName,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+      update user
+      set created_at   = #{createdAt,jdbcType=TIMESTAMP},
+          updated_at   = #{updatedAt,jdbcType=TIMESTAMP},
+          deleted_at   = #{deletedAt,jdbcType=TIMESTAMP},
+          avatar       = #{avatar,jdbcType=VARCHAR},
+          professional = #{professional,jdbcType=VARCHAR},
+          `status`     = #{status,jdbcType=VARCHAR},
+          email        = #{email,jdbcType=VARCHAR},
+          `name`       = #{name,jdbcType=VARCHAR},
+          `password`   = #{password,jdbcType=VARCHAR},
+          phonenumber  = #{phonenumber,jdbcType=VARCHAR},
+          sex          = #{sex,jdbcType=CHAR},
+          user_type    = #{userType,jdbcType=CHAR},
+          del_flag     = #{delFlag,jdbcType=INTEGER},
+          create_by    = #{createBy,jdbcType=BIGINT},
+          nick_name    = #{nickName,jdbcType=LONGVARCHAR}
+      where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.User">
-    update user
-    set created_at   = #{createdAt,jdbcType=TIMESTAMP},
-        updated_at   = #{updatedAt,jdbcType=TIMESTAMP},
-        deleted_at   = #{deletedAt,jdbcType=TIMESTAMP},
-        avatar       = #{avatar,jdbcType=VARCHAR},
-        professional = #{professional,jdbcType=VARCHAR},
-        `status`     = #{status,jdbcType=VARCHAR},
-        email        = #{email,jdbcType=VARCHAR},
-        `name`       = #{name,jdbcType=VARCHAR},
-        `password`   = #{password,jdbcType=VARCHAR},
-        phonenumber  = #{phonenumber,jdbcType=VARCHAR},
-        sex          = #{sex,jdbcType=CHAR},
-        user_type    = #{userType,jdbcType=CHAR},
-        del_flag     = #{delFlag,jdbcType=INTEGER},
-        create_by    = #{createBy,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
+      update user
+      set created_at   = #{createdAt,jdbcType=TIMESTAMP},
+          updated_at   = #{updatedAt,jdbcType=TIMESTAMP},
+          deleted_at   = #{deletedAt,jdbcType=TIMESTAMP},
+          avatar       = #{avatar,jdbcType=VARCHAR},
+          professional = #{professional,jdbcType=VARCHAR},
+          `status`     = #{status,jdbcType=VARCHAR},
+          email        = #{email,jdbcType=VARCHAR},
+          `name`       = #{name,jdbcType=VARCHAR},
+          `password`   = #{password,jdbcType=VARCHAR},
+          phonenumber  = #{phonenumber,jdbcType=VARCHAR},
+          sex          = #{sex,jdbcType=CHAR},
+          user_type    = #{userType,jdbcType=CHAR},
+          del_flag     = #{delFlag,jdbcType=INTEGER},
+          create_by    = #{createBy,jdbcType=BIGINT}
+      where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

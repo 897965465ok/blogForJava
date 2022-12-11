@@ -2,54 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.blog.model.dao.ArticleMapper">
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.Article">
-    <id column="id" jdbcType="BIGINT" property="id"/>
-    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
-    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
-    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
-    <result column="picture" jdbcType="VARCHAR" property="picture"/>
-    <result column="paragraph" jdbcType="VARCHAR" property="paragraph"/>
-    <result column="name" jdbcType="VARCHAR" property="name"/>
-    <result column="tag" jdbcType="VARCHAR" property="tag"/>
-    <result column="article_path" jdbcType="VARCHAR" property="articlePath"/>
-    <result column="whatch_number" jdbcType="INTEGER" property="whatchNumber"/>
-    <result column="like" jdbcType="INTEGER" property="like"/>
-    <result column="cover" jdbcType="VARCHAR" property="cover"/>
-    <result column="content" jdbcType="VARCHAR" property="content"/>
-    <result column="hot" jdbcType="BIGINT" property="hot"/>
-    <result column="rec" jdbcType="BIGINT" property="rec"/>
-    <result column="comments_count" jdbcType="BIGINT" property="commentsCount"/>
-    <result column="side_article" jdbcType="BIGINT" property="sideArticle"/>
+      <id column="id" jdbcType="BIGINT" property="id"/>
+      <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+      <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
+      <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
+      <result column="picture" jdbcType="VARCHAR" property="picture"/>
+      <result column="paragraph" jdbcType="VARCHAR" property="paragraph"/>
+      <result column="name" jdbcType="VARCHAR" property="name"/>
+      <result column="tag" jdbcType="VARCHAR" property="tag"/>
+      <result column="article_path" jdbcType="VARCHAR" property="articlePath"/>
+      <result column="whatch_number" jdbcType="INTEGER" property="whatchNumber"/>
+      <result column="like" jdbcType="INTEGER" property="like"/>
+      <result column="cover" jdbcType="VARCHAR" property="cover"/>
+      <result column="content" jdbcType="VARCHAR" property="content"/>
+      <result column="hot" jdbcType="BIGINT" property="hot"/>
+      <result column="rec" jdbcType="BIGINT" property="rec"/>
+      <result column="comments_count" jdbcType="BIGINT" property="commentsCount"/>
+      <result column="side_article" jdbcType="BIGINT" property="sideArticle"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id
-    , created_at, updated_at, deleted_at, picture, paragraph, `name`, tag, article_path,
+      id
+      , created_at, updated_at, deleted_at, picture, paragraph, `name`, tag, article_path,
     whatch_number, `like`, cover, content, hot, rec, comments_count, side_article
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
-    from article
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where id = #{id,jdbcType=BIGINT}
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete
-    from article
-    where id = #{id,jdbcType=BIGINT}
+      delete
+      from article
+      where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.jiang.blog.model.pojo.Article">
-    insert into article (id, created_at, updated_at,
-                         deleted_at, picture, paragraph,
-                         `name`, tag, article_path,
-                         whatch_number, `like`, cover,
-                         content, hot, rec, comments_count,
-                         side_article)
-    values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
-            #{deletedAt,jdbcType=TIMESTAMP}, #{picture,jdbcType=VARCHAR}, #{paragraph,jdbcType=VARCHAR},
-            #{name,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{articlePath,jdbcType=VARCHAR},
-            #{whatchNumber,jdbcType=INTEGER}, #{like,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR},
-            #{content,jdbcType=VARCHAR}, #{hot,jdbcType=BIGINT}, #{rec,jdbcType=BIGINT},
-            #{commentsCount,jdbcType=BIGINT},
-            #{sideArticle,jdbcType=BIGINT})
+      insert into article (id, created_at, updated_at,
+                           deleted_at, picture, paragraph,
+                           `name`, tag, article_path,
+                           whatch_number, `like`, cover,
+                           content, hot, rec, comments_count,
+                           side_article)
+      values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+              #{deletedAt,jdbcType=TIMESTAMP}, #{picture,jdbcType=VARCHAR}, #{paragraph,jdbcType=VARCHAR},
+              #{name,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{articlePath,jdbcType=VARCHAR},
+              #{whatchNumber,jdbcType=INTEGER}, #{like,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR},
+              #{content,jdbcType=VARCHAR}, #{hot,jdbcType=BIGINT}, #{rec,jdbcType=BIGINT},
+              #{commentsCount,jdbcType=BIGINT},
+              #{sideArticle,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.Article">
     insert into article
@@ -215,23 +215,23 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.Article">
-    update article
-    set created_at     = #{createdAt,jdbcType=TIMESTAMP},
-        updated_at     = #{updatedAt,jdbcType=TIMESTAMP},
-        deleted_at     = #{deletedAt,jdbcType=TIMESTAMP},
-        picture        = #{picture,jdbcType=VARCHAR},
-        paragraph      = #{paragraph,jdbcType=VARCHAR},
-        `name`         = #{name,jdbcType=VARCHAR},
-        tag            = #{tag,jdbcType=VARCHAR},
-        article_path   = #{articlePath,jdbcType=VARCHAR},
-        whatch_number  = #{whatchNumber,jdbcType=INTEGER},
-        `like`         = #{like,jdbcType=INTEGER},
-        cover          = #{cover,jdbcType=VARCHAR},
-        content        = #{content,jdbcType=VARCHAR},
-        hot            = #{hot,jdbcType=BIGINT},
-        rec            = #{rec,jdbcType=BIGINT},
-        comments_count = #{commentsCount,jdbcType=BIGINT},
-        side_article   = #{sideArticle,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
+      update article
+      set created_at     = #{createdAt,jdbcType=TIMESTAMP},
+          updated_at     = #{updatedAt,jdbcType=TIMESTAMP},
+          deleted_at     = #{deletedAt,jdbcType=TIMESTAMP},
+          picture        = #{picture,jdbcType=VARCHAR},
+          paragraph      = #{paragraph,jdbcType=VARCHAR},
+          `name`         = #{name,jdbcType=VARCHAR},
+          tag            = #{tag,jdbcType=VARCHAR},
+          article_path   = #{articlePath,jdbcType=VARCHAR},
+          whatch_number  = #{whatchNumber,jdbcType=INTEGER},
+          `like`         = #{like,jdbcType=INTEGER},
+          cover          = #{cover,jdbcType=VARCHAR},
+          content        = #{content,jdbcType=VARCHAR},
+          hot            = #{hot,jdbcType=BIGINT},
+          rec            = #{rec,jdbcType=BIGINT},
+          comments_count = #{commentsCount,jdbcType=BIGINT},
+          side_article   = #{sideArticle,jdbcType=BIGINT}
+      where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

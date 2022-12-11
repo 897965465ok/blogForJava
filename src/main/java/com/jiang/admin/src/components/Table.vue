@@ -1,8 +1,7 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect} from 'vue'
+import {onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
 import {useStore} from '@/stores'
 import {useRoute, useRouter} from 'vue-router';
-import {ElTable, type TableColumnCtx} from 'element-plus'
 
 const articleList = ref();
 const store = useStore();
@@ -13,10 +12,6 @@ onBeforeMount(async () => {
   articleList.value = pageInfo.result.list
   columns.value = Object.keys(articleList.value[0]).map((item: string) => item);
 })
-
-function handleSelectionChange() {
-
-}
 
 /**
  * 仓库
@@ -45,13 +40,20 @@ watchEffect(() => {
 })
 // 使用toRefs解构
 // let { } = { ...toRefs(data) } 
-defineExpose({
-  ...toRefs(data)
-})
+
+const eimits = defineEmits(['check'])
+
+function handleSelectionChange(selection: any) {
+  eimits('check', selection)
+
+}
+
+
 </script>
 
 <template>
   <el-table :data="articleList" border @selection-change="handleSelectionChange">
+    <el-table-column class="column" type="selection"></el-table-column>
     <el-table-column v-for="item in columns" :key="item.id" :label="item" :prop="item" :show-overflow-tooltip="true"
                      align="center" fixed="right">
       <template v-slot:header="{ column, $index }">
@@ -66,6 +68,10 @@ defineExpose({
       </template>
     </el-table-column>
   </el-table>
+  <div class="demo-pagination-block">
+    <div class="demonstration">All combined</div>
+    <el-pagination :page-sizes="[100, 200, 300, 400]" :total="400" layout="total, sizes, prev, pager, next, jumper"/>
+  </div>
 </template>
 
 <style lang="scss" scoped>

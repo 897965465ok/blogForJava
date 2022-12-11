@@ -27,6 +27,12 @@ export const getArticle = async (offset: any, limit: any) => {
   return data
 }
 
+
+export const deleteArticle = async (id: any) => {
+  let {data} = await api.delete("v1/articles", {params: {id}})
+  return data
+}
+
 export const comment = async (articleId: any, content: any, replyArticle: any, userName: any) => {
   console.log(articleId, content, replyArticle, userName);
   return await api.post(
