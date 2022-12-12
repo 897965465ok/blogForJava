@@ -48,7 +48,6 @@ function handleSelectionChange(selection: any) {
 
 }
 
-
 </script>
 
 <template>
@@ -75,6 +74,10 @@ function handleSelectionChange(selection: any) {
 </template>
 
 <style lang="scss" scoped>
+.el-table {
+  min-width: 1500px;
+}
+
 .column {
   height: 25px;
   text-align: center;

@@ -7,8 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Article: typeof import('./src/components/Article.vue')['default']
-    Avatar: typeof import('./src/components/Avatar.vue')['default']
+    Article: typeof import('./src/components/Article/Article.vue')['default']
+    Avatar: typeof import('./src/components/Header/Avatar.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
@@ -49,13 +49,13 @@ declare module '@vue/runtime-core' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTimePicker: typeof import('element-plus/es')['ElTimePicker']
     ElUpload: typeof import('element-plus/es')['ElUpload']
-    Lanuages: typeof import('./src/components/Lanuages.vue')['default']
-    Markdown: typeof import('./src/components/Markdown.vue')['default']
+    Lanuages: typeof import('./src/components/Header/Lanuages.vue')['default']
+    Markdown: typeof import('./src/components/Article/Markdown.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ScreenFull: typeof import('./src/components/ScreenFull.vue')['default']
+    ScreenFull: typeof import('./src/components/Header/ScreenFull.vue')['default']
     Side: typeof import('./src/components/side.vue')['default']
-    Table: typeof import('./src/components/Table.vue')['default']
+    Table: typeof import('./src/components/Article/Table.vue')['default']
     User: typeof import('./src/components/User.vue')['default']
   }
 }

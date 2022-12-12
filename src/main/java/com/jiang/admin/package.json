@@ -10,9 +10,12 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@toast-ui/editor": "^3.2.1",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "axios": "^1.2.0",
     "element-plus": "^2.2.26",
     "pinia": "^2.0.26",
+    "prismjs": "^1.29.0",
     "qs": "^6.11.0",
     "sass": "^1.56.1",
     "screenfull": "^6.0.2",
