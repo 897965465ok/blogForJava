@@ -1,20 +1,14 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
-import {useStore} from '@/stores'
-import {useRoute, useRouter} from 'vue-router';
+import { onBeforeMount, onMounted, reactive, toRefs, watchEffect } from 'vue';
+import { useStore } from '@/stores'
+import { useRoute, useRouter } from 'vue-router';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-// Step 1. Import prismjs
-import Prism from 'prismjs';
-
-// Step 2. Import language files of prismjs that you need
-import 'prismjs/components/prism-clojure.js';
-
-
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import Editor, {type EditorOptions} from '@toast-ui/editor';
-
+import Prism from 'prismjs';
+import 'prismjs/components/prism-clojure.js';
+import Editor, { type EditorOptions } from '@toast-ui/editor';
 
 let options: EditorOptions
 
@@ -55,12 +49,11 @@ onMounted(() => {
     height: '500px',
     initialValue: '',
     theme: 'white',
-    plugins: [[codeSyntaxHighlight, {highlighter: Prism}]]
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]]
   })
   const editor = new Editor(options);
-  editor.setMarkdown(`## 内容`);
-
-  console.log(editor.getMarkdown())
+  // editor.setMarkdown(`## 内容`);
+  // console.log(editor.getMarkdown())
 })
 
 watchEffect(() => {
@@ -76,25 +69,25 @@ defineExpose({
 </template>
 
 <style lang='scss' scoped>
-:deep(.toastui-editor-contents) {
-  font-size: 18px;
-  background: #ffffff;
+// :deep(.toastui-editor-contents) {
+//   font-size: 18px;
+//   background: #ffffff;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    padding: 10px;
-    border-bottom: none;
-  }
+//   h1,
+//   h2,
+//   h3,
+//   h4,
+//   h5,
+//   h6 {
+//     padding: 10px;
+//     border-bottom: none;
+//   }
 
-  pre {
-    margin: 0px;
-    padding: 12px;
-    background-color: transparent;
-  }
+//   pre {
+//     margin: 0px;
+//     padding: 12px;
+//     background-color: transparent;
+//   }
 
-}
+// }
 </style>

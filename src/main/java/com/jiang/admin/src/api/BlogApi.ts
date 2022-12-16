@@ -2,6 +2,12 @@ import {api} from "./index";
 import axios from "axios";
 import qs from "qs";
 
+
+export const createArticle = async (from:any) => {
+  let response = await api.post("v1/createArticle",from)
+  return response
+}
+
 export const getComments = async (articleId: any) => {
   let {data: comment} = await api.get("v1/comment", {
     params: {articleId}

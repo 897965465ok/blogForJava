@@ -1,20 +1,22 @@
 <script lang="ts" setup>
 import {useStore} from '@/stores'
 import {storeToRefs} from 'pinia';
-
+import HeaderVue from './Header.vue';
+import MainVue from './Main.vue';
+import SideVue from './Side.vue';
 const {sideSwitch} = storeToRefs(useStore());
 </script>
 <template>
   <el-container :class="[sideSwitch ? 'switch-side' : '', 'app-wrapper']">
     <el-aside :class="['sidebar-container', 'mini-side']">
-      <Side></Side>
+      <SideVue></SideVue>
     </el-aside>
     <el-container class="right-container mini-container">
       <el-header>
-        <Header></Header>
+        <HeaderVue></HeaderVue>
       </el-header>
       <el-main>
-        <Main></Main>
+        <MainVue></MainVue>
       </el-main>
     </el-container>
   </el-container>

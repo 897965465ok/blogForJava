@@ -1,11 +1,11 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
-import {useStore} from '@/stores'
-import {useRoute, useRouter} from 'vue-router';
+import { onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
+import { useStore } from '@/stores'
+import { useRoute, useRouter } from 'vue-router';
 
 const articleList = ref();
 const store = useStore();
-const {Articles} = store;
+const { Articles } = store;
 let columns = ref();
 onBeforeMount(async () => {
   let pageInfo = await Articles(1, 7)
@@ -54,7 +54,7 @@ function handleSelectionChange(selection: any) {
   <el-table :data="articleList" border @selection-change="handleSelectionChange">
     <el-table-column class="column" type="selection"></el-table-column>
     <el-table-column v-for="item in columns" :key="item.id" :label="item" :prop="item" :show-overflow-tooltip="true"
-                     align="center" fixed="right">
+      align="center" fixed="right">
       <template v-slot:header="{ column, $index }">
         <div class="column">
           {{ column.property }}
@@ -68,8 +68,8 @@ function handleSelectionChange(selection: any) {
     </el-table-column>
   </el-table>
   <div class="demo-pagination-block">
-    <div class="demonstration">All combined</div>
-    <el-pagination :page-sizes="[100, 200, 300, 400]" :total="400" layout="total, sizes, prev, pager, next, jumper"/>
+
+    <el-pagination :page-sizes="[100, 200, 300, 400]" :total="400" layout="total, sizes, prev, pager, next, jumper" />
   </div>
 </template>
 
