@@ -3,13 +3,13 @@ package com.jiang.blog.model.dao;
 import com.jiang.blog.model.pojo.Role;
 
 public interface RoleMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long roleId);
 
     int insert(Role record);
 
     int insertSelective(Role record);
 
-    Role selectByPrimaryKey(Long id);
+    Role selectByPrimaryKey(Long roleId);
 
     int updateByPrimaryKeySelective(Role record);
 
