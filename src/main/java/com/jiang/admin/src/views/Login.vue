@@ -1,19 +1,21 @@
 <template>
   <div class="
+        container
         flex
-         w-screen
-          h-screen
+        h-screen
+        w-full
         bg-white
         justify-center
         content-center
+        shadow-sm
       ">
-    <el-form ref="loginForm" :model="form" :rules="rules" class="bg-white  w-3/12 h-3/12 ">
+    <el-form ref="loginForm" :model="form" :rules="rules" class="bg-white w-4/12 h-4/12 ">
       <h3 class="login-title">欢迎登录</h3>
       <el-form-item label="账号" prop="username">
-        <el-input v-model="form.username" placeholder="请输入账号" type="text" />
+        <el-input v-model="form.username" placeholder="请输入账号" type="text"/>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password" placeholder="请输入密码" type="password" />
+        <el-input v-model="form.password" placeholder="请输入密码" type="password"/>
       </el-form-item>
       <el-form-item class="flex justify-between">
         <el-button @click="onSubmit('loginForm')">登录</el-button>
@@ -21,11 +23,10 @@
     </el-form>
   </div>
 </template>
+
 <script lang="js">
-
 import qs from "qs";
-
-import {api} from "@/api";
+import {getOauthInfo} from "@/api/BlogApi";
 
 export default {
   name: "Login",
@@ -40,10 +41,10 @@ export default {
       // 表单验证，需要在 el-form-item 元素中增加 prop 属性
       rules: {
         username: [
-          { required: true, message: "账号不可为空", trigger: "blur" },
+          {required: true, message: "账号不可为空", trigger: "blur"},
         ],
         password: [
-          { required: true, message: "密码不可为空", trigger: "blur" },
+          {required: true, message: "密码不可为空", trigger: "blur"},
         ],
         // email: [
         //   { required: true, message: "邮箱不能为空", trigger: "blur" },
@@ -78,14 +79,14 @@ export default {
       // 为表单绑定验证功能
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          let { username: account, password, email } = this.form;
-          let { data: result } = await api.post(
-            "/v1/login",
-            qs.stringify({ account, password, email }),
-            { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+          let {username: userName, password, email} = this.form;
+          let {data: result} = await this.$api.post(
+              "/v1/login",
+              qs.stringify({userName, password, email}),
+              {headers: {"Content-Type": "application/x-www-form-urlencoded"}}
           );
           if (result.code == 200) {
-            localStorage.setItem("token", "token " + result.data.token);
+            localStorage.setItem("token", "Bearer " + result.data.token);
             this.$router.push("/");
           }
         } else {
@@ -101,21 +102,21 @@ export default {
       var iTop = (window.screen.availHeight - 30 - iHeight) / 2; //获得窗口的垂直位置;
       var iLeft = (window.screen.availWidth - 10 - iWidth) / 2; //获得窗口的水平位置;
       return window.open(
-        url,
-        name,
-        "height=" +
-        iHeight +
-        ",,innerHeight=" +
-        iHeight +
-        ",width=" +
-        iWidth +
-        ",innerWidth=" +
-        iWidth +
-        ",top=" +
-        iTop +
-        ",left=" +
-        iLeft +
-        ",toolbar=no,menubar=no,scrollbars=auto,resizeable=no,location=no,status=no"
+          url,
+          name,
+          "height=" +
+          iHeight +
+          ",,innerHeight=" +
+          iHeight +
+          ",width=" +
+          iWidth +
+          ",innerWidth=" +
+          iWidth +
+          ",top=" +
+          iTop +
+          ",left=" +
+          iLeft +
+          ",toolbar=no,menubar=no,scrollbars=auto,resizeable=no,location=no,status=no"
       );
     },
     oauth(website) {
@@ -144,6 +145,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/icon/iconfont.css";
+
 .login-title {
   text-align: center;
   margin: 0 auto 40px auto;

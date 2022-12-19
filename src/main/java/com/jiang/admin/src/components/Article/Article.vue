@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { deleteArticle } from "@/api/BlogApi";
 import TableVue from './Table.vue';
 import MarkdownVue from './Markdown.vue';
-import { createArticle } from '@/api/BlogApi';
+import {createArticle} from '@/api/BlogApi'; 
 /**
  * 仓库
  */
@@ -50,13 +50,15 @@ function deleteSelectorArticleList() {
   deleteArticle
 }
 
-function changeArticle() {
+ function changeArticle() {
   // 修改选中的文章
   dialogTableVisible.value = true
   Object.keys(form).forEach((item) => {
-    form[item] = ArticleList.value[0][item]
+    form[item]   = ArticleList.value[0][item]
+  
+  
   })
-
+ 
 }
 
 
@@ -68,7 +70,7 @@ async function creatArticle() {
 
 
 
-const form:formType = reactive({
+const form = reactive({
   name: '',
   paragraph: '',
   tag: '',
@@ -136,7 +138,7 @@ const onSubmit = () => {
         </div>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">修改</el-button>
-          <el-button>取消</el-button>
+          <el-button >取消</el-button>
         </el-form-item>
       </el-form>
     </template>

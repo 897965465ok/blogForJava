@@ -3,25 +3,13 @@ package com.jiang.blog.model.pojo;
 import java.util.Date;
 
 public class Menu {
-    private Long menuId;
+    private Long id;
 
     private String menuName;
-
-    private Long parentId;
-
-    private Integer orderNum;
 
     private String path;
 
     private String component;
-
-    private String query;
-
-    private Integer isFrame;
-
-    private Integer isCache;
-
-    private String menuType;
 
     private String visible;
 
@@ -31,22 +19,24 @@ public class Menu {
 
     private String icon;
 
-    private String createBy;
+    private Long createBy;
 
     private Date createTime;
 
-    private String updateBy;
+    private Long updateBy;
 
     private Date updateTime;
 
+    private Integer delFlag;
+
     private String remark;
 
-    public Long getMenuId() {
-        return menuId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getMenuName() {
@@ -55,22 +45,6 @@ public class Menu {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName == null ? null : menuName.trim();
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
     }
 
     public String getPath() {
@@ -87,38 +61,6 @@ public class Menu {
 
     public void setComponent(String component) {
         this.component = component == null ? null : component.trim();
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query == null ? null : query.trim();
-    }
-
-    public Integer getIsFrame() {
-        return isFrame;
-    }
-
-    public void setIsFrame(Integer isFrame) {
-        this.isFrame = isFrame;
-    }
-
-    public Integer getIsCache() {
-        return isCache;
-    }
-
-    public void setIsCache(Integer isCache) {
-        this.isCache = isCache;
-    }
-
-    public String getMenuType() {
-        return menuType;
-    }
-
-    public void setMenuType(String menuType) {
-        this.menuType = menuType == null ? null : menuType.trim();
     }
 
     public String getVisible() {
@@ -153,12 +95,12 @@ public class Menu {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    public String getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateTime() {
@@ -169,12 +111,12 @@ public class Menu {
         this.createTime = createTime;
     }
 
-    public String getUpdateBy() {
+    public Long getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy == null ? null : updateBy.trim();
+    public void setUpdateBy(Long updateBy) {
+        this.updateBy = updateBy;
     }
 
     public Date getUpdateTime() {
@@ -183,6 +125,14 @@ public class Menu {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Integer delFlag) {
+        this.delFlag = delFlag;
     }
 
     public String getRemark() {

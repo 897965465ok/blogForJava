@@ -3,13 +3,13 @@
 <mapper namespace="com.jiang.blog.model.dao.ExtendDao.ExtendUserMapper">
     <select id="userExists" parameterType="java.lang.String" resultType="integer">
         SELECT EXISTS
-                   (SELECT 1 FROM sys_user WHERE email = #{userName,jdbcType=VARCHAR})
+                   (SELECT 1 FROM user WHERE email = #{userName,jdbcType=VARCHAR})
     </select>
 
     <select id="selectByUserName" parameterType="string" resultType="com.jiang.blog.model.pojo.User">
         select
         <include refid="com.jiang.blog.model.dao.UserMapper.Base_Column_List"/>
-        from sys_user
+        from user
         where email = #{account ,jdbcType=VARCHAR}
     </select>
 
