@@ -3,40 +3,48 @@ package com.jiang.blog.model.pojo;
 import java.util.Date;
 
 public class Role {
-    private Long id;
+    private Long roleId;
 
-    private String name;
+    private String roleName;
 
     private String roleKey;
 
+    private Integer roleSort;
+
+    private String dataScope;
+
+    private Boolean menuCheckStrictly;
+
+    private Boolean deptCheckStrictly;
+
     private String status;
 
-    private Integer delFlag;
+    private String delFlag;
 
-    private Long createBy;
+    private String createBy;
 
     private Date createTime;
 
-    private Long updateBy;
+    private String updateBy;
 
     private Date updateTime;
 
     private String remark;
 
-    public Long getId() {
-        return id;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setRoleName(String roleName) {
+        this.roleName = roleName == null ? null : roleName.trim();
     }
 
     public String getRoleKey() {
@@ -47,6 +55,38 @@ public class Role {
         this.roleKey = roleKey == null ? null : roleKey.trim();
     }
 
+    public Integer getRoleSort() {
+        return roleSort;
+    }
+
+    public void setRoleSort(Integer roleSort) {
+        this.roleSort = roleSort;
+    }
+
+    public String getDataScope() {
+        return dataScope;
+    }
+
+    public void setDataScope(String dataScope) {
+        this.dataScope = dataScope == null ? null : dataScope.trim();
+    }
+
+    public Boolean getMenuCheckStrictly() {
+        return menuCheckStrictly;
+    }
+
+    public void setMenuCheckStrictly(Boolean menuCheckStrictly) {
+        this.menuCheckStrictly = menuCheckStrictly;
+    }
+
+    public Boolean getDeptCheckStrictly() {
+        return deptCheckStrictly;
+    }
+
+    public void setDeptCheckStrictly(Boolean deptCheckStrictly) {
+        this.deptCheckStrictly = deptCheckStrictly;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -55,20 +95,20 @@ public class Role {
         this.status = status == null ? null : status.trim();
     }
 
-    public Integer getDelFlag() {
+    public String getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag == null ? null : delFlag.trim();
     }
 
-    public Long getCreateBy() {
+    public String getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(Long createBy) {
-        this.createBy = createBy;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy == null ? null : createBy.trim();
     }
 
     public Date getCreateTime() {
@@ -79,12 +119,12 @@ public class Role {
         this.createTime = createTime;
     }
 
-    public Long getUpdateBy() {
+    public String getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(Long updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy == null ? null : updateBy.trim();
     }
 
     public Date getUpdateTime() {

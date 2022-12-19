@@ -2,43 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.blog.model.dao.CommentMapper">
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.Comment">
-      <id column="id" jdbcType="BIGINT" property="id"/>
-      <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
-      <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
-      <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
-      <result column="user_id" jdbcType="BIGINT" property="userId"/>
-      <result column="article_id" jdbcType="BIGINT" property="articleId"/>
-      <result column="manager_id" jdbcType="BIGINT" property="managerId"/>
-      <result column="content" jdbcType="VARCHAR" property="content"/>
-      <result column="is_reply" jdbcType="BIT" property="isReply"/>
-      <result column="reply_id" jdbcType="BIGINT" property="replyId"/>
-      <result column="to" jdbcType="VARCHAR" property="to"/>
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    <result column="manager_id" jdbcType="BIGINT" property="managerId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="is_reply" jdbcType="BIT" property="isReply" />
+    <result column="reply_id" jdbcType="BIGINT" property="replyId" />
+    <result column="to" jdbcType="VARCHAR" property="to" />
   </resultMap>
   <sql id="Base_Column_List">
-      id
-      , created_at, updated_at, deleted_at, user_id, article_id, manager_id, content,
+    id, created_at, updated_at, deleted_at, user_id, article_id, manager_id, content, 
     is_reply, reply_id, `to`
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from comment
-        where id = #{id,jdbcType=BIGINT}
-    </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-      delete
-      from comment
-      where id = #{id,jdbcType=BIGINT}
+    delete from comment
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.jiang.blog.model.pojo.Comment">
-      insert into comment (id, created_at, updated_at,
-                           deleted_at, user_id, article_id,
-                           manager_id, content, is_reply,
-                           reply_id, `to`)
-      values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
-              #{deletedAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT},
-              #{managerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{isReply,jdbcType=BIT},
-              #{replyId,jdbcType=BIGINT}, #{to,jdbcType=VARCHAR})
+    insert into comment (id, created_at, updated_at, 
+      deleted_at, user_id, article_id, 
+      manager_id, content, is_reply, 
+      reply_id, `to`)
+    values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, 
+      #{managerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{isReply,jdbcType=BIT}, 
+      #{replyId,jdbcType=BIGINT}, #{to,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.Comment">
     insert into comment
@@ -150,17 +148,17 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.Comment">
-      update comment
-      set created_at = #{createdAt,jdbcType=TIMESTAMP},
-          updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-          deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
-          user_id    = #{userId,jdbcType=BIGINT},
-          article_id = #{articleId,jdbcType=BIGINT},
-          manager_id = #{managerId,jdbcType=BIGINT},
-          content    = #{content,jdbcType=VARCHAR},
-          is_reply   = #{isReply,jdbcType=BIT},
-          reply_id   = #{replyId,jdbcType=BIGINT},
-          `to`       = #{to,jdbcType=VARCHAR}
-      where id = #{id,jdbcType=BIGINT}
+    update comment
+    set created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      article_id = #{articleId,jdbcType=BIGINT},
+      manager_id = #{managerId,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      is_reply = #{isReply,jdbcType=BIT},
+      reply_id = #{replyId,jdbcType=BIGINT},
+      `to` = #{to,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             User user = new User();
             user.setEmail(account);
-            user.setName(account);
+            user.setUserName(account);
+            user.setNickName(account);
 
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -53,8 +54,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             /* password = CryptUtils.GeneratePassword(password, 12);*/
 
             user.setPassword(password);
-            user.setCreatedAt(new Date());
-            return userMapper.insert(user);
+            user.setCreateTime(new Date());
+
+
+
+            return    userMapper.insert(user);
         }
     }
 
@@ -74,7 +78,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         /*authenticate.getPrincipal() 会返回loadUserByUsername的返回值*/
         LoginUser loginUser = (LoginUser) (authenticate.getPrincipal());
 
-        String userId = loginUser.getUser().getId().toString();
+        String userId = loginUser.getUser().getUserId().toString();
 
 
         String jwt = JwtUtil.createJWT(userId);
@@ -97,7 +101,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new BlogException(BlogExceptionEnum.USER_NOT_EXISTS);
         }
 
-        List<String> permissions = menuMapper.selectPermsByUserId(user.getId());
+        // 重数据库拿字符 比如System:article:read
+        List<String> permissions = menuMapper.selectPermsByUserId(user.getUserId());
 
         return new LoginUser(user, permissions);
     }

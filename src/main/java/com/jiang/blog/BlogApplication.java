@@ -14,7 +14,6 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 public class BlogApplication {
 
 
-    // TODO 装依赖
     public static void main(String[] args) {
         SpringApplication.run(BlogApplication.class, args);
     }

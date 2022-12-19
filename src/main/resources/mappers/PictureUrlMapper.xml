@@ -2,52 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.blog.model.dao.PictureUrlMapper">
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.PictureUrl">
-      <id column="id" jdbcType="INTEGER" property="id"/>
-      <result column="is_banner" jdbcType="INTEGER" property="isBanner"/>
-      <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
-      <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
-      <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt"/>
-      <result column="url" jdbcType="VARCHAR" property="url"/>
-      <result column="short_url" jdbcType="VARCHAR" property="shortUrl"/>
-      <result column="category" jdbcType="VARCHAR" property="category"/>
-      <result column="file_type" jdbcType="VARCHAR" property="fileType"/>
-      <result column="path" jdbcType="VARCHAR" property="path"/>
-      <result column="large" jdbcType="VARCHAR" property="large"/>
-      <result column="original" jdbcType="VARCHAR" property="original"/>
-      <result column="small" jdbcType="VARCHAR" property="small"/>
-      <result column="dimension_x" jdbcType="BIGINT" property="dimensionX"/>
-      <result column="dimension_y" jdbcType="BIGINT" property="dimensionY"/>
-      <result column="file_size" jdbcType="BIGINT" property="fileSize"/>
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="is_banner" jdbcType="INTEGER" property="isBanner" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="short_url" jdbcType="VARCHAR" property="shortUrl" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="large" jdbcType="VARCHAR" property="large" />
+    <result column="original" jdbcType="VARCHAR" property="original" />
+    <result column="small" jdbcType="VARCHAR" property="small" />
+    <result column="dimension_x" jdbcType="BIGINT" property="dimensionX" />
+    <result column="dimension_y" jdbcType="BIGINT" property="dimensionY" />
+    <result column="file_size" jdbcType="BIGINT" property="fileSize" />
   </resultMap>
   <sql id="Base_Column_List">
-      id
-      , is_banner, created_at, updated_at, deleted_at, url, short_url, category, file_type,
+    id, is_banner, created_at, updated_at, deleted_at, url, short_url, category, file_type, 
     `path`, `large`, original, small, dimension_x, dimension_y, file_size
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from picture_url
-        where id = #{id,jdbcType=INTEGER}
-    </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from picture_url
+    where id = #{id,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-      delete
-      from picture_url
-      where id = #{id,jdbcType=INTEGER}
+    delete from picture_url
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jiang.blog.model.pojo.PictureUrl">
-      insert into picture_url (id, is_banner, created_at,
-                               updated_at, deleted_at, url,
-                               short_url, category, file_type,
-                               `path`, `large`, original,
-                               small, dimension_x, dimension_y,
-                               file_size)
-      values (#{id,jdbcType=INTEGER}, #{isBanner,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP},
-              #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR},
-              #{shortUrl,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR},
-              #{path,jdbcType=VARCHAR}, #{large,jdbcType=VARCHAR}, #{original,jdbcType=VARCHAR},
-              #{small,jdbcType=VARCHAR}, #{dimensionX,jdbcType=BIGINT}, #{dimensionY,jdbcType=BIGINT},
-              #{fileSize,jdbcType=BIGINT})
+    insert into picture_url (id, is_banner, created_at, 
+      updated_at, deleted_at, url, 
+      short_url, category, file_type, 
+      `path`, `large`, original, 
+      small, dimension_x, dimension_y, 
+      file_size)
+    values (#{id,jdbcType=INTEGER}, #{isBanner,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR}, 
+      #{shortUrl,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{large,jdbcType=VARCHAR}, #{original,jdbcType=VARCHAR}, 
+      #{small,jdbcType=VARCHAR}, #{dimensionX,jdbcType=BIGINT}, #{dimensionY,jdbcType=BIGINT}, 
+      #{fileSize,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.PictureUrl">
     insert into picture_url
@@ -204,22 +202,22 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.PictureUrl">
-      update picture_url
-      set is_banner   = #{isBanner,jdbcType=INTEGER},
-          created_at  = #{createdAt,jdbcType=TIMESTAMP},
-          updated_at  = #{updatedAt,jdbcType=TIMESTAMP},
-          deleted_at  = #{deletedAt,jdbcType=TIMESTAMP},
-          url         = #{url,jdbcType=VARCHAR},
-          short_url   = #{shortUrl,jdbcType=VARCHAR},
-          category    = #{category,jdbcType=VARCHAR},
-          file_type   = #{fileType,jdbcType=VARCHAR},
-          `path`      = #{path,jdbcType=VARCHAR},
-          `large`     = #{large,jdbcType=VARCHAR},
-          original    = #{original,jdbcType=VARCHAR},
-          small       = #{small,jdbcType=VARCHAR},
-          dimension_x = #{dimensionX,jdbcType=BIGINT},
-          dimension_y = #{dimensionY,jdbcType=BIGINT},
-          file_size   = #{fileSize,jdbcType=BIGINT}
-      where id = #{id,jdbcType=INTEGER}
+    update picture_url
+    set is_banner = #{isBanner,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      url = #{url,jdbcType=VARCHAR},
+      short_url = #{shortUrl,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      `path` = #{path,jdbcType=VARCHAR},
+      `large` = #{large,jdbcType=VARCHAR},
+      original = #{original,jdbcType=VARCHAR},
+      small = #{small,jdbcType=VARCHAR},
+      dimension_x = #{dimensionX,jdbcType=BIGINT},
+      dimension_y = #{dimensionY,jdbcType=BIGINT},
+      file_size = #{fileSize,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
