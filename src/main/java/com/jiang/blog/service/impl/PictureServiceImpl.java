@@ -2,7 +2,7 @@ package com.jiang.blog.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jiang.blog.model.dao.ExtendDao.ExtendPictureUrlMapper;
+import com.jiang.blog.model.dao.PictureUrlMapper;
 import com.jiang.blog.model.pojo.PictureUrl;
 import com.jiang.blog.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class PictureServiceImpl implements PictureService {
     @Autowired
-    ExtendPictureUrlMapper pictureUrlMapper;
+    PictureUrlMapper pictureUrlMapper;
 
     @Override
     @Cacheable(value = "queryManyPicture")

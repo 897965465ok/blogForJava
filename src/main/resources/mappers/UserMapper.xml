@@ -30,4 +30,16 @@
     `password`, `status`, del_flag, login_ip, login_date, create_by, create_time, update_by, 
     update_time, remark
   </sql>
+
+  <select id="userExists" parameterType="java.lang.String" resultType="integer">
+    SELECT EXISTS
+    (SELECT 1 FROM sys_user WHERE email = #{userName,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectByUserName" parameterType="string" resultType="com.jiang.blog.model.pojo.User">
+    select
+    <include refid="com.jiang.blog.model.dao.UserMapper.Base_Column_List"/>
+    from sys_user
+    where email = #{account ,jdbcType=VARCHAR}
+  </select>
 </mapper>

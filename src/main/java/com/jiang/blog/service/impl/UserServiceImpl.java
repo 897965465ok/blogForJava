@@ -1,8 +1,8 @@
 package com.jiang.blog.service.impl;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.dao.ExtendDao.ExtendMenuMapper;
-import com.jiang.blog.model.dao.ExtendDao.ExtendUserMapper;
+import com.jiang.blog.model.dao.MenuMapper;
+import com.jiang.blog.model.dao.UserMapper;
 import com.jiang.blog.model.pojo.LoginUser;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.UserService;
@@ -23,10 +23,10 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
-    ExtendUserMapper userMapper;
+    UserMapper userMapper;
 
     @Autowired
-    ExtendMenuMapper menuMapper;
+    MenuMapper menuMapper;
 
     @Autowired
     AuthenticationManager authenticationManager;

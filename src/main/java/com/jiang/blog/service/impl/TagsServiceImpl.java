@@ -2,7 +2,7 @@ package com.jiang.blog.service.impl;
 
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.dao.ExtendDao.ExtendTagsMapper;
+import com.jiang.blog.model.dao.TagsMapper;
 import com.jiang.blog.model.pojo.Tags;
 import com.jiang.blog.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 public class TagsServiceImpl implements TagsService {
 
     @Autowired
-    ExtendTagsMapper tagsMapper;
+    TagsMapper tagsMapper;
 
     @Override
     public List<Tags> queryByTags() {
@@ -42,19 +42,19 @@ public class TagsServiceImpl implements TagsService {
 
     @Override
     public boolean deleteTags(Integer id) {
-        return (tagsMapper.deleteByPrimaryKey(id) == 1) ? true : false;
+        return (tagsMapper.deleteById(id) == 1) ? true : false;
     }
 
     @Override
     public Integer updateTags(Integer id, String content) {
-        Tags tags = tagsMapper.selectByPrimaryKey(id);
+        Tags tags = tagsMapper.selectById(id);
 
         if (tags == null) {
             throw new BlogException(BlogExceptionEnum.TAGS_NOT_EXISTS);
         } else {
             tags.setUpdatedAt(new Date());
             tags.setArticleTag(content);
-            return tagsMapper.updateByPrimaryKeySelective(tags);
+            return tagsMapper.updateById(tags);
         }
     }
 

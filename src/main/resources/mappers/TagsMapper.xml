@@ -14,4 +14,13 @@
     <!--@mbg.generated-->
     id, created_at, updated_at, deleted_at, article_tag
   </sql>
+  <select id="queryByTagsAll" resultMap="com.jiang.blog.model.dao.TagsMapper.BaseResultMap">
+    select
+    <include refid="com.jiang.blog.model.dao.TagsMapper.Base_Column_List"></include>
+    from tags
+  </select>
+  <select id="tagsExists" parameterType="java.lang.String" resultType="int">
+    SELECT EXISTS
+    (SELECT 1 FROM tags WHERE article_tag = #{article_tag,jdbcType=VARCHAR})
+  </select>
 </mapper>
