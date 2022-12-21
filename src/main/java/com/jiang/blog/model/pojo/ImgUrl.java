@@ -13,13 +13,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "picture_url")
-public class PictureUrl implements Serializable {
+@TableName(value = "img_url")
+public class ImgUrl implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Integer id;
-
-    @TableField(value = "is_banner")
-    private Integer isBanner;
 
     @TableField(value = "created_at")
     private Date createdAt;
@@ -29,6 +26,9 @@ public class PictureUrl implements Serializable {
 
     @TableField(value = "deleted_at")
     private Date deletedAt;
+
+    @TableField(value = "uuid")
+    private String uuid;
 
     @TableField(value = "url")
     private String url;

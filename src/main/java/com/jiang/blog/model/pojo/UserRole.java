@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,22 +12,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "tags")
-public class Tags implements Serializable {
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+@TableName(value = "sys_user_role")
+public class UserRole implements Serializable {
+    /**
+     * 用户ID
+     */
+    @TableId(value = "user_id", type = IdType.ASSIGN_ID)
+    private Long userId;
 
-    @TableField(value = "created_at")
-    private Date createdAt;
-
-    @TableField(value = "updated_at")
-    private Date updatedAt;
-
-    @TableField(value = "deleted_at")
-    private Date deletedAt;
-
-    @TableField(value = "article_tag")
-    private String articleTag;
+    /**
+     * 角色ID
+     */
+    @TableId(value = "role_id", type = IdType.ASSIGN_ID)
+    private Long roleId;
 
     private static final long serialVersionUID = 1L;
 }

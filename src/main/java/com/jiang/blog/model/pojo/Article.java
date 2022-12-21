@@ -1,176 +1,121 @@
 package com.jiang.blog.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName(value = "article")
 public class Article implements Serializable {
+    /**
+     * id
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
+    /**
+     * 创建时间
+     */
+    @TableField(value = "created_at")
     private Date createdAt;
 
+    /**
+     * 上传时间
+     */
+    @TableField(value = "updated_at")
     private Date updatedAt;
 
+    /**
+     * 删除时间
+     */
+    @TableField(value = "deleted_at")
     private Date deletedAt;
 
+    /**
+     * 图片链接
+     */
+    @TableField(value = "picture")
     private String picture;
 
+    /**
+     * 文章段落
+     */
+    @TableField(value = "paragraph")
     private String paragraph;
 
+    /**
+     * 名字
+     */
+    @TableField(value = "`name`")
     private String name;
 
+    /**
+     * 分类
+     */
+    @TableField(value = "tag")
     private String tag;
 
+    /**
+     * 原文件路径
+     */
+    @TableField(value = "article_path")
     private String articlePath;
 
+    /**
+     * 查看次数
+     */
+    @TableField(value = "whatch_number")
     private Integer whatchNumber;
 
+    /**
+     * 喜欢
+     */
+    @TableField(value = "`like`")
     private Integer like;
 
+    /**
+     * 封面
+     */
+    @TableField(value = "cover")
     private String cover;
 
+    /**
+     * 解析后的内容
+     */
+    @TableField(value = "content")
     private String content;
 
+    /**
+     * 是否热门
+     */
+    @TableField(value = "hot")
     private Long hot;
 
+    /**
+     * 推荐
+     */
+    @TableField(value = "rec")
     private Long rec;
 
+    /**
+     * 评论次数
+     */
+    @TableField(value = "comments_count")
     private Long commentsCount;
 
+    /**
+     * 侧边栏
+     */
+    @TableField(value = "side_article")
     private Long sideArticle;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture == null ? null : picture.trim();
-    }
-
-    public String getParagraph() {
-        return paragraph;
-    }
-
-    public void setParagraph(String paragraph) {
-        this.paragraph = paragraph == null ? null : paragraph.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag == null ? null : tag.trim();
-    }
-
-    public String getArticlePath() {
-        return articlePath;
-    }
-
-    public void setArticlePath(String articlePath) {
-        this.articlePath = articlePath == null ? null : articlePath.trim();
-    }
-
-    public Integer getWhatchNumber() {
-        return whatchNumber;
-    }
-
-    public void setWhatchNumber(Integer whatchNumber) {
-        this.whatchNumber = whatchNumber;
-    }
-
-    public Integer getLike() {
-        return like;
-    }
-
-    public void setLike(Integer like) {
-        this.like = like;
-    }
-
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover == null ? null : cover.trim();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public Long getHot() {
-        return hot;
-    }
-
-    public void setHot(Long hot) {
-        this.hot = hot;
-    }
-
-    public Long getRec() {
-        return rec;
-    }
-
-    public void setRec(Long rec) {
-        this.rec = rec;
-    }
-
-    public Long getCommentsCount() {
-        return commentsCount;
-    }
-
-    public void setCommentsCount(Long commentsCount) {
-        this.commentsCount = commentsCount;
-    }
-
-    public Long getSideArticle() {
-        return sideArticle;
-    }
-
-    public void setSideArticle(Long sideArticle) {
-        this.sideArticle = sideArticle;
-    }
+    private static final long serialVersionUID = 1L;
 }

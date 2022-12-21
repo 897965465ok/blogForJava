@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.blog.model.dao.ArticleMapper">
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.Article">
+    <!--@mbg.generated-->
+    <!--@Table article-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
@@ -13,222 +15,16 @@
     <result column="article_path" jdbcType="VARCHAR" property="articlePath" />
     <result column="whatch_number" jdbcType="INTEGER" property="whatchNumber" />
     <result column="like" jdbcType="INTEGER" property="like" />
-    <result column="cover" jdbcType="VARCHAR" property="cover" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="cover" jdbcType="LONGVARCHAR" property="cover" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="hot" jdbcType="BIGINT" property="hot" />
     <result column="rec" jdbcType="BIGINT" property="rec" />
     <result column="comments_count" jdbcType="BIGINT" property="commentsCount" />
     <result column="side_article" jdbcType="BIGINT" property="sideArticle" />
   </resultMap>
   <sql id="Base_Column_List">
+    <!--@mbg.generated-->
     id, created_at, updated_at, deleted_at, picture, paragraph, `name`, tag, article_path, 
     whatch_number, `like`, cover, content, hot, rec, comments_count, side_article
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from article
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from article
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.jiang.blog.model.pojo.Article">
-    insert into article (id, created_at, updated_at, 
-      deleted_at, picture, paragraph, 
-      `name`, tag, article_path, 
-      whatch_number, `like`, cover, 
-      content, hot, rec, comments_count, 
-      side_article)
-    values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{deletedAt,jdbcType=TIMESTAMP}, #{picture,jdbcType=VARCHAR}, #{paragraph,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{articlePath,jdbcType=VARCHAR}, 
-      #{whatchNumber,jdbcType=INTEGER}, #{like,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{hot,jdbcType=BIGINT}, #{rec,jdbcType=BIGINT}, #{commentsCount,jdbcType=BIGINT}, 
-      #{sideArticle,jdbcType=BIGINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.Article">
-    insert into article
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="createdAt != null">
-        created_at,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-      <if test="deletedAt != null">
-        deleted_at,
-      </if>
-      <if test="picture != null">
-        picture,
-      </if>
-      <if test="paragraph != null">
-        paragraph,
-      </if>
-      <if test="name != null">
-        `name`,
-      </if>
-      <if test="tag != null">
-        tag,
-      </if>
-      <if test="articlePath != null">
-        article_path,
-      </if>
-      <if test="whatchNumber != null">
-        whatch_number,
-      </if>
-      <if test="like != null">
-        `like`,
-      </if>
-      <if test="cover != null">
-        cover,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="hot != null">
-        hot,
-      </if>
-      <if test="rec != null">
-        rec,
-      </if>
-      <if test="commentsCount != null">
-        comments_count,
-      </if>
-      <if test="sideArticle != null">
-        side_article,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="createdAt != null">
-        #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deletedAt != null">
-        #{deletedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="picture != null">
-        #{picture,jdbcType=VARCHAR},
-      </if>
-      <if test="paragraph != null">
-        #{paragraph,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="tag != null">
-        #{tag,jdbcType=VARCHAR},
-      </if>
-      <if test="articlePath != null">
-        #{articlePath,jdbcType=VARCHAR},
-      </if>
-      <if test="whatchNumber != null">
-        #{whatchNumber,jdbcType=INTEGER},
-      </if>
-      <if test="like != null">
-        #{like,jdbcType=INTEGER},
-      </if>
-      <if test="cover != null">
-        #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="hot != null">
-        #{hot,jdbcType=BIGINT},
-      </if>
-      <if test="rec != null">
-        #{rec,jdbcType=BIGINT},
-      </if>
-      <if test="commentsCount != null">
-        #{commentsCount,jdbcType=BIGINT},
-      </if>
-      <if test="sideArticle != null">
-        #{sideArticle,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiang.blog.model.pojo.Article">
-    update article
-    <set>
-      <if test="createdAt != null">
-        created_at = #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deletedAt != null">
-        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="picture != null">
-        picture = #{picture,jdbcType=VARCHAR},
-      </if>
-      <if test="paragraph != null">
-        paragraph = #{paragraph,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null">
-        `name` = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="tag != null">
-        tag = #{tag,jdbcType=VARCHAR},
-      </if>
-      <if test="articlePath != null">
-        article_path = #{articlePath,jdbcType=VARCHAR},
-      </if>
-      <if test="whatchNumber != null">
-        whatch_number = #{whatchNumber,jdbcType=INTEGER},
-      </if>
-      <if test="like != null">
-        `like` = #{like,jdbcType=INTEGER},
-      </if>
-      <if test="cover != null">
-        cover = #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="hot != null">
-        hot = #{hot,jdbcType=BIGINT},
-      </if>
-      <if test="rec != null">
-        rec = #{rec,jdbcType=BIGINT},
-      </if>
-      <if test="commentsCount != null">
-        comments_count = #{commentsCount,jdbcType=BIGINT},
-      </if>
-      <if test="sideArticle != null">
-        side_article = #{sideArticle,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.Article">
-    update article
-    set created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
-      picture = #{picture,jdbcType=VARCHAR},
-      paragraph = #{paragraph,jdbcType=VARCHAR},
-      `name` = #{name,jdbcType=VARCHAR},
-      tag = #{tag,jdbcType=VARCHAR},
-      article_path = #{articlePath,jdbcType=VARCHAR},
-      whatch_number = #{whatchNumber,jdbcType=INTEGER},
-      `like` = #{like,jdbcType=INTEGER},
-      cover = #{cover,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      hot = #{hot,jdbcType=BIGINT},
-      rec = #{rec,jdbcType=BIGINT},
-      comments_count = #{commentsCount,jdbcType=BIGINT},
-      side_article = #{sideArticle,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 </mapper>

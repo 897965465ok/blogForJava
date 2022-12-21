@@ -10,17 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ExtendTagsMapper extends TagsMapper, BaseMapper<Tags> {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Tags record);
-
-    int insertSelective(Tags record);
-
-    Tags selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Tags record);
-
-    int updateByPrimaryKey(Tags record);
 
     List<Tags> queryByTagsAll();
 

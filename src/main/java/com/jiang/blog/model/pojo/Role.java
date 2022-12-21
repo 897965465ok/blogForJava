@@ -1,145 +1,103 @@
 package com.jiang.blog.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Role {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName(value = "sys_role")
+public class Role implements Serializable {
+    /**
+     * 角色ID
+     */
+    @TableId(value = "role_id", type = IdType.ASSIGN_ID)
     private Long roleId;
 
+    /**
+     * 角色名称
+     */
+    @TableField(value = "role_name")
     private String roleName;
 
+    /**
+     * 角色权限字符串
+     */
+    @TableField(value = "role_key")
     private String roleKey;
 
+    /**
+     * 显示顺序
+     */
+    @TableField(value = "role_sort")
     private Integer roleSort;
 
+    /**
+     * 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
+     */
+    @TableField(value = "data_scope")
     private String dataScope;
 
-    private Boolean menuCheckStrictly;
+    /**
+     * 菜单树选择项是否关联显示
+     */
+    @TableField(value = "menu_check_strictly")
+    private Byte menuCheckStrictly;
 
-    private Boolean deptCheckStrictly;
+    /**
+     * 部门树选择项是否关联显示
+     */
+    @TableField(value = "dept_check_strictly")
+    private Byte deptCheckStrictly;
 
+    /**
+     * 角色状态（0正常 1停用）
+     */
+    @TableField(value = "`status`")
     private String status;
 
+    /**
+     * 删除标志（0代表存在 2代表删除）
+     */
+    @TableField(value = "del_flag")
     private String delFlag;
 
+    /**
+     * 创建者
+     */
+    @TableField(value = "create_by")
     private String createBy;
 
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_time")
     private Date createTime;
 
+    /**
+     * 更新者
+     */
+    @TableField(value = "update_by")
     private String updateBy;
 
+    /**
+     * 更新时间
+     */
+    @TableField(value = "update_time")
     private Date updateTime;
 
+    /**
+     * 备注
+     */
+    @TableField(value = "remark")
     private String remark;
 
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
-    }
-
-    public String getRoleKey() {
-        return roleKey;
-    }
-
-    public void setRoleKey(String roleKey) {
-        this.roleKey = roleKey == null ? null : roleKey.trim();
-    }
-
-    public Integer getRoleSort() {
-        return roleSort;
-    }
-
-    public void setRoleSort(Integer roleSort) {
-        this.roleSort = roleSort;
-    }
-
-    public String getDataScope() {
-        return dataScope;
-    }
-
-    public void setDataScope(String dataScope) {
-        this.dataScope = dataScope == null ? null : dataScope.trim();
-    }
-
-    public Boolean getMenuCheckStrictly() {
-        return menuCheckStrictly;
-    }
-
-    public void setMenuCheckStrictly(Boolean menuCheckStrictly) {
-        this.menuCheckStrictly = menuCheckStrictly;
-    }
-
-    public Boolean getDeptCheckStrictly() {
-        return deptCheckStrictly;
-    }
-
-    public void setDeptCheckStrictly(Boolean deptCheckStrictly) {
-        this.deptCheckStrictly = deptCheckStrictly;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag == null ? null : delFlag.trim();
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy == null ? null : updateBy.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+    private static final long serialVersionUID = 1L;
 }

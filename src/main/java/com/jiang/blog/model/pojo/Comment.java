@@ -1,115 +1,52 @@
 package com.jiang.blog.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Comment {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName(value = "`comment`")
+public class Comment implements Serializable {
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
+    @TableField(value = "created_at")
     private Date createdAt;
 
+    @TableField(value = "updated_at")
     private Date updatedAt;
 
+    @TableField(value = "deleted_at")
     private Date deletedAt;
 
+    @TableField(value = "user_id")
     private Long userId;
 
+    @TableField(value = "article_id")
     private Long articleId;
 
+    @TableField(value = "manager_id")
     private Long managerId;
 
+    @TableField(value = "content")
     private String content;
 
-    private Boolean isReply;
+    @TableField(value = "is_reply")
+    private Byte isReply;
 
+    @TableField(value = "reply_id")
     private Long replyId;
 
+    @TableField(value = "`to`")
     private String to;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public Long getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public Boolean getIsReply() {
-        return isReply;
-    }
-
-    public void setIsReply(Boolean isReply) {
-        this.isReply = isReply;
-    }
-
-    public Long getReplyId() {
-        return replyId;
-    }
-
-    public void setReplyId(Long replyId) {
-        this.replyId = replyId;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to == null ? null : to.trim();
-    }
+    private static final long serialVersionUID = 1L;
 }

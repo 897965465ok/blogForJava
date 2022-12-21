@@ -10,17 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ExtendPictureUrlMapper extends BaseMapper<PictureUrl>, PictureUrlMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(PictureUrl record);
-
-    int insertSelective(PictureUrl record);
-
-    PictureUrl selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(PictureUrl record);
-
-    int updateByPrimaryKey(PictureUrl record);
 
     @Select(" select * from picture_url ")
     List<PictureUrl> queryManyPicture(Integer offset, Integer limit);

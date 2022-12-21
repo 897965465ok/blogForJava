@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "favorites")
-public class Favorites implements Serializable {
+@TableName(value = "banner")
+public class Banner implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
@@ -27,11 +27,29 @@ public class Favorites implements Serializable {
     @TableField(value = "deleted_at")
     private Date deletedAt;
 
-    @TableField(value = "`name`")
-    private String name;
+    @TableField(value = "uuid")
+    private String uuid;
 
-    @TableField(value = "link")
-    private String link;
+    @TableField(value = "url")
+    private String url;
+
+    @TableField(value = "short_url")
+    private String shortUrl;
+
+    @TableField(value = "`path`")
+    private String path;
+
+    @TableField(value = "`large`")
+    private String large;
+
+    @TableField(value = "original")
+    private String original;
+
+    @TableField(value = "small")
+    private String small;
+
+    @TableField(value = "img_url_id")
+    private String imgUrlId;
 
     private static final long serialVersionUID = 1L;
 }

@@ -1,17 +1,7 @@
 package com.jiang.blog.model.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jiang.blog.model.pojo.Article;
 
-public interface ArticleMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Article record);
-
-    int insertSelective(Article record);
-
-    Article selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Article record);
-
-    int updateByPrimaryKey(Article record);
+public interface ArticleMapper extends BaseMapper<Article> {
 }

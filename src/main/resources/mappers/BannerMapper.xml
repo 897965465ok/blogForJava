@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jiang.blog.model.dao.PictureUrlMapper">
-  <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.PictureUrl">
+<mapper namespace="com.jiang.blog.model.dao.BannerMapper">
+  <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.Banner">
     <!--@mbg.generated-->
-    <!--@Table picture_url-->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="is_banner" jdbcType="INTEGER" property="isBanner" />
+    <!--@Table banner-->
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="short_url" jdbcType="VARCHAR" property="shortUrl" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="large" jdbcType="VARCHAR" property="large" />
     <result column="original" jdbcType="VARCHAR" property="original" />
     <result column="small" jdbcType="VARCHAR" property="small" />
-    <result column="dimension_x" jdbcType="BIGINT" property="dimensionX" />
-    <result column="dimension_y" jdbcType="BIGINT" property="dimensionY" />
-    <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+    <result column="img_url_id" jdbcType="VARCHAR" property="imgUrlId" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, is_banner, created_at, updated_at, deleted_at, url, short_url, category, file_type, 
-    `path`, `large`, original, small, dimension_x, dimension_y, file_size
+    id, created_at, updated_at, deleted_at, uuid, url, short_url, `path`, `large`, original, 
+    small, img_url_id
   </sql>
 </mapper>

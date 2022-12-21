@@ -1,195 +1,133 @@
 package com.jiang.blog.model.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Menu {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName(value = "sys_menu")
+public class Menu implements Serializable {
+    /**
+     * 菜单ID
+     */
+    @TableId(value = "menu_id", type = IdType.ASSIGN_ID)
     private Long menuId;
 
+    /**
+     * 菜单名称
+     */
+    @TableField(value = "menu_name")
     private String menuName;
 
+    /**
+     * 父菜单ID
+     */
+    @TableField(value = "parent_id")
     private Long parentId;
 
+    /**
+     * 显示顺序
+     */
+    @TableField(value = "order_num")
     private Integer orderNum;
 
+    /**
+     * 路由地址
+     */
+    @TableField(value = "`path`")
     private String path;
 
+    /**
+     * 组件路径
+     */
+    @TableField(value = "component")
     private String component;
 
+    /**
+     * 路由参数
+     */
+    @TableField(value = "query")
     private String query;
 
+    /**
+     * 是否为外链（0是 1否）
+     */
+    @TableField(value = "is_frame")
     private Integer isFrame;
 
+    /**
+     * 是否缓存（0缓存 1不缓存）
+     */
+    @TableField(value = "is_cache")
     private Integer isCache;
 
+    /**
+     * 菜单类型（M目录 C菜单 F按钮）
+     */
+    @TableField(value = "menu_type")
     private String menuType;
 
+    /**
+     * 菜单状态（0显示 1隐藏）
+     */
+    @TableField(value = "visible")
     private String visible;
 
+    /**
+     * 菜单状态（0正常 1停用）
+     */
+    @TableField(value = "`status`")
     private String status;
 
+    /**
+     * 权限标识
+     */
+    @TableField(value = "perms")
     private String perms;
 
+    /**
+     * 菜单图标
+     */
+    @TableField(value = "icon")
     private String icon;
 
+    /**
+     * 创建者
+     */
+    @TableField(value = "create_by")
     private String createBy;
 
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_time")
     private Date createTime;
 
+    /**
+     * 更新者
+     */
+    @TableField(value = "update_by")
     private String updateBy;
 
+    /**
+     * 更新时间
+     */
+    @TableField(value = "update_time")
     private Date updateTime;
 
+    /**
+     * 备注
+     */
+    @TableField(value = "remark")
     private String remark;
 
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName == null ? null : menuName.trim();
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path == null ? null : path.trim();
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component == null ? null : component.trim();
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query == null ? null : query.trim();
-    }
-
-    public Integer getIsFrame() {
-        return isFrame;
-    }
-
-    public void setIsFrame(Integer isFrame) {
-        this.isFrame = isFrame;
-    }
-
-    public Integer getIsCache() {
-        return isCache;
-    }
-
-    public void setIsCache(Integer isCache) {
-        this.isCache = isCache;
-    }
-
-    public String getMenuType() {
-        return menuType;
-    }
-
-    public void setMenuType(String menuType) {
-        this.menuType = menuType == null ? null : menuType.trim();
-    }
-
-    public String getVisible() {
-        return visible;
-    }
-
-    public void setVisible(String visible) {
-        this.visible = visible == null ? null : visible.trim();
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public void setPerms(String perms) {
-        this.perms = perms == null ? null : perms.trim();
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy == null ? null : updateBy.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
+    private static final long serialVersionUID = 1L;
 }

@@ -1,17 +1,7 @@
 package com.jiang.blog.model.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jiang.blog.model.pojo.Role;
 
-public interface RoleMapper {
-    int deleteByPrimaryKey(Long roleId);
-
-    int insert(Role record);
-
-    int insertSelective(Role record);
-
-    Role selectByPrimaryKey(Long roleId);
-
-    int updateByPrimaryKeySelective(Role record);
-
-    int updateByPrimaryKey(Role record);
+public interface RoleMapper extends BaseMapper<Role> {
 }

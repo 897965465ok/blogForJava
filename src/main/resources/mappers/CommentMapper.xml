@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiang.blog.model.dao.CommentMapper">
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.Comment">
+    <!--@mbg.generated-->
+    <!--@Table `comment`-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
@@ -9,156 +11,14 @@
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="article_id" jdbcType="BIGINT" property="articleId" />
     <result column="manager_id" jdbcType="BIGINT" property="managerId" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="is_reply" jdbcType="BIT" property="isReply" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="is_reply" jdbcType="TINYINT" property="isReply" />
     <result column="reply_id" jdbcType="BIGINT" property="replyId" />
-    <result column="to" jdbcType="VARCHAR" property="to" />
+    <result column="to" jdbcType="LONGVARCHAR" property="to" />
   </resultMap>
   <sql id="Base_Column_List">
+    <!--@mbg.generated-->
     id, created_at, updated_at, deleted_at, user_id, article_id, manager_id, content, 
     is_reply, reply_id, `to`
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from comment
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from comment
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.jiang.blog.model.pojo.Comment">
-    insert into comment (id, created_at, updated_at, 
-      deleted_at, user_id, article_id, 
-      manager_id, content, is_reply, 
-      reply_id, `to`)
-    values (#{id,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
-      #{deletedAt,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, 
-      #{managerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{isReply,jdbcType=BIT}, 
-      #{replyId,jdbcType=BIGINT}, #{to,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.jiang.blog.model.pojo.Comment">
-    insert into comment
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="createdAt != null">
-        created_at,
-      </if>
-      <if test="updatedAt != null">
-        updated_at,
-      </if>
-      <if test="deletedAt != null">
-        deleted_at,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="articleId != null">
-        article_id,
-      </if>
-      <if test="managerId != null">
-        manager_id,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="isReply != null">
-        is_reply,
-      </if>
-      <if test="replyId != null">
-        reply_id,
-      </if>
-      <if test="to != null">
-        `to`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="createdAt != null">
-        #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deletedAt != null">
-        #{deletedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="articleId != null">
-        #{articleId,jdbcType=BIGINT},
-      </if>
-      <if test="managerId != null">
-        #{managerId,jdbcType=BIGINT},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="isReply != null">
-        #{isReply,jdbcType=BIT},
-      </if>
-      <if test="replyId != null">
-        #{replyId,jdbcType=BIGINT},
-      </if>
-      <if test="to != null">
-        #{to,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jiang.blog.model.pojo.Comment">
-    update comment
-    <set>
-      <if test="createdAt != null">
-        created_at = #{createdAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedAt != null">
-        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deletedAt != null">
-        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="articleId != null">
-        article_id = #{articleId,jdbcType=BIGINT},
-      </if>
-      <if test="managerId != null">
-        manager_id = #{managerId,jdbcType=BIGINT},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="isReply != null">
-        is_reply = #{isReply,jdbcType=BIT},
-      </if>
-      <if test="replyId != null">
-        reply_id = #{replyId,jdbcType=BIGINT},
-      </if>
-      <if test="to != null">
-        `to` = #{to,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.jiang.blog.model.pojo.Comment">
-    update comment
-    set created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
-      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
-      user_id = #{userId,jdbcType=BIGINT},
-      article_id = #{articleId,jdbcType=BIGINT},
-      manager_id = #{managerId,jdbcType=BIGINT},
-      content = #{content,jdbcType=VARCHAR},
-      is_reply = #{isReply,jdbcType=BIT},
-      reply_id = #{replyId,jdbcType=BIGINT},
-      `to` = #{to,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 </mapper>
