@@ -1,57 +1,14 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
-import {storeToRefs} from 'pinia';
-import {useStore} from '@/stores'
-import {useRoute, useRouter} from 'vue-router';
-
+import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useStore } from '@/stores'
+import { useRoute, useRouter } from 'vue-router';
 /**
  * 仓库
  */
 const store = useStore();
 
-const {sideSwitch} = storeToRefs(useStore())
-
-const menuList = reactive([
-  {
-    "id": 125,
-    "authName": "用户管理",
-    "path": "users",
-    "children": [
-      {
-        "id": 110,
-        "authName": "用户列表",
-        "path": "users",
-        "children": [],
-        "order": null
-      }
-    ],
-    "order": 1
-  },
-  {
-    "id": 103,
-    "authName": "权限管理",
-    "path": "rights",
-    "children": [
-      {
-        "id": 111,
-        "authName": "角色列表",
-        "path": "roles",
-        "children": [],
-        "order": null
-      },
-      {
-        "id": 112,
-        "authName": "权限列表",
-        "path": "rights",
-        "children": [],
-        "order": null
-      }
-    ],
-    "order": 2
-  }
-
-])
-
+const { sideSwitch, treeMap } = storeToRefs(store)
 
 /**
  * 路由对象
@@ -66,11 +23,13 @@ const router = useRouter();
  * 数据部分
  */
 const data = reactive({})
+
 onBeforeMount(() => {
-  //console.log('2.组件挂载页面之前执行----onBeforeMount')
+  store.getRouter();
 })
 onMounted(() => {
-  //console.log('3.-组件挂载到页面之后执行-------onMounted')
+
+
 })
 watchEffect(() => {
 })
@@ -80,7 +39,6 @@ defineExpose({
   ...toRefs(data)
 })
 
-
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
@@ -88,23 +46,25 @@ const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
+
 </script>
 <template>
-  <el-menu :collapse="sideSwitch" active-text-color="#ffd04b" background-color="#304156" default-active="1"
-           text-color="#fff" @close="handleClose" @open="handleOpen">
-    <el-sub-menu v-for="(item, index) in menuList" :key="index" :index="index">
+  <el-menu router :collapse="sideSwitch" active-text-color="#ffd04b" background-color="#304156" default-active="1"
+    text-color="#fff" @close="handleClose" @open="handleOpen">
+    <el-sub-menu v-for="(item, index) in treeMap" :key="index" :index="index">
       <template #title>
         <el-icon>
-          <Document/>
+          <component :is="item.icon"></component>
         </el-icon>
-        <span>{{ item.authName }}</span>
+        <span>{{ item.menuName }}</span>
       </template>
-      <el-menu-item v-for="(child, childIndex) in  item.children" :key="childIndex" :index="(`${index}+${childIndex}`)">
+      <el-menu-item :route="{ path: child.path }" v-for="(child, childIndex) in  item.children" :key="childIndex"
+        :index="(`${index}+${childIndex}`)">
         <template #title>
           <el-icon>
-            <location/>
+            <component :is="child.icon"></component>
           </el-icon>
-          <span>{{ child.authName }}</span>
+          <span>{{ child.menuName }}</span>
         </template>
       </el-menu-item>
     </el-sub-menu>

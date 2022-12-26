@@ -22,10 +22,8 @@
   </div>
 </template>
 <script lang="js">
-
 import qs from "qs";
-
-import {api} from "@/api";
+import { api } from "@/api";
 
 export default {
   name: "Login",
@@ -85,8 +83,8 @@ export default {
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           );
           if (result.code == 200) {
-            localStorage.setItem("token", "token " + result.data.token);
-            this.$router.push("/");
+            localStorage.setItem("token", "token " + result.result.token);
+            window.location.href = '/menu'
           }
         } else {
           return false;
@@ -144,6 +142,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "@/assets/icon/iconfont.css";
+
 .login-title {
   text-align: center;
   margin: 0 auto 40px auto;

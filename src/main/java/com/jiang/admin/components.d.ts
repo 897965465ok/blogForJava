@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Article: typeof import('./src/components/Article/Article.vue')['default']
+    ArticleTable: typeof import('./src/components/Article/ArticleTable.vue')['default']
     Avatar: typeof import('./src/components/Header/Avatar.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -35,6 +36,8 @@ declare module '@vue/runtime-core' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Lanuages: typeof import('./src/components/Header/Lanuages.vue')['default']
     Markdown: typeof import('./src/components/Article/Markdown.vue')['default']
+    Menu: typeof import('./src/components/Menu/Menu.vue')['default']
+    MenuTable: typeof import('./src/components/Menu/MenuTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScreenFull: typeof import('./src/components/Header/ScreenFull.vue')['default']

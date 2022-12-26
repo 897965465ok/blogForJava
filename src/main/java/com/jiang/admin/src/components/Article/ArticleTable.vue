@@ -5,11 +5,13 @@ import { useRoute, useRouter } from 'vue-router';
 
 const articleList = ref();
 const store = useStore();
-const { Articles } = store;
-let columns = ref();
+const { articles } = store;
+const columns = ref();
+const pageInfo = ref();
+
 onBeforeMount(async () => {
-  let pageInfo = await Articles(1, 7)
-  articleList.value = pageInfo.result.list
+  pageInfo.value = await articles(1, 7)
+  articleList.value = pageInfo.value.list;
   columns.value = Object.keys(articleList.value[0]).map((item: string) => item);
 })
 
@@ -48,6 +50,12 @@ function handleSelectionChange(selection: any) {
 
 }
 
+
+async function jump(current: number) {
+  pageInfo.value = await articles(current * 1, 7)
+  articleList.value = pageInfo.value.list;
+}
+
 </script>
 
 <template>
@@ -68,8 +76,8 @@ function handleSelectionChange(selection: any) {
     </el-table-column>
   </el-table>
   <div class="demo-pagination-block">
-
-    <el-pagination :page-sizes="[100, 200, 300, 400]" :total="400" layout="total, sizes, prev, pager, next, jumper" />
+    <el-pagination v-if="pageInfo" @current-change="jump" v-model:page-size="pageInfo.pageSize" :total="pageInfo.total"
+      layout="total, prev, pager, next, jumper" />
   </div>
 </template>
 

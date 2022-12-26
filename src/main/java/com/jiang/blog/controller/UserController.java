@@ -1,5 +1,6 @@
 package com.jiang.blog.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.service.ArticleService;
@@ -56,6 +57,12 @@ public class UserController {
     public ApiRestResponse visited(@RequestParam(name = "uuid") Integer id) {
         articleService.visit(id);
         return ApiRestResponse.success();
+    }
+    @ApiOperation("获取所有用户")
+    @GetMapping("/queryManyUser")
+    public ApiRestResponse queryManyUser(Integer offset, Integer limit) {
+        PageInfo pageInfo = userService.queryManyUser(offset, limit);
+        return ApiRestResponse.success(pageInfo);
     }
 
 }

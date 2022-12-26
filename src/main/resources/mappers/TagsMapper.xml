@@ -16,7 +16,7 @@
   </sql>
   <select id="queryByTagsAll" resultMap="com.jiang.blog.model.dao.TagsMapper.BaseResultMap">
     select
-    <include refid="com.jiang.blog.model.dao.TagsMapper.Base_Column_List"></include>
+    <include refid="com.jiang.blog.model.dao.TagsMapper.Base_Column_List" />
     from tags
   </select>
   <select id="tagsExists" parameterType="java.lang.String" resultType="int">

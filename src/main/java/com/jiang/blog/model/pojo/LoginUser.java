@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +21,8 @@ import java.util.stream.Collectors;
 public class LoginUser implements UserDetails, Serializable {
 
     private List<String> permissions;
-    @Autowired
+
+
     private User user;
     @JSONField(serialize = false)
     private List<SimpleGrantedAuthority> authoritys;
@@ -32,6 +34,7 @@ public class LoginUser implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         //把permissions中String类型的权限信息封装成SimpleGrantedAuthority对象
         if (authoritys != null) {
             return authoritys;
@@ -40,6 +43,7 @@ public class LoginUser implements UserDetails, Serializable {
         authoritys = permissions.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+
         return authoritys;
 
     }

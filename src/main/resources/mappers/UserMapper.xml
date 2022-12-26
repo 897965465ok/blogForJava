@@ -38,8 +38,17 @@
 
   <select id="selectByUserName" parameterType="string" resultType="com.jiang.blog.model.pojo.User">
     select
-    <include refid="com.jiang.blog.model.dao.UserMapper.Base_Column_List"/>
+    <include refid="com.jiang.blog.model.dao.UserMapper.Base_Column_List" />
     from sys_user
     where email = #{account ,jdbcType=VARCHAR}
   </select>
+
+  <select id="queryManyUser" resultType="com.jiang.blog.model.pojo.User">
+    select
+      <include refid="Base_Column_List">
+      </include>
+      from sys_user
+  </select>
+
+
 </mapper>

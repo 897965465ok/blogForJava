@@ -1,8 +1,11 @@
 package com.jiang.blog.service.impl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.UserMapper;
+import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.model.pojo.LoginUser;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.UserService;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,6 +37,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     RedisCache redisCache;
+
+
+
+    @Override
+    public PageInfo queryManyUser(Integer offset, Integer limit) {
+        // DESC表示降序
+        PageHelper.startPage(offset, limit);
+
+        List<User> userList = userMapper.queryManyUser();
+
+        PageInfo pageinfo = new PageInfo<>(userList);
+        return pageinfo;
+    }
 
 
     @Override
@@ -76,6 +93,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new BlogException(BlogExceptionEnum.USER_NOT_EXISTS);
         }
         /*authenticate.getPrincipal() 会返回loadUserByUsername的返回值*/
+
         LoginUser loginUser = (LoginUser) (authenticate.getPrincipal());
 
         String userId = loginUser.getUser().getUserId().toString();
@@ -92,6 +110,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
+/*    public  void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userid = loginUser.getUser().getUserId();
+        redisCache.deleteObject("login:"+userid);
+    }*/
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 重数据库查询id
@@ -106,4 +131,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return new LoginUser(user, permissions);
     }
+
+
 }

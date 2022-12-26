@@ -3,24 +3,55 @@ package com.jiang.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
-import com.jiang.blog.service.ArticleService;
+import com.jiang.blog.model.pojo.User;
+import com.jiang.blog.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/v1")
 public class MenuController {
     @Autowired
-    ArticleService articleService;
+    MenuService menuService;
+
+
+    @ApiOperation("添加一个菜单")
+    @GetMapping("/addMenu")
+    public ApiRestResponse addMenu(){
+        List routers =  menuService.getRouter();
+        return ApiRestResponse.success(routers);
+    }
+
+
+
 
     @ApiOperation("查询菜单列表")
     @GetMapping("/menus")
-    public ApiRestResponse queryManyArticle(Integer offset, Integer limit) {
-        PageInfo pageInfo = articleService.queryManyArticle(offset, limit);
+    public ApiRestResponse queryManyMenu(Integer offset, Integer limit) {
+        PageInfo pageInfo = menuService.queryManyMenu(offset, limit);
         return ApiRestResponse.success(pageInfo);
+    }
+
+    @ApiOperation("查询一个菜单列表")
+    @GetMapping("/menu")
+    public ApiRestResponse queryOneMenu(Integer id) {
+        menuService.queryOneMenu(id);
+        return ApiRestResponse.success();
+    }
+
+
+    @ApiOperation("获取前端路由")
+    @GetMapping("/getRouter")
+    public ApiRestResponse getRouter(){
+
+          List routers =  menuService.getRouter();
+        return ApiRestResponse.success(routers);
     }
 
 

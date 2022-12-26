@@ -1,15 +1,18 @@
 <script lang='ts' setup>
 import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
-import { useStore } from '@/stores';
+import {storeToRefs} from 'pinia';
+import { useStore  } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
 import { deleteArticle } from "@/api/BlogApi";
-import TableVue from './ArticleTable.vue';
-import MarkdownVue from './Markdown.vue';
-import { createArticle } from '@/api/BlogApi';
+import TableVue from './MenuTable.vue'
+import MarkdownVue from '../Article/Markdown.vue';
+import { createArticle} from '@/api/BlogApi';
+
 /**
  * 仓库
  */
 const store = useStore();
+const {treeMap} = storeToRefs(store);
 /**
  * 路由对象
  */
@@ -26,9 +29,7 @@ const data = reactive({})
 onBeforeMount(() => {
   //console.log('2.组件挂载页面之前执行----onBeforeMount')
 })
-onMounted(() => {
-  //console.log('3.-组件挂载到页面之后执行-------onMounted')
-})
+onMounted(async () =>{})
 watchEffect(() => {
 })
 // 使用toRefs解构
@@ -67,8 +68,7 @@ async function creatArticle() {
 }
 
 
-
-const form:formType = reactive({
+const form: formType = reactive({
   name: '',
   paragraph: '',
   tag: '',
@@ -82,6 +82,51 @@ const onSubmit = () => {
   console.log(form)
 }
 
+var menu = {
+  "name": "System",
+  "path": "/system",
+  "hidden": false,
+  "redirect": "noRedirect",
+  "component": "Layout",
+  "alwaysShow": true,
+  "meta": {
+    "title": "系统管理",
+    "icon": "system",
+    "noCache": false,
+    "link": null
+  },
+  "children": [
+    {
+      "name": "User",
+      "path": "user",
+      "hidden": false,
+      "component": "system/user/index",
+      "meta": {
+        "title": "用户管理",
+        "icon": "user",
+        "noCache": false,
+        "link": null
+      }
+    }
+
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 <template>
@@ -90,58 +135,10 @@ const onSubmit = () => {
     <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
     <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
-  <TableVue @check="checkButton"></TableVue>
-  <el-dialog v-model="dialogTableVisible" destroy-on-close title="修改文章">
-    <template #default>
-      <el-form :model="form" label-width="100px">
-        <MarkdownVue></MarkdownVue>
-        <div class=" article-title el-upload__text">
-          <span>文章封面图</span>
-          <span>文章段落</span>
-        </div>
-        <div class="form-header">
-          <div class="header-upload">
-            <el-upload action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" drag multiple>
-              <el-icon>
-                <upload-filled />
-              </el-icon>
-              <div class="el-upload__text">
-                <em>图片拖放</em><br>
-                <em>点击上传</em>
-              </div>
-            </el-upload>
-          </div>
-          <div class="header-textarea">
-            <el-input v-model="form.paragraph" resize="none" type="textarea" />
-          </div>
-        </div>
-        <div class="form-body">
-          <div class="form-switch">
-            <el-form-item label="热门">
-              <el-switch v-model="form.hot" />
-            </el-form-item>
-            <el-form-item label="侧边栏文章">
-              <el-switch v-model="form.sideArticle" />
-            </el-form-item>
-            <el-form-item label="文章名">
-              <el-input v-model="form.name" />
-            </el-form-item>
-            <el-form-item label="分类名">
-              <el-input v-model="form.tag" />
-            </el-form-item>
-            <el-form-item label="文章路径">
-              <el-input v-model="form.articlePath" />
-            </el-form-item>
-          </div>
-        </div>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">修改</el-button>
-          <el-button>取消</el-button>
-        </el-form-item>
-      </el-form>
-    </template>
+  <TableVue @check="checkButton">
 
-  </el-dialog>
+  </TableVue>
+
 </template>
 
 
@@ -196,3 +193,5 @@ const onSubmit = () => {
   margin: 16px 0px;
 }
 </style>
+
+

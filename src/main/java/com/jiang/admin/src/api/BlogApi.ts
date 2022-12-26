@@ -8,6 +8,17 @@ export const createArticle = async (from:any) => {
   return response
 }
 
+export const getRouter = async () => {
+  let response = await api.get("v1/getRouter")
+  return response.data
+}
+
+export const queryManyMenu = async (offset: number, limit: number) => {
+  let response = await api.get("v1/menus", {params: {offset: offset, limit: limit}})
+  return response.data
+}
+
+
 export const getComments = async (articleId: any) => {
   let {data: comment} = await api.get("v1/comment", {
     params: {articleId}
