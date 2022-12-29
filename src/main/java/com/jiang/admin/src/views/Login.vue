@@ -21,7 +21,7 @@
     </el-form>
   </div>
 </template>
-<script lang="js">
+<script>
 import qs from "qs";
 import { api } from "@/api";
 

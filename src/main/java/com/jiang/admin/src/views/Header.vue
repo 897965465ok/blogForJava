@@ -64,7 +64,6 @@ defineExpose({
       <Lanuages/>
       <Avatar/>
     </div>
-
   </header>
 </template>
 

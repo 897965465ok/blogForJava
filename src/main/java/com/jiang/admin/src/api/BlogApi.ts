@@ -3,6 +3,20 @@ import axios from "axios";
 import qs from "qs";
 
 
+
+export const queryManyRole = async (offset: number, limit: number) => {
+  let response = await api.get("v1/queryManyRole", {params: {offset: offset, limit: limit}})
+  return response.data
+}
+
+
+
+export const queryManyUser = async (offset: number, limit: number) => {
+  let response = await api.get("v1/queryManyUser", {params: {offset: offset, limit: limit}})
+  return response.data
+}
+
+
 export const createArticle = async (from:any) => {
   let response = await api.post("v1/createArticle",from)
   return response

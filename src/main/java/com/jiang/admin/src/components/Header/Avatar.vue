@@ -1,8 +1,8 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
-import {useStore} from '@/stores'
-import {useRoute, useRouter} from 'vue-router';
-
+import { onBeforeMount, onMounted, reactive, toRefs, watchEffect } from 'vue';
+import { useStore } from '@/stores'
+import { useRoute, useRouter } from 'vue-router';
+import jerry from '@/assets/jerry.png';
 /**
  * 仓库
  */
@@ -20,9 +20,10 @@ const router = useRouter();
  * 数据部分
  */
 const user = reactive({
-  avatar: '../assets/jerry.png'
-
+  avatar: jerry
 })
+
+
 onBeforeMount(() => {
   //console.log('2.组件挂载页面之前执行----onBeforeMount')
 })
@@ -41,7 +42,7 @@ defineExpose({
 <template>
   <div class="header-avatar">
     <el-dropdown>
-      <el-avatar :src="user.avatar" fit="fill" shape="square"/>
+      <el-avatar :src="user.avatar" fit="fill" shape="square" />
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item> 退出</el-dropdown-item>

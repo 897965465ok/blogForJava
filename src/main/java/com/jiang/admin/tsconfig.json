@@ -3,9 +3,11 @@
   "include": [
     "env.d.ts",
     "src/**/*",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    
   ],
   "compilerOptions": {
+    "allowJs":true, // 设置可以导入js文件不报错
     "baseUrl": ".",
     "paths": {
       "@/*": [
