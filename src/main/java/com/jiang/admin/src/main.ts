@@ -13,6 +13,7 @@ app.use(createPinia())
 app.use(router)
 app.use(i18n)
 app.mount('#app')
+
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }

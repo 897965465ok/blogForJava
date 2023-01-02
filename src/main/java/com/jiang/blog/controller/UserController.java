@@ -1,5 +1,6 @@
 package com.jiang.blog.controller;
 
+import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
@@ -9,8 +10,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Map;
 
 @RequestMapping("/v1")
@@ -58,11 +65,29 @@ public class UserController {
         articleService.visit(id);
         return ApiRestResponse.success();
     }
+
     @ApiOperation("获取所有用户")
     @GetMapping("/queryManyUser")
     public ApiRestResponse queryManyUser(Integer offset, Integer limit) {
         PageInfo pageInfo = userService.queryManyUser(offset, limit);
         return ApiRestResponse.success(pageInfo);
     }
+
+    @ApiOperation("单文件上传")
+    @PostMapping("/updateFile")
+    public ApiRestResponse updateFile(@RequestParam(name = "jerry") MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String filePath = "F:\\JAVA\\Mblog\\src\\main\\resources\\static\\" + fileName;
+        File dest = new File(filePath);
+        try {
+            InputStream Input = file.getInputStream();
+            Files.copy(Input, dest.toPath());
+        } catch (IOException e) {
+            return new ApiRestResponse(404, "文件存入失败", e);
+        }
+        return ApiRestResponse.success();
+
+    }
+
 
 }

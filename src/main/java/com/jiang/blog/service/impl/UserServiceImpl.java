@@ -1,4 +1,6 @@
 package com.jiang.blog.service.impl;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
@@ -25,9 +27,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl  implements  UserDetailsService ,UserService {
     @Autowired
     UserMapper userMapper;
+
 
     @Autowired
     MenuMapper menuMapper;
@@ -40,16 +43,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
 
+
     @Override
     public PageInfo queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
-
         List<User> userList = userMapper.queryManyUser();
 
         PageInfo pageinfo = new PageInfo<>(userList);
         return pageinfo;
     }
+
 
 
     @Override
@@ -78,6 +82,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return    userMapper.insert(user);
         }
     }
+
 
     @Override
     public Map userLogin(String account, String password) {

@@ -23,12 +23,21 @@ public class MenuController {
 
     @ApiOperation("添加一个菜单")
     @GetMapping("/addMenu")
-    public ApiRestResponse addMenu(){
-        List routers =  menuService.getRouter();
+    public ApiRestResponse addMenu() {
+        List routers = menuService.getRouter();
         return ApiRestResponse.success(routers);
     }
 
+    @ApiOperation("删除一个菜单")
+    @GetMapping("/deleteMenu")
+    public ApiRestResponse deleteMenuById(String id) {
+        if (menuService.deleteMenuByOne(id)) {
+            return ApiRestResponse.success();
+        } else {
+            return ApiRestResponse.error(400, "删除失败");
+        }
 
+    }
 
 
     @ApiOperation("查询菜单列表")
@@ -46,11 +55,21 @@ public class MenuController {
     }
 
 
+
+    @ApiOperation("修改一个菜单")
+    @GetMapping("/updateMenuById")
+    public ApiRestResponse updateMenuById(Integer id) {
+        menuService.queryOneMenu(id);
+        return ApiRestResponse.success();
+    }
+
+
+
     @ApiOperation("获取前端路由")
     @GetMapping("/getRouter")
-    public ApiRestResponse getRouter(){
+    public ApiRestResponse getRouter() {
 
-          List routers =  menuService.getRouter();
+        List routers = menuService.getRouter();
         return ApiRestResponse.success(routers);
     }
 

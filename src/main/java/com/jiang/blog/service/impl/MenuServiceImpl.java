@@ -1,7 +1,9 @@
 package com.jiang.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.model.dao.MenuMapper;
@@ -15,7 +17,7 @@ import java.util.*;
 
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements MenuService {
     @Autowired
     MenuMapper menuMapper;
     @Autowired
@@ -51,18 +53,34 @@ public class MenuServiceImpl implements MenuService {
             Long userid = loginUser.getUser().getUserId();
         // 先查 用户ID查出角色(user_role) -》
         loginUser.getPermissions();*/
+        LambdaQueryWrapper<Menu> query =  new LambdaQueryWrapper();
+        query.eq(Menu::getParentId,0);
+        List<Menu> menus =   this.list(query);
+        LinkedList<Map>  treeMenus = new LinkedList<>();
+        for (Menu menu: menus) {
+           Map<String,Object>  result =   generatorTreeMenu(menu);
+           treeMenus.add(result);
+        }
 
-        // 先这用吧
-        Menu menu =   menuMapper.selectById(1);
-        QueryWrapper<Menu>   query =  new QueryWrapper();
-        query.eq("parent_id",menu.getMenuId());
+        return  treeMenus;
+    }
+
+      private   Map generatorTreeMenu(Menu menu){
+        LambdaQueryWrapper<Menu> query =  new LambdaQueryWrapper();
+        query.eq(Menu::getParentId,menu.getMenuId());
         Map<String, Object> menuMap = BeanUtil.beanToMap(menu);
         menuMap.put("children", menuMapper.selectList(query));
-        List menuList =  new LinkedList<Map>();
-        menuList.add(menuMap);
-        return menuList;
-
+        return  menuMap;
     }
+
+
+    @Override
+    public  boolean deleteMenuByOne(String id){
+        return  this.removeById(id);
+    }
+
+
+
 
 
 

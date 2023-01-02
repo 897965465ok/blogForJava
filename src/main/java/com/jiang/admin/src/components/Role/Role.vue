@@ -6,12 +6,19 @@ import { useRoute, useRouter } from 'vue-router';
 import { deleteArticle } from "@/api/BlogApi";
 import TableVue from './RoleTable.vue';
 import { createArticle } from '@/api/BlogApi';
+import type { Tree } from "element-plus/es/components/tree-v2/src/types";
+
+
 
 /**
  * 仓库
  */
 const store = useStore();
 const { treeMap } = storeToRefs(store);
+
+const treeTwo = ref(null);
+
+
 /**
  * 路由对象
  */
@@ -28,7 +35,10 @@ const router = useRouter();
 onBeforeMount(() => {
   //console.log('2.组件挂载页面之前执行----onBeforeMount')
 })
-onMounted(async () => { })
+onMounted( () => {
+
+
+ })
 watchEffect(() => {
 })
 // 使用toRefs解构
@@ -39,9 +49,12 @@ const ArticleList = ref([]);
 const dialogTableVisible = ref(true)
 
 
+
 function checkButton(selectorList: any) {
   ArticleList.value = selectorList
 }
+
+
 
 function deleteSelectorArticleList() {
   // 删除选择中的文章
@@ -64,7 +77,8 @@ async function creatArticle() {
   // let result  =   await createArticle(form);
 }
 
-
+// default-expanded-keys 
+// default-checked-keys
 const form = reactive({
   "userName": "",
   "nickName": "",
@@ -73,7 +87,8 @@ const form = reactive({
   "sex": "0",
   "password": 1,
   "status": "0",
-  "roles": []
+  "roles": [],
+  "strictly": false
 })
 
 const onSubmit = () => {
@@ -81,47 +96,12 @@ const onSubmit = () => {
 }
 
 
-interface Tree {
-  id: string
-  label: string
-  children?: Tree[]
-}
-
-const getKey = (prefix: string, id: number) => {
-  return `${prefix}-${id}`
-}
-
-const createData = (
-  maxDeep: number,
-  maxChildren: number,
-  minNodesNumber: number,
-  deep = 1,
-  key = 'node'
-): Tree[] => {
-  let id = 0
-  return Array.from({ length: minNodesNumber })
-    .fill(deep)
-    .map(() => {
-      const childrenNumber =
-        deep === maxDeep ? 0 : Math.round(Math.random() * maxChildren)
-      const nodeKey = getKey(key, ++id)
-      return {
-        id: nodeKey,
-        label: nodeKey,
-        children: childrenNumber
-          ? createData(maxDeep, maxChildren, childrenNumber, deep + 1, nodeKey)
-          : undefined,
-      }
-    })
-}
 
 const props = {
-  value: 'id',
-  label: 'label',
-  children: 'children',
+  value: 'menuId', //   表头 id
+  label: 'menuName', // 表头 内容
+  children: 'children', // 表头 子节点
 }
-
-const data = createData(4, 30, 40)
 
 
 </script>
@@ -132,10 +112,10 @@ const data = createData(4, 30, 40)
     <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
   <TableVue @check="checkButton"></TableVue>
-  <el-dialog v-model="dialogTableVisible" destroy-on-close title="添加角色">
+  <el-dialog width="30vw" v-model="dialogTableVisible" destroy-on-close title="添加角色">
     <el-form :model="form">
       <div class="flex flex-col">
-        <div class=" flex  flex-col  font-black">
+        <div class="flex flex-col font-black ">
           <div>
             <el-form-item label="角色名称">
               <el-input v-model="form.userName" />
@@ -152,28 +132,31 @@ const data = createData(4, 30, 40)
                 <el-radio label="停用" />
               </el-radio-group>
             </el-form-item>
-
           </div>
-
           <div>
             <el-form-item label="菜单权限">
-              <el-checkbox-group v-model="form.type">
+              <el-checkbox-group v-model="form.strictly">
                 <el-checkbox label="展开/折叠" name="type" />
                 <el-checkbox label="全选/全不选" name="type" />
                 <el-checkbox label="父子联动" name="type" />
               </el-checkbox-group>
             </el-form-item>
-            <el-tree-v2 :data="data" :props="props" show-checkbox :height="208" />
+            <el-tree-v2 
+            ref="treeTwo"
+            :data="treeMap" 
+            :props="props" 
+            show-checkbox 
+            :height="100"
+            :check-strictly="form.strictly"
+            >
+            </el-tree-v2>
           </div>
         </div>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">修改</el-button>
           <el-button @click="dialogTableVisible = false">取消</el-button>
         </el-form-item>
-
       </div>
-
-
     </el-form>
   </el-dialog>
 </template>
