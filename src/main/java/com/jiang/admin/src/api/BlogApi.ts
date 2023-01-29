@@ -9,7 +9,10 @@ export const queryManyRole = async (offset: number, limit: number) => {
   return response.data
 }
 
-
+export const createUser = async (userForm:any)=>{
+  let response = await api.post("v1/register",userForm)
+  return response.data
+}
 
 export const queryManyUser = async (offset: number, limit: number) => {
   let response = await api.get("v1/queryManyUser", {params: {offset: offset, limit: limit}})

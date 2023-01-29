@@ -1,16 +1,16 @@
 <script lang='ts' setup>
 import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
+import type { Ref } from 'vue'
 import { useStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router';
-
 const userList = ref();
 const store = useStore();
 const pageInfo = ref();
-const columns = ref();
+const userTableHeader: Ref<userTableHeaderType | null> = ref(null);
 onBeforeMount(async () => {
   pageInfo.value = await store.queryManyUser(1, 7)
-  userList.value = pageInfo.value.result.list
-  columns.value = Object.keys(userList.value[0]).map((item: string) => item);
+  userList.value = pageInfo.value.result.pageInfo.list
+  userTableHeader.value = pageInfo.value.result.userTableHeader
 })
 
 
@@ -59,17 +59,19 @@ async function jump(current: number) {
   <div v-if="pageInfo">
     <el-table :data="userList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
-      <el-table-column v-for="item in columns" :key="item.id" :label="item" :prop="item" :show-overflow-tooltip="true"
-        align="center" fixed="right">
+      <el-table-column v-for="item, index in userTableHeader" :key="index" :label="item" :prop="item"
+        :show-overflow-tooltip="true" align="center" fixed="right">
         <template v-slot:header="{ column, $index }">
           <div class="column">
             {{ column.property }}
           </div>
         </template>
         <template v-slot:default="{ row, column }">
+
           <div class="column">
-            {{ row[column.property] }}
+            {{ row[column.rawColumnKey] }}
           </div>
+
         </template>
       </el-table-column>
     </el-table>

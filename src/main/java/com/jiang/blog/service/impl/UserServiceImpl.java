@@ -1,13 +1,11 @@
 package com.jiang.blog.service.impl;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.UserVO;
 import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.UserMapper;
-import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.model.pojo.LoginUser;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.UserService;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,39 +42,30 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
 
 
     @Override
-    public PageInfo queryManyUser(Integer offset, Integer limit) {
+    public UserVO queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
         List<User> userList = userMapper.queryManyUser();
-
+        // TODO 生成VO
         PageInfo pageinfo = new PageInfo<>(userList);
-        return pageinfo;
+        UserVO userVO = new UserVO();
+        userVO.setPageInfo(pageinfo);
+
+        return userVO;
     }
 
 
 
     @Override
-    public Integer register(String account, String password) {
-        Integer exists = userMapper.userExists(account);
+    public Integer register(User user) {
+        Integer exists = userMapper.userExists(user.getPassword());
         if (exists == 1) {
             throw new BlogException(BlogExceptionEnum.USER_EXISTS);
         } else {
-            User user = new User();
-            user.setEmail(account);
-            user.setUserName(account);
-            user.setNickName(account);
-
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
-
-            password = bCryptPasswordEncoder.encode(password);
-
+            user.setPassword( bCryptPasswordEncoder.encode(user.getPassword()));
             /* password = CryptUtils.GeneratePassword(password, 12);*/
-
-            user.setPassword(password);
-            user.setCreateTime(new Date());
-
-
+          /*  user.setCreateTime(new Date());*/
 
             return    userMapper.insert(user);
         }

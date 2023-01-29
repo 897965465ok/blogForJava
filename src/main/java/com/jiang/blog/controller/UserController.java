@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.UserVO;
+import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.ArticleService;
 import com.jiang.blog.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -31,15 +33,14 @@ public class UserController {
 
     @PostMapping("/register")
     @ApiOperation("用户注册")
-    public ApiRestResponse userRegister(
-            @NotEmpty(message = "账号不能为空") @RequestParam String account,
-            @NotEmpty(message = "密码不能为空") @RequestParam String password) {
-        if (userService.register(account, password) == 1) {
+    public ApiRestResponse userRegister(@RequestBody User user) {
+        if (userService.register(user) == 1) {
             return ApiRestResponse.success();
         } else {
             return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
         }
     }
+
 
     @PostMapping("/login")
     @ApiOperation("用户登录")
@@ -69,8 +70,8 @@ public class UserController {
     @ApiOperation("获取所有用户")
     @GetMapping("/queryManyUser")
     public ApiRestResponse queryManyUser(Integer offset, Integer limit) {
-        PageInfo pageInfo = userService.queryManyUser(offset, limit);
-        return ApiRestResponse.success(pageInfo);
+        UserVO userVO = userService.queryManyUser(offset, limit);
+        return ApiRestResponse.success(userVO);
     }
 
     @ApiOperation("单文件上传")

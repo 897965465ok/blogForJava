@@ -1,9 +1,9 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
+import { nextTick, onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
-import { deleteArticle } from "@/api/BlogApi";
+import { createUser, deleteArticle } from "@/api/BlogApi";
 import TableVue from './UserTable.vue'
 import { createArticle } from '@/api/BlogApi';
 
@@ -25,10 +25,8 @@ const router = useRouter();
  * 数据部分
  */
 const data = reactive({})
-onBeforeMount(() => {
-  //console.log('2.组件挂载页面之前执行----onBeforeMount')
-})
-onMounted(async () => { })
+const ruleFormRef = ref();
+
 watchEffect(() => {
 })
 // 使用toRefs解构
@@ -53,6 +51,7 @@ function deleteSelectorArticleList() {
 function changeArticle() {
   // 修改选中的文章
   dialogTableVisible.value = true
+
   Object.keys(form).forEach((item) => {
     form[item] = ArticleList.value[0][item]
   })
@@ -63,6 +62,7 @@ function changeArticle() {
 async function creatArticle() {
   // 创建文章
   dialogTableVisible.value = true
+  console.log("创建用户")
   // let result  =   await createArticle(form);
 }
 
@@ -78,12 +78,40 @@ const form = reactive({
   "roles": []
 })
 
+const rules = reactive({
+  nickName: [
+    { required: true, message: "请输入用户昵称", trigger: "blur" },
+  ],
+  userName: [
+    { required: true, message: "请输入账号", trigger: "blur" },
+  ],
+  password: [
+    { required: true, message: "请输入密码", trigger: "blur" },
+  ],
+  email: [
+    { required: true, message: "请输入邮箱", trigger: "blur" },
+    {
+      pattern: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
+      message: "请正确输入邮箱",
+    },
+  ],
+  phonenumber: [
+    { required: true, message: "请输入手机号码", trigger: "blur" },
+  ],
+  sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
+  status: [{ required: true, message: "请选择账号状态", trigger: "blur" }],
+})
+
+
 const onSubmit = () => {
-  console.log(form)
+  ruleFormRef.value.validate(async (valid: any) => {
+    if (valid) {
+      await createUser(form);
+    } else {
+      return false;
+    }
+  });
 }
-
-
-
 
 </script>
 <template>
@@ -93,55 +121,52 @@ const onSubmit = () => {
     <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
   <TableVue @check="checkButton"></TableVue>
+
   <el-dialog v-model="dialogTableVisible" destroy-on-close title="添加用户">
-    <el-form :model="form">
+
+    <el-form ref="ruleFormRef" :model="form" :rules="rules">
       <div class="flex flex-col">
         <div class=" flex  flex-row    justify-around  font-black">
           <div>
-            <el-form-item label="用户账号">
+            <el-form-item prop="userName" label="用户账号">
               <el-input v-model="form.userName" />
             </el-form-item>
-            <el-form-item label=" 用户昵称">
+            <el-form-item prop="nickName" label=" 用户昵称">
               <el-input v-model="form.nickName" />
             </el-form-item>
-            <el-form-item label="用户密码">
+            <el-form-item prop="password" label="用户密码">
               <el-input v-model="form.password" />
             </el-form-item>
-            <el-form-item label="手机号码">
+            <el-form-item prop="phonenumber" label="手机号码">
               <el-input v-model="form.phonenumber" />
             </el-form-item>
           </div>
           <div>
-            <el-form-item label="用户邮箱">
+            <el-form-item prop="email" label="用户邮箱">
               <el-input v-model="form.email" />
             </el-form-item>
-            <el-form-item label="用户性别">
-
+            <el-form-item prop="sex" label="用户性别">
               <el-select v-model="form.sex" placeholder="选择性别">
                 <el-option label="女孩子" value="0" />
                 <el-option label="男孩子" value="1" />
               </el-select>
-
             </el-form-item>
             <el-form-item label="用户角色">
               <el-select multiple v-model="form.roles" placeholder="用户角色">
                 <el-option label="CEO" value="董事长" />
               </el-select>
             </el-form-item>
-            <el-form-item label="用户状态">
-              <el-switch v-model="form.status" />
+            <el-form-item prop="status" label="用户状态">
+              <el-switch active-value="1" inactive-value="0" v-model="form.status" />
             </el-form-item>
+
           </div>
         </div>
-
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">修改</el-button>
+          <el-button type="primary" @click="onSubmit">提交</el-button>
           <el-button @click="dialogTableVisible = false">取消</el-button>
         </el-form-item>
-
       </div>
-
-
     </el-form>
   </el-dialog>
 </template>
