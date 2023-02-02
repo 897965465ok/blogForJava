@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/v1")
@@ -40,6 +42,18 @@ public class UserController {
             return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
         }
     }
+
+    @PostMapping("/userUpdate")
+    @ApiOperation("修改用户")
+    public ApiRestResponse userUpdate(@RequestBody User user) {
+        if (userService.register(user) == 1) {
+            return ApiRestResponse.success();
+        } else {
+            return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
+        }
+    }
+
+
 
 
     @PostMapping("/login")
@@ -73,6 +87,21 @@ public class UserController {
         UserVO userVO = userService.queryManyUser(offset, limit);
         return ApiRestResponse.success(userVO);
     }
+
+
+    @ApiOperation("批量删除用户")
+    @PostMapping("/deleteManyUser")
+    public ApiRestResponse deleteManyUser(@RequestBody ArrayList<String> ids ) {
+        int result =   userService.deleteManyUser(ids);
+        if (result>0){
+            return ApiRestResponse.success(result);
+        }else {
+            return ApiRestResponse.error(400,"删除失败");
+        }
+
+    }
+
+
 
     @ApiOperation("单文件上传")
     @PostMapping("/updateFile")

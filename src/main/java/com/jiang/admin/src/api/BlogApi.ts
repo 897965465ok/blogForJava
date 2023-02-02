@@ -3,6 +3,10 @@ import axios from "axios";
 import qs from "qs";
 
 
+export const deleteManyUser = async (userList: any) => {
+  let {data} = await api.post("v1/deleteManyUser", userList)
+  return data
+}
 
 export const queryManyRole = async (offset: number, limit: number) => {
   let response = await api.get("v1/queryManyRole", {params: {offset: offset, limit: limit}})

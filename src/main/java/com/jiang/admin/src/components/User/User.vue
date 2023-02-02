@@ -3,15 +3,17 @@ import { nextTick, onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect 
 import { storeToRefs } from 'pinia';
 import { useStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
-import { createUser, deleteArticle } from "@/api/BlogApi";
+import * as blogApi from "@/api/BlogApi";
 import TableVue from './UserTable.vue'
-import { createArticle } from '@/api/BlogApi';
+import { ElMessage } from 'element-plus';
 
 /**
  * 仓库
  */
 const store = useStore();
 const { treeMap } = storeToRefs(store);
+const openDeleteBox = ref(false);
+const isCreateUser = ref(true);
 /**
  * 路由对象
  */
@@ -35,35 +37,65 @@ defineExpose({
   ...toRefs(data)
 })
 
-const ArticleList = ref([]);
+const userList = ref([]);
 const dialogTableVisible = ref(false)
-
-
 function checkButton(selectorList: any) {
-  ArticleList.value = selectorList
-}
-
-function deleteSelectorArticleList() {
-  // 删除选择中的文章
-
-}
-
-function changeArticle() {
-  // 修改选中的文章
-  dialogTableVisible.value = true
-
-  Object.keys(form).forEach((item) => {
-    form[item] = ArticleList.value[0][item]
-  })
-
+  userList.value = selectorList
 }
 
 
-async function creatArticle() {
-  // 创建文章
-  dialogTableVisible.value = true
-  console.log("创建用户")
-  // let result  =   await createArticle(form);
+
+async function sureDeleteUserList() {
+  let ids = userList.value.map((item: any) => item.userId);
+  let { code, message, result } = await blogApi.deleteManyUser(ids);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: `删除成功，删除${result}条记录`,
+      type: 'success',
+    })
+  } else {
+    ElMessage.success({
+      message: '删除失败',
+      type: 'error',
+    })
+  }
+  openDeleteBox.value = false;
+}
+
+// 创建用户函数
+async function createUser() {
+  let { code, message } = await blogApi.createUser(form);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: '创建用户成功',
+      type: 'success',
+    })
+  } else {
+    ElMessage.success({
+      message: '创建用户失败',
+      type: 'error',
+    })
+  }
+}
+
+
+// 修改选中的用户
+async function changeUser() {
+  // Object.keys(form).forEach((item) => {
+  //   form[item] = userList.value[0][item]
+  // })
+  let { code, message } = await blogApi.createUser(form);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: '修改用户成功',
+      type: 'success',
+    })
+  } else {
+    ElMessage.success({
+      message: '修改用户失败',
+      type: 'error',
+    })
+  }
 }
 
 
@@ -103,27 +135,43 @@ const rules = reactive({
 })
 
 
+
+//   <el-button :plain="true" @click="open1">message</el-button>
+//   <el-button :plain="true" @click="open2">success</el-button>
+//   <el-button :plain="true" @click="open3">warning</el-button>
+//   <el-button :plain="true" @click="open4">error</el-button>
+
+// 创建或者修改用户
 const onSubmit = () => {
   ruleFormRef.value.validate(async (valid: any) => {
     if (valid) {
-      await createUser(form);
+      if (isCreateUser.value) {
+        await createUser()
+      } else {
+        await changeUser()
+      }
     } else {
       return false;
     }
   });
 }
 
+function openBox(number: Number) {
+  dialogTableVisible.value = true
+  isCreateUser.value = (number == 1) ? true : false;
+}
+
+
 </script>
 <template>
   <div class="button-wrapper">
-    <el-button @click="creatArticle">新增</el-button>
-    <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
-    <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
+    <el-button @click="openBox(1)">新增</el-button>
+    <el-button :disabled="(userList.length != 1)" @click="openBox(2)">修改</el-button>
+    <el-button :disabled="(userList.length < 1)" @click="openDeleteBox = true">删除</el-button>
+  
   </div>
   <TableVue @check="checkButton"></TableVue>
-
   <el-dialog v-model="dialogTableVisible" destroy-on-close title="添加用户">
-
     <el-form ref="ruleFormRef" :model="form" :rules="rules">
       <div class="flex flex-col">
         <div class=" flex  flex-row    justify-around  font-black">
@@ -168,6 +216,21 @@ const onSubmit = () => {
         </el-form-item>
       </div>
     </el-form>
+
+  </el-dialog>
+
+  <!-- 删除遮罩层 -->
+  <el-dialog v-model="openDeleteBox" title="确认信息" width="30%" align-center>
+    <span>是否删除这些用户?</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="sureDeleteUserList">
+          确定
+        </el-button>
+        <el-button @click="openDeleteBox = false">取消</el-button>
+      
+      </span>
+    </template>
   </el-dialog>
 </template>
 

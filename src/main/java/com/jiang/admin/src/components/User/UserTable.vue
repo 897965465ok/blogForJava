@@ -10,6 +10,7 @@ const userTableHeader: Ref<userTableHeaderType | null> = ref(null);
 onBeforeMount(async () => {
   pageInfo.value = await store.queryManyUser(1, 7)
   userList.value = pageInfo.value.result.pageInfo.list
+  console.log(userList.value)
   userTableHeader.value = pageInfo.value.result.userTableHeader
 })
 
