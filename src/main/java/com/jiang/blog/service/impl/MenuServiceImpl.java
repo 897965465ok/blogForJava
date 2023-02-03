@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jiang.blog.model.VO.MenuTableHeader;
 import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.UserRoleMapper;
 import com.jiang.blog.model.pojo.Menu;
@@ -34,6 +35,14 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
 
         return pageinfo;
     }
+
+    @Override
+    public MenuTableHeader queryMenuTableHeader() {
+        return   new MenuTableHeader();
+    }
+
+
+
 
     @Override
     public Menu queryOneMenu(Integer id) {

@@ -15,13 +15,10 @@ export const useStore = defineStore('store', () => {
     return articlePages.value
   }
 
-
   async function queryManyRole(offset: number, limit: number) {
     RolePages.value = await BlogApi.queryManyRole(offset, limit)
     return RolePages.value
   }
-
-
 
   async function queryManyMenu(offset: number, limit: number) {
     menuPages.value = await BlogApi.queryManyMenu(offset, limit)

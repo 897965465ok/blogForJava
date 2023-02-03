@@ -178,3 +178,11 @@ export const queryByTags = async (tags = "ES6", offset = 0, limit = 0) => {
   return response.data.result
 }
 
+
+
+export const queryMenuTableHeader = async () => {
+  let response = await api.get("v1/queryMenuTableHeader")
+  return response.data.result
+}
+
+

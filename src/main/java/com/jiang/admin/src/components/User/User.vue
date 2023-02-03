@@ -55,7 +55,7 @@ async function sureDeleteUserList() {
       type: 'success',
     })
   } else {
-    ElMessage.success({
+    ElMessage.error({
       message: '删除失败',
       type: 'error',
     })
@@ -72,7 +72,7 @@ async function createUser() {
       type: 'success',
     })
   } else {
-    ElMessage.success({
+    ElMessage.error({
       message: '创建用户失败',
       type: 'error',
     })
@@ -90,7 +90,7 @@ async function changeUser() {
       type: 'success',
     })
   } else {
-    ElMessage.success({
+    ElMessage.error({
       message: '修改用户失败',
       type: 'error',
     })
@@ -99,7 +99,7 @@ async function changeUser() {
 
 
 const form: any = reactive({
-  "userId":"",
+  "userId": "",
   "userName": "",
   "nickName": "",
   "email": "",
@@ -128,7 +128,11 @@ const rules = reactive({
     },
   ],
   phonenumber: [
-    { required: true, message: "请输入手机号码", trigger: "blur" },
+    { required: true, message: "请输入手机号码", trigger: "blur", },
+    {
+      pattern: /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/,
+      message: "请正确输入手机号码",
+    },
   ],
   sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
   status: [{ required: true, message: "请选择账号状态", trigger: "blur" }],

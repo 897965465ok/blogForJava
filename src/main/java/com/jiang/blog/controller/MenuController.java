@@ -3,6 +3,7 @@ package com.jiang.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
+import com.jiang.blog.model.VO.MenuTableHeader;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.MenuService;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+
+
+// TODO 明天菜单CRUD
 
 @RestController
 @RequestMapping("/v1")
@@ -46,6 +50,16 @@ public class MenuController {
         PageInfo pageInfo = menuService.queryManyMenu(offset, limit);
         return ApiRestResponse.success(pageInfo);
     }
+
+
+
+    @ApiOperation("查询菜单表格头")
+    @GetMapping("/queryMenuTableHeader")
+    public ApiRestResponse queryMenuTableHeader() {
+        MenuTableHeader  menuTableHeader =  menuService.queryMenuTableHeader();
+        return ApiRestResponse.success(menuTableHeader);
+    }
+
 
     @ApiOperation("查询一个菜单列表")
     @GetMapping("/menu")

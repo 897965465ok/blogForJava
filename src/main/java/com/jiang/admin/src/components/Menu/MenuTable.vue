@@ -2,12 +2,16 @@
 import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
 import { useStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router';
-
+import * as blogApi from '@/api/BlogApi';
 const menuList = ref();
 const store = useStore();
 const pageInfo = ref();
 const columns = ref();
+
 onBeforeMount(async () => {
+
+  let center =   blogApi.queryMenuTableHeader();
+  console.log(center)
   pageInfo.value = await store.queryManyMenu(1, 7)
   menuList.value = pageInfo.value.result.list
   columns.value = Object.keys(menuList.value[0]).map((item: string) => item);
