@@ -9,6 +9,8 @@ import java.util.Map;
 public interface UserService  {
 
 
+    int userUpdate(User user);
+
     Integer register(User user);
 
     Map userLogin(String account, String password);

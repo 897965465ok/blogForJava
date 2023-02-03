@@ -18,6 +18,14 @@ export const createUser = async (userForm:any)=>{
   return response.data
 }
 
+
+export const userUpdate = async (userForm:any)=>{
+  let response = await api.post("v1/userUpdate",userForm)
+  return response.data
+}
+
+
+
 export const queryManyUser = async (offset: number, limit: number) => {
   let response = await api.get("v1/queryManyUser", {params: {offset: offset, limit: limit}})
   return response.data

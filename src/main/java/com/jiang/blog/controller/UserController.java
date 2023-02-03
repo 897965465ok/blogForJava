@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequestMapping("/v1")
 @RestController
@@ -43,11 +44,13 @@ public class UserController {
         }
     }
 
+    // TODO 完成用户更新接口
     @PostMapping("/userUpdate")
     @ApiOperation("修改用户")
     public ApiRestResponse userUpdate(@RequestBody User user) {
-        if (userService.register(user) == 1) {
-            return ApiRestResponse.success();
+        Integer count = userService.userUpdate(user);
+        if (count>0) {
+            return ApiRestResponse.success(count);
         } else {
             return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
         }

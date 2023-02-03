@@ -54,12 +54,18 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
         return userVO;
     }
 
+
     @Override
     public int deleteManyUser(ArrayList<String> ids) {
         int result =   userMapper.deleteBatchIds(ids);
         return result ;
     }
 
+    @Override
+    public int userUpdate(User user) {
+        int result =   userMapper.updateById(user);
+        return result ;
+    }
 
     @Override
     public Integer register(User user) {

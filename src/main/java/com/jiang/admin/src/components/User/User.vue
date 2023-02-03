@@ -1,5 +1,6 @@
 <script lang='ts' setup>
 import { nextTick, onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
+import { type Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
@@ -81,10 +82,8 @@ async function createUser() {
 
 // 修改选中的用户
 async function changeUser() {
-  // Object.keys(form).forEach((item) => {
-  //   form[item] = userList.value[0][item]
-  // })
-  let { code, message } = await blogApi.createUser(form);
+
+  let { code, message } = await blogApi.userUpdate(form);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: '修改用户成功',
@@ -99,7 +98,8 @@ async function changeUser() {
 }
 
 
-const form = reactive({
+const form: any = reactive({
+  "userId":"",
   "userName": "",
   "nickName": "",
   "email": "",
@@ -158,6 +158,11 @@ const onSubmit = () => {
 
 function openBox(number: Number) {
   dialogTableVisible.value = true
+  if (number == 2) {
+    Object.keys(form).forEach((item) => {
+      form[item] = userList.value[0][item]
+    })
+  }
   isCreateUser.value = (number == 1) ? true : false;
 }
 
@@ -168,7 +173,7 @@ function openBox(number: Number) {
     <el-button @click="openBox(1)">新增</el-button>
     <el-button :disabled="(userList.length != 1)" @click="openBox(2)">修改</el-button>
     <el-button :disabled="(userList.length < 1)" @click="openDeleteBox = true">删除</el-button>
-  
+
   </div>
   <TableVue @check="checkButton"></TableVue>
   <el-dialog v-model="dialogTableVisible" destroy-on-close title="添加用户">
@@ -228,7 +233,7 @@ function openBox(number: Number) {
           确定
         </el-button>
         <el-button @click="openDeleteBox = false">取消</el-button>
-      
+
       </span>
     </template>
   </el-dialog>
