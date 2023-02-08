@@ -186,3 +186,15 @@ export const queryMenuTableHeader = async () => {
 }
 
 
+export const queryArticleTableHeader = async () => {
+  let response = await api.get("v1/queryArticleTableHeader")
+  return response.data.result
+}
+
+export const queryUserTableHeader = async () => {
+  let response = await api.get("v1/queryUserTableHeader")
+  return response.data.result
+}
+
+
+

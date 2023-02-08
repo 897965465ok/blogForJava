@@ -1,12 +1,12 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, toRaw, toRef, toRefs, unref, watch, watchEffect, type Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
 import { deleteArticle } from "@/api/BlogApi";
 import TableVue from './RoleTable.vue';
 import { createArticle } from '@/api/BlogApi';
-import type { Tree } from "element-plus/es/components/tree-v2/src/types";
+
 
 
 
@@ -16,7 +16,7 @@ import type { Tree } from "element-plus/es/components/tree-v2/src/types";
 const store = useStore();
 const { treeMap } = storeToRefs(store);
 
-const treeTwo = ref(null);
+const treeTwo = ref();
 
 
 /**
@@ -35,14 +35,15 @@ const router = useRouter();
 onBeforeMount(() => {
   //console.log('2.组件挂载页面之前执行----onBeforeMount')
 })
-onMounted( () => {
+onMounted(() => {
 
+  // console.log(treeTwo)
 
- })
-watchEffect(() => {
 })
+
 // 使用toRefs解构
 // let { } = { ...toRefs(data) } 
+
 
 
 const ArticleList = ref([]);
@@ -79,7 +80,7 @@ async function creatArticle() {
 
 // default-expanded-keys 
 // default-checked-keys
-const form = reactive({
+const form: any = reactive({
   "userName": "",
   "nickName": "",
   "email": "",
@@ -88,12 +89,69 @@ const form = reactive({
   "password": 1,
   "status": "0",
   "roles": [],
-  "strictly": false
 })
+
+const keys: any[] = [];
+
+const strictly = ref(false)
+function GeneratorKeys(treeData: Array<Object>) {
+  treeData.forEach((item: any) => {
+    keys.push(item.menuId)
+    if (Array.isArray(item.children)) {
+      GeneratorKeys(item.children)
+    }
+  })
+
+}
+
+//点击展开
+const allOpen = (isCheck: boolean) => {
+  let RawArr = toRaw(reactive(treeMap.value))
+  GeneratorKeys(RawArr)
+  if (isCheck) {
+    keys.forEach(id => {
+      let node = treeTwo.value.getNode(id)
+      treeTwo.value.expandNode(node)
+    })
+  }else{
+    keys.forEach(id => {
+      let node = treeTwo.value.getNode(id)
+      treeTwo.value.collapseNode(node)
+    })
+  }
+
+}
+// 全选/反选
+const allSelector = (isCheck: boolean) => {
+  let RawArr = toRaw(reactive(treeMap.value))
+  GeneratorKeys(RawArr)
+  if (isCheck) {
+    keys.forEach(id => {
+      treeTwo.value.setChecked(id,true)
+    })
+  }else{
+    keys.forEach(id => {
+      treeTwo.value.setChecked(id,false)
+    })
+  }
+
+}
+// 父子联动
+const linkage = (isCheck: boolean) => {
+
+  strictly.value = !strictly.value
+
+}
+
+
+
 
 const onSubmit = () => {
   console.log(form)
+
 }
+
+
 
 
 
@@ -134,22 +192,17 @@ const props = {
             </el-form-item>
           </div>
           <div>
+
             <el-form-item label="菜单权限">
-              <el-checkbox-group v-model="form.strictly">
-                <el-checkbox label="展开/折叠" name="type" />
-                <el-checkbox label="全选/全不选" name="type" />
-                <el-checkbox label="父子联动" name="type" />
-              </el-checkbox-group>
+              <el-checkbox label="展开/折叠" @change="allOpen" />
+              <el-checkbox label="全选/全不选" @change="allSelector" />
+              <el-checkbox label="父子联动" @change="linkage"/>
             </el-form-item>
-            <el-tree-v2 
-            ref="treeTwo"
-            :data="treeMap" 
-            :props="props" 
-            show-checkbox 
-            :height="100"
-            :check-strictly="form.strictly"
-            >
+
+            <el-tree-v2 ref="treeTwo" :data="treeMap" :props="props" show-checkbox :height="100"
+              :check-strictly="strictly">
             </el-tree-v2>
+
           </div>
         </div>
         <el-form-item>

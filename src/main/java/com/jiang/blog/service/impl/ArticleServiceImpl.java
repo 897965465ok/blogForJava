@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.dao.ArticleMapper;
 import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.service.ArticleService;
@@ -74,6 +75,13 @@ public class ArticleServiceImpl implements ArticleService {
             article.setUpdatedAt(new Date());
             articleMapper.updateById(article);
         }
+    }
+
+    @Override
+    public ArticleTableHeader queryMenuTableHeader(){
+
+        return  new ArticleTableHeader();
+
     }
 
 

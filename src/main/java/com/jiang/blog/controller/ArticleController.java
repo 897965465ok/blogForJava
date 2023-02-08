@@ -3,6 +3,8 @@ package com.jiang.blog.controller;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.ArticleTableHeader;
+import com.jiang.blog.model.VO.MenuTableHeader;
 import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +42,13 @@ public class ArticleController {
             return ApiRestResponse.error(BlogExceptionEnum.ARTICLE_NOT_EXISTS);
         }
         return ApiRestResponse.success(article);
+    }
+
+    @ApiOperation("查询文章表格头")
+    @GetMapping("/queryArticleTableHeader")
+    public ApiRestResponse queryArticleTableHeader() {
+        ArticleTableHeader articleTableHeader =  articleService.queryMenuTableHeader();
+        return ApiRestResponse.success(articleTableHeader);
     }
 
     //TODO 修改  增加

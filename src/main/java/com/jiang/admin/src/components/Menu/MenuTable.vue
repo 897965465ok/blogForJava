@@ -3,18 +3,16 @@ import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect }
 import { useStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router';
 import * as blogApi from '@/api/BlogApi';
+
 const menuList = ref();
 const store = useStore();
 const pageInfo = ref();
 const columns = ref();
 
 onBeforeMount(async () => {
-
-  let center =   blogApi.queryMenuTableHeader();
-  console.log(center)
   pageInfo.value = await store.queryManyMenu(1, 7)
   menuList.value = pageInfo.value.result.list
-  columns.value = Object.keys(menuList.value[0]).map((item: string) => item);
+  columns.value = await blogApi.queryMenuTableHeader();
 })
 
 
@@ -63,16 +61,20 @@ async function jump(current: number) {
   <div v-if="pageInfo">
     <el-table :data="menuList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
-      <el-table-column v-for="item in columns" :key="item.id" :label="item" :prop="item" :show-overflow-tooltip="true"
+
+      <el-table-column v-for="(item,index) in columns" :key="index" :label="item" :prop="item" :show-overflow-tooltip="true"
         align="center" fixed="right">
         <template v-slot:header="{ column, $index }">
           <div class="column">
             {{ column.property }}
           </div>
         </template>
+
         <template v-slot:default="{ row, column }">
           <div class="column">
-            {{ row[column.property] }}
+         
+            {{ row[column.rawColumnKey] }}
+          
           </div>
         </template>
       </el-table-column>

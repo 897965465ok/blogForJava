@@ -3,15 +3,18 @@ import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect }
 import type { Ref } from 'vue'
 import { useStore } from '@/stores'
 import { useRoute, useRouter } from 'vue-router';
+import * as blogApi from "@/api/BlogApi";
 const userList = ref();
 const store = useStore();
 const pageInfo = ref();
-const userTableHeader: Ref<userTableHeaderType | null> = ref(null);
+const userTableHeader = ref(null);
 onBeforeMount(async () => {
   pageInfo.value = await store.queryManyUser(1, 7)
-  userList.value = pageInfo.value.result.pageInfo.list
-  console.log(userList.value)
-  userTableHeader.value = pageInfo.value.result.userTableHeader
+  console.log(pageInfo.value)
+  //TODO 做这个
+  userList.value = pageInfo.value.result
+  // console.log(userList.value)
+  userTableHeader.value = await blogApi.queryUserTableHeader()
 })
 
 
