@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.VO.UserVO;
+
+import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.ArticleService;
 import com.jiang.blog.service.UserService;
@@ -82,13 +83,22 @@ public class UserController {
     public ApiRestResponse visited(@RequestParam(name = "uuid") Integer id) {
         articleService.visit(id);
         return ApiRestResponse.success();
+     }
+
+
+    @ApiOperation("获取用户表格表头")
+    @GetMapping("/queryUserTableHeader")
+    public ApiRestResponse queryUserTableHeader() {
+         UserTableHeader userTableHeader =  userService.queryUserTableHeader();
+        return ApiRestResponse.success(userTableHeader);
     }
+
 
     @ApiOperation("获取所有用户")
     @GetMapping("/queryManyUser")
     public ApiRestResponse queryManyUser(Integer offset, Integer limit) {
-        UserVO userVO = userService.queryManyUser(offset, limit);
-        return ApiRestResponse.success(userVO);
+        List userlist = userService.queryManyUser(offset, limit);
+        return ApiRestResponse.success(userlist);
     }
 
 

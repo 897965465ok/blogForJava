@@ -1,9 +1,8 @@
 package com.jiang.blog.service.impl;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.VO.UserVO;
+import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.UserMapper;
 import com.jiang.blog.model.pojo.LoginUser;
@@ -41,17 +40,20 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
 
 
 
+
     @Override
-    public UserVO queryManyUser(Integer offset, Integer limit) {
+    public UserTableHeader queryUserTableHeader() {
+        return new UserTableHeader();
+    }
+
+
+
+    @Override
+    public List queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
         List<User> userList = userMapper.queryManyUser();
-        // TODO 生成VO
-        PageInfo pageinfo = new PageInfo<>(userList);
-        UserVO userVO = new UserVO();
-        userVO.setPageInfo(pageinfo);
-
-        return userVO;
+        return userList;
     }
 
 

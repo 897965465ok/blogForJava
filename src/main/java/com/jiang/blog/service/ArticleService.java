@@ -1,6 +1,7 @@
 package com.jiang.blog.service;
 
 import com.github.pagehelper.PageInfo;
+import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.pojo.Article;
 
 public interface ArticleService {
@@ -15,4 +16,6 @@ public interface ArticleService {
     void favor(Integer id);
 
     void visit(Integer id);
+
+    ArticleTableHeader queryMenuTableHeader();
 }

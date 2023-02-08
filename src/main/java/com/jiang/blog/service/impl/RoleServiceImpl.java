@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jiang.blog.model.VO.RoleTableHeader;
 import com.jiang.blog.model.dao.RoleMapper;
-import com.jiang.blog.model.dao.UserMapper;
+import com.jiang.blog.model.dao.RoleMenuMapper;
+import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.model.pojo.Role;
-import com.jiang.blog.model.pojo.User;
+import com.jiang.blog.model.pojo.RoleMenu;
 import com.jiang.blog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 //Iserver配置
@@ -21,6 +24,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    RoleMenuMapper roleMenuMapper;
 
     @Override
     public PageInfo queryManyRole(Integer offset, Integer limit) {
@@ -34,5 +40,27 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         PageInfo pageinfo = new PageInfo<Role>(roles);
 
         return pageinfo;
+    }
+
+
+    @Override
+    public RoleTableHeader queryRoleTableHeader() {
+        return new RoleTableHeader();
+    }
+
+    @Override
+    public int createRole(Role role, Menu[] menus) {
+        int result = roleMapper.insert(role);
+        if (result == 1) {
+            Arrays.stream(menus).forEach((menu -> {
+                RoleMenu roleMenu = new RoleMenu();
+                roleMenu.setMenuId(menu.getMenuId());
+                roleMenu.setRoleId(role.getRoleId());
+                roleMenuMapper.insert(roleMenu);
+            }));
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
