@@ -1,7 +1,6 @@
 import {api} from "./index";
 import axios from "axios";
 import qs from "qs";
-import {data} from "autoprefixer";
 
 
 export const deleteManyUser = async (userList: any) => {
@@ -35,11 +34,6 @@ export const queryManyUser = async (offset: number, limit: number) => {
 
 export const createArticle = async (from:any) => {
   let response = await api.post("v1/createArticle",from)
-  return response
-}
-
-export const createRole = async (roleAndResource:any) => {
-  let response = await api.post("v1/createRole", roleAndResource)
   return response
 }
 
@@ -84,14 +78,6 @@ export const deleteArticle = async (id: any) => {
   let {data} = await api.delete("v1/articles", {params: {id}})
   return data
 }
-export const deleteRole = async (id: any) => {
-  let {data} = await api.delete("v1/articles", {params: {id}})
-  return data
-}
-
-
-
-
 
 export const comment = async (articleId: any, content: any, replyArticle: any, userName: any) => {
   console.log(articleId, content, replyArticle, userName);
@@ -210,7 +196,5 @@ export const queryUserTableHeader = async () => {
   return response.data.result
 }
 
-export const queryRoleTableHeader = async () => {
-  let response = await api.get("v1/queryRoleTableHeader")
-  return response.data.result
-}
+
+
