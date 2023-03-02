@@ -17,7 +17,6 @@ import {storeToRefs} from 'pinia';
 import {useStore} from '@/stores';
 import {useRoute, useRouter} from 'vue-router';
 import TableVue from './RoleTable.vue';
-import {deleteRole} from "@/api/BlogApi";
 import * as BlogApi from '@/api/BlogApi';
 
 /**

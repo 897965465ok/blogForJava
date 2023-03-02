@@ -196,5 +196,14 @@ export const queryUserTableHeader = async () => {
   return response.data.result
 }
 
+export const queryRoleTableHeader = async () => {
+  let response = await api.get("v1/queryRoleTableHeader")
+  return response.data.result
+}
 
+
+export const createRole = async (roleAndMenu:any)=>{
+  let response = await api.post("v1/createRole",roleAndMenu)
+  return response.data
+}
 

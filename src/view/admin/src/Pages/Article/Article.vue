@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
 import { deleteArticle } from "@/api/BlogApi";
-import TableVue from './RoleTable.vue';
+import TableVue from './component/ArticleTable.vue';
 import { createArticle } from '@/api/BlogApi';
 
 
