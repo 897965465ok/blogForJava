@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +21,7 @@ public class Role implements Serializable {
     /**
      * 角色ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     @TableId(value = "role_id", type = IdType.ASSIGN_ID)
     private Long roleId;
 

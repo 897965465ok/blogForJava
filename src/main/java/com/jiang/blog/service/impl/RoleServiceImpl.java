@@ -1,5 +1,6 @@
 package com.jiang.blog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -14,8 +15,10 @@ import com.jiang.blog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 //Iserver配置
 @Service
@@ -63,4 +66,21 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             return 0;
         }
     }
+
+    @Override
+    public Long deleteManyRole(ArrayList<Role> roles) {
+        LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
+        List<Long> ids = roles.
+                stream().
+                map(role -> role.getRoleId()).
+                collect(Collectors.toList());
+        long count = ids.
+                stream().
+                map((Long id) -> {
+                    query.eq(RoleMenu::getRoleId, id);
+                    return roleMenuMapper.delete(query);
+                }).count();
+        return count + roleMapper.deleteBatchIds(ids);
+    }
+
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/v1")
@@ -52,4 +53,20 @@ public class RoleController {
             return ApiRestResponse.error(404, "创建失败");
         }
     }
+
+
+    @PostMapping("/deleteManyRole")
+    @ApiOperation("删除角色")
+    public ApiRestResponse deleteManyRole(@RequestBody ArrayList<Role> roles) {
+        Long result = roleService.deleteManyRole(roles);
+        if (result > 0) {
+            return ApiRestResponse.success(result);
+        } else {
+            return ApiRestResponse.error(404, "删除失败");
+        }
+    }
+
+
+
+
 }

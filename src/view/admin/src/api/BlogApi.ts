@@ -207,3 +207,10 @@ export const createRole = async (roleAndMenu:any)=>{
   return response.data
 }
 
+
+export const deleteManyRole = async (Roles:any)=>{
+  let response = await api.post("v1/deleteManyRole",Roles)
+  return response.data
+}
+
+

@@ -11,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class BlogWebMvcConfig implements WebMvcConfigurer {
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("/admin/**").addResourceLocations("classpath:/static/admin/");

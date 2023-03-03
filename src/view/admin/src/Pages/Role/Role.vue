@@ -18,6 +18,7 @@ import {useStore} from '@/stores';
 import {useRoute, useRouter} from 'vue-router';
 import TableVue from './RoleTable.vue';
 import * as BlogApi from '@/api/BlogApi';
+import {ElMessage} from 'element-plus'
 
 /**
  * 仓库
@@ -58,33 +59,30 @@ onMounted(async () => {
 // 使用toRefs解构
 // let { } = { ...toRefs(data) }
 const RoleList = ref([]);
-const dialogTableVisible = ref(true)
+
+const dialogTableVisible: Ref<boolean> = ref(false)
 
 function checkButton(selectorList: any) {
   RoleList.value = selectorList
 }
 
-function deleteSelectorRoleList() {
-  // 删除选择中的文章
+//
+// const open2 = () => {
+//   ElMessage({
+//     message: 'Congrats, this is a success message.',
+//     type: 'success',
+//   })
+// }
+// const open3 = () => {
+//   ElMessage({
+//     message: 'Warning, this is a warning message.',
+//     type: 'warning',
+//   })
+// }
+// const open4 = () => {
+//   ElMessage.error('Oops, this is a error message.')
+// }
 
-}
-
-function changeRole() {
-  // 修改选中的文章
-  dialogTableVisible.value = true
-  Object.keys(form).forEach((item) => {
-    form[item] = RoleList.value[0][item]
-
-  })
-
-}
-
-
-async function creatRole() {
-  // 创建文章
-  dialogTableVisible.value = true
-  // let result  =   await createRole(form);
-}
 
 // default-expanded-keys 
 // default-checked-keys
@@ -155,27 +153,98 @@ const linkage = (isCheck: boolean) => {
 
 }
 
-// 发送信息
-const onSubmit = async () => {
+const funcType: Ref<number> = ref(0);
+const isLoading: Ref<boolean> = ref(false)
+
+// 打开窗口
+const openBox = async (index: number) => {
+  dialogTableVisible.value = true
+  funcType.value = index
+}
+
+// 删除角色
+async function deleteRole() {
+  isLoading.value = !isLoading.value
+  let {code, message} = await BlogApi.deleteManyRole(RoleList.value);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success("删除角色成功")
+  } else {
+    ElMessage.error("删除角色失败,系统错误")
+  }
+  isLoading.value = !isLoading.value
+  isDelete.value =!isDelete.value
+}
+
+function changeRole() {
+  // 修改选中的文章
+  dialogTableVisible.value = true
+  Object.keys(form).forEach((item) => {
+    form[item] = RoleList.value[0][item]
+
+  })
+}
+
+async function creatRole() {
   let roleAndResource = {
     role: form,
     resource: treeTwo.value.getCheckedNodes()
   }
-
-  let result = await BlogApi.createRole(roleAndResource);
-
+  let {code, message} = await BlogApi.createRole(roleAndResource);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success("创建角色成功")
+  } else {
+    ElMessage.error("创建角色失败,系统错误")
+  }
+  dialogTableVisible.value = !dialogTableVisible.value
+  isLoading.value = !isLoading.value
 }
 
+const isDelete: Ref<boolean> = ref(false)
+
+
+async function dispatchFunction() {
+  isLoading.value = !isLoading.value;
+  switch (funcType.value) {
+    case 0: {
+      await creatRole()
+      break;
+    }
+    case 1: {
+      break;
+    }
+    default: {
+      console.log("删除消息")
+      return
+    }
+  }
+}
 
 </script>
 <template>
   <div class="button-wrapper">
-
-    <el-button @click="creatRole">新增</el-button>
-    <el-button :disabled="(RoleList.length < 1)" @click="deleteSelectorRoleList">删除</el-button>
-    <el-button :disabled="(RoleList.length != 1)" @click="changeRole">修改</el-button>
+    <el-button @click="openBox(0)">新增</el-button>
+    <el-button :disabled="(RoleList.length != 1)" @click="openBox(1)">修改</el-button>
+    <el-button :disabled="(RoleList.length < 1)" @click="isDelete = true">删除</el-button>
   </div>
   <TableVue @check="checkButton"></TableVue>
+  <el-dialog
+      v-model="isDelete"
+      title="删除角色"
+      width="30%"
+      align-center
+  >
+    <span>是否删除角色？</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="isDelete = false">
+         取消
+        </el-button>
+        <el-button  :loading="isLoading"  @click="deleteRole">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+
   <el-dialog width="30vw" v-model="dialogTableVisible" destroy-on-close title="添加角色">
     <el-form :model="form">
       <div class="flex flex-col">
@@ -228,7 +297,7 @@ const onSubmit = async () => {
           </div>
         </div>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">提交</el-button>
+          <el-button :loading="isLoading" type="primary" @click="dispatchFunction()">提交</el-button>
           <el-button @click="dialogTableVisible = false">取消</el-button>
         </el-form-item>
       </div>
