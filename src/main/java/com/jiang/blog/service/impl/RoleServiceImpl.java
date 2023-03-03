@@ -13,6 +13,7 @@ import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.RoleMenu;
 import com.jiang.blog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     RoleMenuMapper roleMenuMapper;
 
     @Override
+    @Cacheable(value = "queryManyRole")
     public PageInfo queryManyRole(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
@@ -47,6 +49,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
 
     @Override
+    @Cacheable(value = "queryRoleTableHeader")
     public RoleTableHeader queryRoleTableHeader() {
         return new RoleTableHeader();
     }

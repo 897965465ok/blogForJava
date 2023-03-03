@@ -78,10 +78,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleTableHeader queryMenuTableHeader(){
-
+    @Cacheable(value = "ArticleTableHeader")
+    public ArticleTableHeader ArticleTableHeader(){
         return  new ArticleTableHeader();
-
     }
 
 

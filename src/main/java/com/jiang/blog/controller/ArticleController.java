@@ -47,7 +47,7 @@ public class ArticleController {
     @ApiOperation("查询文章表格头")
     @GetMapping("/queryArticleTableHeader")
     public ApiRestResponse queryArticleTableHeader() {
-        ArticleTableHeader articleTableHeader =  articleService.queryMenuTableHeader();
+        ArticleTableHeader articleTableHeader =  articleService.ArticleTableHeader();
         return ApiRestResponse.success(articleTableHeader);
     }
 

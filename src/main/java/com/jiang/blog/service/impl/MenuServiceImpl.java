@@ -12,6 +12,7 @@ import com.jiang.blog.model.dao.UserRoleMapper;
 import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,6 +26,7 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
     UserRoleMapper userRoleMapper;
 
     @Override
+    @Cacheable(value = "queryManyMenu")
     public PageInfo queryManyMenu(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "menu_id");
@@ -37,6 +39,7 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
     }
 
     @Override
+    @Cacheable(value = "queryMenuTableHeader")
     public MenuTableHeader queryMenuTableHeader() {
         return   new MenuTableHeader();
     }
@@ -45,6 +48,7 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
 
 
     @Override
+    @Cacheable(value = "queryOneMenu")
     public Menu queryOneMenu(Integer id) {
         return menuMapper.selectById(id);
     }
@@ -55,6 +59,7 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
     }
 
     @Override
+    @Cacheable(value = "getRouter")
     public List getRouter() {
         // 根据用户生成路由器
      /*   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

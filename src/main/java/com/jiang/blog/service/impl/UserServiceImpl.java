@@ -11,6 +11,7 @@ import com.jiang.blog.service.UserService;
 import com.jiang.blog.utils.JwtUtil;
 import com.jiang.blog.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,7 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
 
 
     @Override
+    @Cacheable(value = "queryUserTableHeader")
     public UserTableHeader queryUserTableHeader() {
         return new UserTableHeader();
     }
@@ -49,6 +51,7 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
 
 
     @Override
+    @Cacheable(value = "queryManyUser")
     public List queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);

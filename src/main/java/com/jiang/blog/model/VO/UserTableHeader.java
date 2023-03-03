@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserTableHeader {
+public class UserTableHeader implements Serializable {
     // id
     private String userId = "编号";
     // 账号

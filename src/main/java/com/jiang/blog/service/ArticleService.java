@@ -3,6 +3,7 @@ package com.jiang.blog.service;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.pojo.Article;
+import org.springframework.cache.annotation.Cacheable;
 
 public interface ArticleService {
     PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit);
@@ -17,5 +18,6 @@ public interface ArticleService {
 
     void visit(Integer id);
 
-    ArticleTableHeader queryMenuTableHeader();
+
+    ArticleTableHeader ArticleTableHeader();
 }
