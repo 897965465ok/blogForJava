@@ -1,11 +1,13 @@
 package com.jiang.blog.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.dao.TagsMapper;
 import com.jiang.blog.model.pojo.Tags;
 import com.jiang.blog.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class TagsServiceImpl implements TagsService {
+public class TagsServiceImpl  extends ServiceImpl<TagsMapper, Tags> implements TagsService {
 
     @Autowired
     TagsMapper tagsMapper;
 
     @Override
-    @Cacheable(value = "queryByTags")
+    @CachePut(value = "queryByTags")
     public List<Tags> queryByTags() {
         List<Tags> tagsList;
         tagsList = tagsMapper.queryByTagsAll();

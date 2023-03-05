@@ -1,14 +1,18 @@
 package com.jiang.blog.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.dao.ArticleMapper;
+import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.pojo.Article;
+import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +20,13 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> implements ArticleService {
     @Autowired
     ArticleMapper articleMapper;
 
     @Override
     // 根据标签查询
-    @Cacheable(value = "queryArticlesByTags")
+    @CachePut(value = "queryArticlesByTags")
     public PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit) {
         PageHelper.startPage(offset, limit);
         List<Article> articles = articleMapper.queryArticlesByTags(tags);
@@ -32,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     // 查询文章
     @Override
-    @Cacheable(value = "queryManyArticle")
+    @CachePut(value = "queryManyArticle")
     public PageInfo queryManyArticle(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "id");
@@ -78,7 +82,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    @Cacheable(value = "ArticleTableHeader")
+    @CachePut(value = "ArticleTableHeader")
     public ArticleTableHeader ArticleTableHeader(){
         return  new ArticleTableHeader();
     }

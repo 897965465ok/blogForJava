@@ -1,4 +1,5 @@
 package com.jiang.blog.service.impl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
@@ -11,6 +12,7 @@ import com.jiang.blog.service.UserService;
 import com.jiang.blog.utils.JwtUtil;
 import com.jiang.blog.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +26,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class UserServiceImpl  implements  UserDetailsService ,UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  UserDetailsService ,UserService {
     @Autowired
     UserMapper userMapper;
 
@@ -43,7 +45,7 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
 
 
     @Override
-    @Cacheable(value = "queryUserTableHeader")
+    @CachePut(value = "queryUserTableHeader")
     public UserTableHeader queryUserTableHeader() {
         return new UserTableHeader();
     }
@@ -51,7 +53,7 @@ public class UserServiceImpl  implements  UserDetailsService ,UserService {
 
 
     @Override
-    @Cacheable(value = "queryManyUser")
+    @CachePut(value = "queryManyUser")
     public List queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);

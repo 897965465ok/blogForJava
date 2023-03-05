@@ -1,5 +1,6 @@
 package com.jiang.blog.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.pojo.User;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public interface UserService  {
+public interface UserService  extends IService<User> {
 
 
     int userUpdate(User user);

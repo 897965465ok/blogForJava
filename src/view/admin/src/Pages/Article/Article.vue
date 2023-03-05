@@ -42,12 +42,12 @@ onMounted(() => {
 })
 
 // 使用toRefs解构
-// let { } = { ...toRefs(data) } 
+// let { } = { ...toRefs(data) }
 
 
 
 const ArticleList = ref([]);
-const dialogTableVisible = ref(true)
+const dialogTableVisible = ref(false)
 
 
 
@@ -78,7 +78,7 @@ async function creatArticle() {
   // let result  =   await createArticle(form);
 }
 
-// default-expanded-keys 
+// default-expanded-keys
 // default-checked-keys
 const form: any = reactive({
   "userName": "",
@@ -164,53 +164,65 @@ const props = {
 
 </script>
 <template>
-  <div class="button-wrapper">
-    <el-button @click="creatArticle">新增</el-button>
+  <div>
+    <el-button @click="dialogTableVisible = !dialogTableVisible">新增</el-button>
     <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
     <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
   <TableVue @check="checkButton"></TableVue>
-  <el-dialog width="30vw" v-model="dialogTableVisible" destroy-on-close title="添加角色">
-    <el-form :model="form">
-      <div class="flex flex-col">
-        <div class="flex flex-col font-black ">
-          <div>
-            <el-form-item label="角色名称">
-              <el-input v-model="form.userName" />
-            </el-form-item>
-            <el-form-item label=" 权限字符">
-              <el-input v-model="form.nickName" />
-            </el-form-item>
-            <el-form-item label="角色顺序">
-              <el-input-number v-model="form.password" :min="1" />
-            </el-form-item>
-            <el-form-item label="状态">
-              <el-radio-group v-model="form.resource">
-                <el-radio label="正常" />
-                <el-radio label="停用" />
-              </el-radio-group>
-            </el-form-item>
+
+  <el-dialog v-model="dialogTableVisible" destroy-on-close title="修改文章">
+    <template #default>
+      <el-form :model="form" label-width="100px">
+        <div class="form-header">
+          <div class="header-upload">
+            <el-upload action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" drag multiple>
+              <el-icon>
+                <upload-filled/>
+              </el-icon>
+              <div class="el-upload__text">
+                <em>图片拖放</em><br>
+                <em>点击上传</em>
+              </div>
+            </el-upload>
           </div>
-          <div>
-
-            <el-form-item label="菜单权限">
-              <el-checkbox label="展开/折叠" @change="allOpen" />
-              <el-checkbox label="全选/全不选" @change="allSelector" />
-              <el-checkbox label="父子联动" @change="linkage"/>
-            </el-form-item>
-
-            <el-tree-v2 ref="treeTwo" :data="treeMap" :props="props" show-checkbox :height="100"
-              :check-strictly="strictly">
-            </el-tree-v2>
-
+          <div class="header-textarea">
+            <el-input v-model="form.paragraph" resize="none" type="textarea"/>
           </div>
         </div>
+
+        <div class="form-body">
+          <div class="form-switch">
+            <el-form-item label="热门">
+              <el-switch v-model="form.hot"/>
+            </el-form-item>
+            <el-form-item label="侧边栏文章">
+              <el-switch v-model="form.sideArticle"/>
+            </el-form-item>
+            <el-form-item label="文章名">
+              <el-input v-model="form.name"/>
+            </el-form-item>
+            <el-form-item label="分类命">
+              <el-input v-model="form.tag"/>
+            </el-form-item>
+            <el-form-item label="原始路径">
+              <el-input v-model="form.articlePath"/>
+            </el-form-item>
+          </div>
+        </div>
+
+        <!-- <el-form-item label="文章内容">
+          content:""
+        </el-form-item> -->
+
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">修改</el-button>
-          <el-button @click="dialogTableVisible = false">取消</el-button>
+          <el-button type="primary" @submit="onSubmit">修改</el-button>
+          <el-button @click="dialogTableVisible = !dialogTableVisible">取消</el-button>
         </el-form-item>
-      </div>
-    </el-form>
+
+
+      </el-form>
+    </template>
   </el-dialog>
 </template>
 
@@ -218,57 +230,32 @@ const props = {
 <style lang='scss' scoped>
 .form-header {
   display: flex;
-
   .header-upload {
     flex: 1 1 30%;
-
     .el-upload-list {
       margin: 0;
     }
   }
-
   .header-textarea {
     flex: 1 1 60%;
     margin-left: 15px;
-
     .el-textarea {
       height: 100%;
     }
-
     :deep(.el-textarea__inner) {
       height: 100%;
     }
   }
 }
-
-:deep(.el-form-item__content) {
-  @apply justify-end
-}
-
 :deep(.el-upload-list) {
   margin: 0;
 }
-
 .form-body {
   display: flex;
   margin-top: 15px;
-
   .form-switch {
     display: flex;
   }
 }
-
-.article-title {
-  width: 100%;
-  margin: 16px 0;
-  display: flex;
-  justify-content: space-between;
-  color: #409eff;
-}
-
-.button-wrapper {
-  margin: 16px 0px;
-}
+// .form-switch {}
 </style>
-
-

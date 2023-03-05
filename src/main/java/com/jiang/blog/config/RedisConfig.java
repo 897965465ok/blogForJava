@@ -18,10 +18,10 @@ public class RedisConfig {
     @Autowired(required = false)//降级注入的检测级别
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
 
-        //添加白名单 不然会报错！！！！！-------------
-        ParserConfig.getGlobalInstance().addAccept("org.springframework.security.core.authority.");
-        TypeUtils.addMapping("org.springframework.security.core.authority.SimpleGrantedAuthority",
-                SimpleGrantedAuthority.class);
+//        //添加白名单 不然会报错！！！！！-------------
+//        ParserConfig.getGlobalInstance().addAccept("org.springframework.security.core.authority.");
+//        TypeUtils.addMapping("org.springframework.security.core.authority.SimpleGrantedAuthority",
+//                SimpleGrantedAuthority.class);
 
         //--------------------
         RedisTemplate<Object, Object> template = new RedisTemplate<>();

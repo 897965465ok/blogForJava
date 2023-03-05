@@ -23,7 +23,7 @@ public class User implements Serializable {
      * 用户ID
      */
     @TableId(value = "user_id", type = IdType.ASSIGN_ID)
-    // 解决前端精度问题
+    //转成string
     @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 

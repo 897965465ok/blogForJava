@@ -92,11 +92,11 @@ const form: any = reactive({
   de1Flag: "O",
   deptCheckStrictly: "1",
   menuCheckStrictly: "1",
-  remark: "超级管理员",
+  remark: "",
   roleId: "",
   roleKey: "",
   roleName: "",
-  roleSort: "400",
+  roleSort: "1",
   status: "1",
   updateBy: "",
   updateTime: "",
@@ -297,8 +297,8 @@ async function dispatchFunction() {
           </div>
         </div>
         <el-form-item>
-          <el-button :loading="isLoading" type="success" @click="dispatchFunction()">提交</el-button>
-          <el-button @click="dialogTableVisible = false"  type="warning" >取消</el-button>
+          <el-button    :loading="isLoading" type="primary"  @click="dispatchFunction()">提交</el-button>
+          <el-button @click="dialogTableVisible = false"  >取消</el-button>
         </el-form-item>
       </div>
     </el-form>
