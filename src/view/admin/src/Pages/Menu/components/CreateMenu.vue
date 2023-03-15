@@ -1,34 +1,23 @@
-<script lang='ts' setup>
-import {isReactive, isRef, onBeforeMount, onMounted, reactive, toRaw, toRef, toRefs, watchEffect, ref} from 'vue';
-import {useStore} from '@/stores'
-import {useRoute, useRouter} from 'vue-router';
-
-/**
- * 仓库
- */
+<script lang='ts' setup xmlns="">
+import { isReactive, isRef, onBeforeMount, onMounted, reactive, toRaw, toRef, toRefs, watchEffect, ref, inject, nextTick } from 'vue';
+import { useStore } from '@/stores'
+import { storeToRefs } from "pinia"
+import { useRoute, useRouter } from 'vue-router';
+const visible = inject('visible')
 const store = useStore();
-/**
- * 路由对象
- */
 const route = useRoute();
-/**
- * 路由实例
- */
 const router = useRouter();
-//console.log('1-开始创建组件-setup')
-/**
- * 数据部分
- */
+const data = ref();
 const user = reactive({
   avatar: "jerry"
 })
-
+const ruleFormRef = ref();
 
 onBeforeMount(() => {
-  //console.log('2.组件挂载页面之前执行----onBeforeMount')
+
 })
-onMounted(() => {
-  //console.log('3.-组件挂载到页面之后执行-------onMounted')
+onMounted(async () => {
+  data.value = await store.generateTree();
 })
 watchEffect(() => {
 })
@@ -39,185 +28,229 @@ defineExpose({
 })
 
 
-const props = defineProps({
-  change: Boolean
+const form = reactive<Menu>({
+  "menuId": "",
+  "menuName": "",
+  "parentId": "0",
+  "orderNum": "1",
+  "path": "",
+  "component": "",
+  "query": "",
+  "isFrame": "0",
+  "isCache": "0",
+  "menuType": "M",
+  "visible": "1",
+  "status": "1",
+  "perms": "",
+  "icon": "",
+  "createBy": "",
+  "createTime": "",
+  "updateBy": "",
+  "updateTime": "",
+  "remark": "",
+  "fatherName": ""
 })
 
-const cancel = ref(true);
+function nodeClick(node: any) {
 
-const form = reactive({
+  if (form.menuType != "M") {
+    form.parentId = node.value
+    console.log( form.parentId)
+  } else {
+    form.parentId = "0"
+  }
+}
+function changeTable(node: any) {
+  form.menuType = node.paneName;
+  if (node.paneName == 'M') {
+    form.parentId = "0"
+  }
+}
 
-  show: "dir"
 
+function submit() {
+  ruleFormRef.value.validate(async (valid: any) => {
+    console.log(form)
+    if (valid) {
+     console.log(valid)
+
+    } else {
+      return false;
+    }
+  });
+
+}
+
+
+
+const rules = reactive({
+  query: [
+    { required: true, message: "请输入组件名字", trigger: "blur" },
+  ],
+  component: [
+    { required: true, message: "请输入组件名字", trigger: "blur" },
+  ],
+  icon: [
+    { required: true, message: "选择图标", trigger: "blur" },
+  ],
+  perms: [
+    { required: true, message: "权限字符", trigger: "blur" },
+  ],
+  status: [
+    { required: true, message: "选择状态", trigger: "blur" },
+  ],
+  visible: [
+    { required: true, message: "是否显示", trigger: "blur" },
+  ],
+  menuType: [
+    { required: true, message: "菜单类型", trigger: "blur" },
+    {
+      pattern: /[CMF]/g,
+      message: "请选择菜单",
+    },
+  ],
+  isCache: [
+    { required: true, message: "是否缓存", trigger: "blur" },
+  ],
+  isFrame: [
+    { required: true, message: "是否外链", trigger: "blur" },
+  ],
+  path: [
+    { required: true, message: "请输入路由路径", trigger: "blur" },
+  ],
+  orderNum: [
+    { required: true, message: "请输入菜单顺序", trigger: "blur" },
+  ],
+
+  parentId: [
+    { required: true, message: "选择上级菜单", trigger: "blur" },
+  ],
+
+  menuName: [
+    { required: true, message: "请输入菜单名", trigger: "blur" },
+  ],
 })
 
-const value = ref()
-
-const data = [
-  {
-    value: '1',
-    label: 'Level one 1',
-    children: [
-      {
-        value: '1-1',
-        label: 'Level two 1-1',
-        children: [
-          {
-            value: '1-1-1',
-            label: 'Level three 1-1-1',
-          },
-        ],
-      },
-    ],
-  },
-
-]
 </script>
-
 <template>
-  <el-dialog
-      v-model="props.change"
-      title="添加菜单"
-      width="40%"
-  >
+  <el-dialog v-model="visible" title="添加菜单" width="40%">
     <el-row>
-      <el-form class=" grid flex-col w-full ">
-        <el-row>
-          <el-form-item label="上级菜单">
-            <el-tree-select
-                v-model="value"
-                :data="data"
-                check-strictly
-                :render-after-expand="false"
-                show-checkbox
-                check-on-click-node
-            />
-          </el-form-item>
-        </el-row>
-        <el-tabs v-model="form.show"  @tab-click="">
-          <el-tab-pane label="目录" name="dir">
-            <el-row class="grid gap-x-10">
-              <el-form-item label="菜单图标">
-                <el-input v-model="form.icon"/>
-              </el-form-item>
-              <el-form-item label="菜单名称">
-                <el-input v-model="form.name"/>
-              </el-form-item>
-            </el-row>
+      <el-form class=" grid flex-col w-full " :model="form" ref="ruleFormRef" :rules="rules">
+        <el-tabs v-model="form.menuType" @tab-click="changeTable">
 
-            <el-row class="grid gap-x-10 ">
-              <el-form-item label="是否外链">
-                <el-radio-group v-model="form.foreign">
-                  <el-radio label="是"/>
-                  <el-radio label="否"/>
-                </el-radio-group>
-              </el-form-item>
-
-              <el-form-item label="路由地址">
-                <el-input v-model="form.path"/>
-              </el-form-item>
-            </el-row>
-            <el-row class="grid gap-x-10 ">
-              <el-form-item label="菜单状态">
-                <el-radio-group v-model="form.state">
-                  <el-radio label="正常"/>
-                  <el-radio label="停用"/>
-                </el-radio-group>
-              </el-form-item>
-              <el-form-item label="菜单顺序">
-                <el-input-number v-model="num" :min="1" :max="10" @change="handleChange"/>
-              </el-form-item>
-            </el-row>
-
-          </el-tab-pane>
-          <el-tab-pane label="菜单" name="menu">
-            <el-row class="grid gap-x-10">
-              <el-form-item label="菜单图标">
-                <el-input v-model="form.icon"/>
-              </el-form-item>
-              <el-form-item label="菜单名称">
-                <el-input v-model="form.name"/>
-              </el-form-item>
-            </el-row>
-            <el-row class="grid gap-x-10 ">
-              <el-form-item label="是否外链">
-                <el-radio-group v-model="form.foreign">
-                  <el-radio label="是"/>
-                  <el-radio label="否"/>
-                </el-radio-group>
-              </el-form-item>
-              <el-form-item label="路由地址">
-                <el-input v-model="form.path"/>
-              </el-form-item>
-            </el-row>
-            <el-row class="grid gap-x-10 ">
-              <el-form-item label="菜单状态">
-                <el-radio-group v-model="form.state">
-                  <el-radio label="正常"/>
-                  <el-radio label="停用"/>
-                </el-radio-group>
-              </el-form-item>
-              <el-form-item label="菜单顺序">
-                <el-input-number v-model="num" :min="1" :max="10" @change="handleChange"/>
-              </el-form-item>
-            </el-row>
-
-            <el-row class="grid gap-x-10 ">
-              <el-form-item label="路由组件">
-                <el-input v-model="form.name"/>
-              </el-form-item>
-              <el-form-item label="权限字符">
-                <el-input v-model="form.name"/>
-              </el-form-item>
-            </el-row>
-
-            <el-row class="grid gap-x-10 ">
-
-              <el-form-item label="路由参数">
-                <el-input v-model="form.name"/>
-              </el-form-item>
-              <el-form-item label="是否缓存">
-                <el-radio-group v-model="form.foreign">
-                  <el-radio label="是"/>
-                  <el-radio label="否"/>
-                </el-radio-group>
-              </el-form-item>
-            </el-row>
-
-            <el-row class="grid gap-x-10 ">
-
-              <el-form-item label="显示状态">
-                <el-radio-group v-model="form.foreign">
-                  <el-radio label="显示"/>
-                  <el-radio label="隐藏"/>
-                </el-radio-group>
-              </el-form-item>
-            </el-row>
-
-
-          </el-tab-pane>
-          <el-tab-pane label="按钮" name="third">
-            <el-row class="grid gap-x-10">
-              <el-form-item label="菜单名称">
-                <el-input v-model="form.name"/>
-              </el-form-item>
-              <el-form-item label="菜单顺序">
-                <el-input-number v-model="num" :min="1" :max="10" @change="handleChange"/>
-              </el-form-item>
-            </el-row>
-            <el-form-item class="w-1/2" label="权限字符">
-              <el-input v-model="form.name"/>
+          <!-- 上级菜单 -->
+          <el-row v-if="form.menuType != 'M'">
+            <el-form-item label="上级菜单" prop="parentId">
+              <el-tree-select @node-click="nodeClick" :data="data" v-model="form.fatherName" :check-strictly="true"
+                :render-after-expand="false" :accordion="true" :check-on-click-node="false" />
             </el-form-item>
+          </el-row>
 
+          <!-- 创建目录UI -->
+          <el-tab-pane label="目录" name="M">
+            <el-row class="grid gap-x-10">
+               <el-form-item label="菜单名称" prop="menuName">
+                <el-input v-model="form.menuName" />
+              </el-form-item>
+
+              <el-form-item label="菜单状态" prop="status">
+                <el-radio-group v-model="form.status">
+                  <el-radio label="1">正常</el-radio>
+                  <el-radio label="0">停用</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-row>
+            <el-row class="grid gap-x-10 ">
+              <el-form-item label="路由地址" prop="path">
+                <el-input v-model="form.path" />
+              </el-form-item>
+              
+              <el-form-item label="菜单顺序" prop="orderNum">
+                <el-input-number v-model.number="form.orderNum" :min="1" />
+              </el-form-item>
+            </el-row>
+          </el-tab-pane>
+
+
+          <!-- 创建按钮UI -->
+          <el-tab-pane label="按钮" name="F">
+            <el-row class="grid gap-x-10">
+              <el-form-item label="菜单名称" prop="menuName">
+                <el-input v-model="form.menuName" />
+              </el-form-item>
+              <el-form-item label="菜单顺序" prop="orderNum">
+                <el-input-number v-model.number="form.orderNum" :min="1" />
+              </el-form-item>
+            </el-row>
+            <el-form-item label="权限字符" prop="path">
+                <el-input v-model="form.perms" />
+              </el-form-item>
+
+          </el-tab-pane>
+
+          <!-- 创建菜单UI -->
+          <el-tab-pane label="菜单" name="C">
+            <el-row class="grid gap-x-10">
+              <!-- <el-form-item label="菜单图标">
+                                              <el-input v-model="form.icon" />
+                                            </el-form-item> -->
+              <el-form-item label="菜单名称" prop="menuName">
+                <el-input v-model="form.menuName" />
+              </el-form-item>
+
+              <el-form-item label="路由地址" prop="path">
+                <el-input v-model="form.path" />
+              </el-form-item>
+            </el-row>
+            <el-row class="grid gap-x-10 ">
+              <el-form-item label="路由组件" prop="component">
+                <el-input v-model="form.component" />
+              </el-form-item>
+              <el-form-item label="权限字符" prop="path">
+                <el-input v-model="form.perms" />
+              </el-form-item>
+            </el-row>
+            <el-row class="grid gap-x-10 ">
+              <el-form-item label="菜单状态" prop="status">
+                <el-radio-group v-model="form.status">
+                  <el-radio label="1">正常</el-radio>
+                  <el-radio label="0">停用</el-radio>
+                </el-radio-group>
+              </el-form-item>
+
+              <el-form-item label="菜单顺序" prop="orderNum">
+                <el-input-number v-model.number="form.orderNum" :min="1" />
+              </el-form-item>
+            </el-row>
+            <el-row class="grid gap-x-10 ">
+              <el-form-item label="路由参数">
+                <el-input v-model="form.query" />
+              </el-form-item>
+              <el-form-item label="是否缓存" prop="isCache">
+                <el-radio-group v-model="form.isCache">
+                  <el-radio label="1">是</el-radio>
+                  <el-radio label="0">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-row>
+
+            <el-row class="grid gap-x-10 ">
+              <el-form-item label="显示状态" prop="visible">
+                <el-radio-group v-model="form.visible">
+                  <el-radio label="1">显示</el-radio>
+                  <el-radio label="0">隐藏</el-radio>
+                </el-radio-group>
+              </el-form-item>
+
+            </el-row>
           </el-tab-pane>
         </el-tabs>
-
       </el-form>
     </el-row>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary">确定</el-button>
-        <el-button @click="cancel=!cancel">取消</el-button>
+        <el-button @click="submit" type="primary">确定</el-button>
+        <el-button @click="visible = !visible">取消</el-button>
       </span>
     </template>
   </el-dialog>
@@ -226,5 +259,4 @@ const data = [
 :deep(.el-tabs__nav-wrap::after) {
   background: none;
 }
-
 </style>

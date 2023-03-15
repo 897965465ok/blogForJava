@@ -66,26 +66,6 @@ function checkButton(selectorList: any) {
   RoleList.value = selectorList
 }
 
-//
-// const open2 = () => {
-//   ElMessage({
-//     message: 'Congrats, this is a success message.',
-//     type: 'success',
-//   })
-// }
-// const open3 = () => {
-//   ElMessage({
-//     message: 'Warning, this is a warning message.',
-//     type: 'warning',
-//   })
-// }
-// const open4 = () => {
-//   ElMessage.error('Oops, this is a error message.')
-// }
-
-
-// default-expanded-keys 
-// default-checked-keys
 
 const form: any = reactive({
   createBy: "",
@@ -221,7 +201,7 @@ async function dispatchFunction() {
 
 </script>
 <template>
-  <div class="button-wrapper">
+  <div class="button-wrapper   after:h-1">
     <el-button @click="openBox(0)">新增</el-button>
     <el-button :disabled="(RoleList.length != 1)" @click="openBox(1)">修改</el-button>
     <el-button :disabled="(RoleList.length < 1)" @click="isDelete = true">删除</el-button>
@@ -248,7 +228,7 @@ async function dispatchFunction() {
   <el-dialog width="30vw" v-model="dialogTableVisible" destroy-on-close title="添加角色">
     <el-form :model="form">
       <div class="flex flex-col">
-        <div class="flex flex-col font-black ">
+        <div class="flex flex-col font-black    ">
           <!--          createBy: "",-->
           <!--          de1Flag: "O",-->
           <!--          deptCheckStrictly : "1",-->

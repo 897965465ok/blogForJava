@@ -4,11 +4,11 @@ type treeMapTyep = any
 
 // 用户表头
 type userTableHeaderType = {
-     // 用户id 
+    // 用户id 
     userId: String
-        // 用户账号
+    // 用户账号
     userName: String
-     // 昵称
+    // 昵称
     nickName: String
     // 用户类型
     userType: String
@@ -26,4 +26,27 @@ type userTableHeaderType = {
     status: Number
     // 创建世间
     createTime: Number
+}
+
+interface Menu {
+    menuId: string;
+    menuName: string;
+    parentId: string;
+    orderNum: string;
+    path: string;
+    component: string;
+    query: string;
+    isFrame: string;
+    isCache: string;
+    menuType: string;
+    visible: string;
+    status: string;
+    perms: string;
+    icon: string;
+    createBy: string;
+    createTime: string;
+    updateBy: string;
+    updateTime: string;
+    remark: string;
+    fatherName:string
 }

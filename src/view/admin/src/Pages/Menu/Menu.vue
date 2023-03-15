@@ -1,19 +1,17 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
+import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect,provide } from 'vue';
 import {storeToRefs} from 'pinia';
 import { useStore  } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
-import { deleteArticle } from "@/api/BlogApi";
 import TableVue from './components/MenuTable.vue'
 import MarkdownVue from '../Article/component/Markdown.vue';
-import { createArticle} from '@/api/BlogApi';
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
+const store = useStore()
+const menuList = ref([])
+const visible = ref(false)
+provide("visible",visible)
 
-/**
- * 仓库
- */
-const store = useStore();
-const {treeMap} = storeToRefs(store);
+
 /**
  * 路由对象
  */
@@ -27,8 +25,9 @@ const router = useRouter();
  * 数据部分
  */
 const data = reactive({})
-onBeforeMount(() => {
-  //console.log('2.组件挂载页面之前执行----onBeforeMount')
+onBeforeMount(async () => {
+
+
 })
 onMounted(async () =>{})
 watchEffect(() => {
@@ -39,12 +38,10 @@ defineExpose({
   ...toRefs(data)
 })
 
-const ArticleList = ref([]);
-const dialogTableVisible = ref(true)
 
 
 function checkButton(selectorList: any) {
-  ArticleList.value = selectorList
+  menuList.value = selectorList
 }
 
 function deleteSelectorArticleList() {
@@ -53,17 +50,17 @@ function deleteSelectorArticleList() {
 
 function changeArticle() {
   // 修改选中的文章
-  dialogTableVisible.value = true
+  visible.value = true
   Object.keys(form).forEach((item) => {
-    form[item] = ArticleList.value[0][item]
+    form[item] = menuList.value[0][item]
   })
 
 }
 
 
-async function creatArticle() {
+async function createMenu() {
   // 创建文章
-  dialogTableVisible.value = true
+  visible.value = true
   // let result  =   await createArticle(form);
 }
 
@@ -88,12 +85,12 @@ const onSubmit = () => {
 </script>
 <template>
   <div class="button-wrapper">
-    <el-button @click="creatArticle">新增</el-button>
-    <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
-    <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
+    <el-button @click="createMenu">新增</el-button>
+    <el-button :disabled="(menuList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
+    <el-button :disabled="(menuList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
   <TableVue @check="checkButton"></TableVue>
-  <CreateMenu :change="dialogTableVisible" ></CreateMenu>
+  <CreateMenu :change="visible" ></CreateMenu>
 </template>
 <style lang='scss' scoped>
 
