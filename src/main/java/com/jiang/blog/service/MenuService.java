@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface MenuService extends IService<Menu> {
 
+    boolean deleteManyMenu(List<Menu> Menus);
+
     PageInfo queryManyMenu(Integer offset, Integer limit);
 
     MenuTableHeader queryMenuTableHeader();
@@ -21,4 +23,6 @@ public interface MenuService extends IService<Menu> {
     List getRouter();
 
     boolean deleteMenuByOne(String id);
+
+    boolean createMenu(Menu menu);
 }

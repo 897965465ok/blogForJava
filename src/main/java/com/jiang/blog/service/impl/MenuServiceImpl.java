@@ -13,10 +13,10 @@ import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,6 +25,17 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
     MenuMapper menuMapper;
     @Autowired
     UserRoleMapper userRoleMapper;
+
+
+
+    @Override
+    public boolean deleteManyMenu(List<Menu> Menus) {
+        List<Long>  ids =  Menus.stream().
+                map( (Menu menu)->menu.getMenuId()).
+                collect(Collectors.toList());
+         return this.removeByIds(ids);
+    }
+
 
     @Override
     @CachePut(value = "queryManyMenu")
@@ -69,8 +80,9 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
         // 先查 用户ID查出角色(user_role) -》
         loginUser.getPermissions();*/
         LambdaQueryWrapper<Menu> query =  new LambdaQueryWrapper();
-        query.eq(Menu::getParentId,0);
+        query.eq(Menu::getMenuType,"M");
         List<Menu> menus =   this.list(query);
+
         LinkedList<Map>  treeMenus = new LinkedList<>();
         for (Menu menu: menus) {
            Map<String,Object>  result =   generatorTreeMenu(menu);
@@ -94,7 +106,10 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
         return  this.removeById(id);
     }
 
-
+    @Override
+    public  boolean createMenu(Menu menu){
+        return  this.saveOrUpdate(menu);
+    }
 
 
 

@@ -61,6 +61,7 @@ async function jump(current: number) {
   <div v-if="pageInfo">
     <el-table :data="menuList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
+
       <el-table-column v-for="(item,index) in columns" :key="index" :label="item" :prop="item" :show-overflow-tooltip="true"
         align="center" fixed="right">
         <template v-slot:header="{ column, $index }">
@@ -77,6 +78,7 @@ async function jump(current: number) {
           </div>
         </template>
       </el-table-column>
+      
     </el-table>
 
     <div class="demo-pagination-block">

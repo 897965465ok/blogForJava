@@ -4,16 +4,16 @@ package com.jiang.blog.controller;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.model.VO.MenuTableHeader;
+import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.MenuService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 // TODO 明天菜单CRUD
@@ -26,10 +26,15 @@ public class MenuController {
 
 
     @ApiOperation("添加一个菜单")
-    @GetMapping("/addMenu")
-    public ApiRestResponse addMenu() {
-        List routers = menuService.getRouter();
-        return ApiRestResponse.success(routers);
+    @PostMapping("/createMenu")
+    public ApiRestResponse createMenu(@RequestBody Menu menu) {
+        boolean result = menuService.createMenu(menu);
+        if (result) {
+            return ApiRestResponse.success(result);
+        } else {
+            return ApiRestResponse.error(400, "创建菜单失败");
+        }
+
     }
 
     @ApiOperation("删除一个菜单")
@@ -43,6 +48,15 @@ public class MenuController {
 
     }
 
+    @ApiOperation("删除多个菜单")
+    @PostMapping("/deleteManyMenu")
+    public ApiRestResponse deleteManyMenu(@RequestBody List<Menu> Menus) {
+        if (menuService.deleteManyMenu(Menus)) {
+            return ApiRestResponse.success("批量删除成功");
+        } else {
+            return ApiRestResponse.error(400, "删除失败");
+        }
+    }
 
     @ApiOperation("查询菜单列表")
     @GetMapping("/menus")
@@ -52,11 +66,10 @@ public class MenuController {
     }
 
 
-
     @ApiOperation("查询菜单表格头")
     @GetMapping("/queryMenuTableHeader")
     public ApiRestResponse queryMenuTableHeader() {
-        MenuTableHeader  menuTableHeader =  menuService.queryMenuTableHeader();
+        MenuTableHeader menuTableHeader = menuService.queryMenuTableHeader();
         return ApiRestResponse.success(menuTableHeader);
     }
 
@@ -69,7 +82,6 @@ public class MenuController {
     }
 
 
-
     @ApiOperation("修改一个菜单")
     @GetMapping("/updateMenuById")
     public ApiRestResponse updateMenuById(Integer id) {
@@ -78,11 +90,9 @@ public class MenuController {
     }
 
 
-
     @ApiOperation("获取前端路由")
     @GetMapping("/getRouter")
     public ApiRestResponse getRouter() {
-
         List routers = menuService.getRouter();
         return ApiRestResponse.success(routers);
     }

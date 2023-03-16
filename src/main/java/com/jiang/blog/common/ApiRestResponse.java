@@ -34,6 +34,7 @@ public class ApiRestResponse<T> {
     // 返回内容呗
     public static <T> ApiRestResponse<T> success(T result) {
         ApiRestResponse<T> response = new ApiRestResponse<>();
+
         response.setResult(result);
         return response;
     }

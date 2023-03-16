@@ -1,17 +1,21 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect,provide } from 'vue';
-import {storeToRefs} from 'pinia';
-import { useStore  } from '@/stores';
+import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect, provide, type Ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useStore } from '@/stores';
 import { useRoute, useRouter } from 'vue-router';
 import TableVue from './components/MenuTable.vue'
 import MarkdownVue from '../Article/component/Markdown.vue';
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
+import { ElMessage } from 'element-plus';
+import { deleteManyMenu } from '@/api/BlogApi';
 const store = useStore()
 const menuList = ref([])
+
 const visible = ref(false)
-provide("visible",visible)
+provide("visible", visible)
 
-
+const isDelete = ref(false)
+const isLoading = ref(false)
 /**
  * 路由对象
  */
@@ -29,7 +33,7 @@ onBeforeMount(async () => {
 
 
 })
-onMounted(async () =>{})
+onMounted(async () => { })
 watchEffect(() => {
 })
 // 使用toRefs解构
@@ -39,31 +43,42 @@ defineExpose({
 })
 
 
-
+// 保存选中的节点
 function checkButton(selectorList: any) {
   menuList.value = selectorList
 }
 
-function deleteSelectorArticleList() {
-  // 删除选择中的文章
+// 删除选择中的节点
+async function deleteSelectByMenuList() {
+  isLoading.value = !isLoading.value
+  let { code, message } = await store.deleteManyMenu(menuList.value);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: '删除成功',
+      type: 'success',
+    })
+  } else {
+    ElMessage.error({
+      message: '删除失败',
+      type: 'error',
+    })
+  }
+  isDelete.value = false
+  isLoading.value = !isLoading.value
 }
 
-function changeArticle() {
+function changeMenu() {
   // 修改选中的文章
   visible.value = true
   Object.keys(form).forEach((item) => {
     form[item] = menuList.value[0][item]
   })
 
+  console.log(menuList.value)
+
+
+
 }
-
-
-async function createMenu() {
-  // 创建文章
-  visible.value = true
-  // let result  =   await createArticle(form);
-}
-
 
 const form: formType = reactive({
   name: '',
@@ -84,22 +99,34 @@ const onSubmit = () => {
 
 </script>
 <template>
-  <div class="button-wrapper">
-    <el-button @click="createMenu">新增</el-button>
-    <el-button :disabled="(menuList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
-    <el-button :disabled="(menuList.length != 1)" @click="changeArticle">修改</el-button>
-  </div>
+  <el-row class="button-wrapper">
+    <el-button @click="visible = !visible">新增</el-button>
+    <el-button :disabled="(menuList.length < 1)" @click="isDelete = !isDelete">删除</el-button>
+    <!-- <el-button :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button> -->
+  </el-row>
+
   <TableVue @check="checkButton"></TableVue>
-  <CreateMenu :change="visible" ></CreateMenu>
+  <CreateMenu :change="visible"></CreateMenu>
+
+  <el-dialog v-model="isDelete" title="删除菜单" width="30%" align-center>
+    <span>是否删除菜单？</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="isDelete = false">
+          取消
+        </el-button>
+        <el-button :loading="isLoading" @click="deleteSelectByMenuList">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 <style lang='scss' scoped>
-
 .container {
   display: grid;
   // 区域一个名称算一个单元
-  grid-template-areas:'header header'
-                      'main aside'
-                     'footer footer';
+  grid-template-areas: 'header header'
+    'main aside'
+    'footer footer';
   //grid-template-columns: 200px 1fr 2fr;
   //grid-template-rows: minmax(100px,200px) repeat(5 ,1fr);
   //grid-gap:10px;
@@ -146,14 +173,15 @@ const onSubmit = () => {
 }
 
 
-.menu-box{
+.menu-box {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr repeat(auto-fill,1fr);
+  grid-template-rows: 1fr repeat(auto-fill, 1fr);
   grid-row-gap: 20px;
   grid-column-gap: 20px;
-  grid-template-areas:'header header' 'main main' 'footer footer';
+  grid-template-areas: 'header header' 'main main' 'footer footer';
 }
+
 .form-header {
   display: flex;
 

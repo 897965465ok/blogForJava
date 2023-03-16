@@ -19,6 +19,12 @@ export const useStore = defineStore('store', {
 
   },
   actions: {
+
+    async deleteManyMenu(Menus: any) {
+  
+      return await BlogApi.deleteManyMenu(Menus)
+    },
+
     async articles(offset: number, limit: number) {
       let { result } = await BlogApi.getArticle(offset, limit)
       this.articlePages = result;
