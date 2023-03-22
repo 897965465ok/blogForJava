@@ -45,21 +45,6 @@ public class UserController {
         }
     }
 
-
-    @PostMapping("/userUpdate")
-    @ApiOperation("修改用户")
-    public ApiRestResponse userUpdate(@RequestBody User user) {
-        Integer count = userService.userUpdate(user);
-        if (count>0) {
-            return ApiRestResponse.success(count);
-        } else {
-            return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
-        }
-    }
-
-
-
-
     @PostMapping("/login")
     @ApiOperation("用户登录")
     public ApiRestResponse userLogin(
@@ -70,6 +55,40 @@ public class UserController {
 
         return ApiRestResponse.success(userinfo);
     }
+
+
+    @PostMapping("/userUpdate")
+    @ApiOperation("修改用户")
+    public ApiRestResponse userUpdate(@RequestBody User user) {
+        Integer count = userService.userUpdate(user);
+        if (count > 0) {
+            return ApiRestResponse.success(count);
+        } else {
+            return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
+        }
+    }
+
+    @ApiOperation("批量删除用户")
+    @PostMapping("/deleteManyUser")
+    public ApiRestResponse deleteManyUser(@RequestBody ArrayList<String> ids) {
+        int result = userService.deleteManyUser(ids);
+        if (result > 0) {
+            return ApiRestResponse.success(result);
+        } else {
+            return ApiRestResponse.error(400, "删除失败");
+        }
+
+    }
+
+    @GetMapping("/getInfo")
+    @ApiOperation("获取用户信息")
+    public ApiRestResponse getInfo() {
+
+        long userId = (long)userService.getInfo();
+
+        return ApiRestResponse.success(userId);
+    }
+
 
     @GetMapping("/favor")
     @ApiOperation("文章点赞")
@@ -83,13 +102,13 @@ public class UserController {
     public ApiRestResponse visited(@RequestParam(name = "uuid") Integer id) {
         articleService.visit(id);
         return ApiRestResponse.success();
-     }
+    }
 
 
     @ApiOperation("获取用户表格表头")
     @GetMapping("/queryUserTableHeader")
     public ApiRestResponse queryUserTableHeader() {
-         UserTableHeader userTableHeader =  userService.queryUserTableHeader();
+        UserTableHeader userTableHeader = userService.queryUserTableHeader();
         return ApiRestResponse.success(userTableHeader);
     }
 
@@ -100,20 +119,6 @@ public class UserController {
         List userlist = userService.queryManyUser(offset, limit);
         return ApiRestResponse.success(userlist);
     }
-
-
-    @ApiOperation("批量删除用户")
-    @PostMapping("/deleteManyUser")
-    public ApiRestResponse deleteManyUser(@RequestBody ArrayList<String> ids ) {
-        int result =   userService.deleteManyUser(ids);
-        if (result>0){
-            return ApiRestResponse.success(result);
-        }else {
-            return ApiRestResponse.error(400,"删除失败");
-        }
-
-    }
-
 
 
     @ApiOperation("单文件上传")
@@ -129,7 +134,6 @@ public class UserController {
             return new ApiRestResponse(404, "文件存入失败", e);
         }
         return ApiRestResponse.success();
-
     }
 
 

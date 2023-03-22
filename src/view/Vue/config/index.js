@@ -78,10 +78,10 @@ module.exports = {
 
   //编译后路径存放的配置
   build: {
-    // Template for index.html
-    index: path.resolve(__dirname, '../../Server/view/index.html'),
+    // 模版路径
+    index: path.resolve(__dirname, '../view/index.html'),
     // Paths
-    assetsRoot: path.resolve(__dirname, '../../Server/view'),
+    assetsRoot: path.resolve(__dirname, '../view'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 

@@ -17,7 +17,7 @@ const router = createRouter({
       path: '/',
       name: 'Index',
       component: Index,
-      redirect: '/role',
+      redirect: '/menu',
       children: [
         {
           path: '/article',

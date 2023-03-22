@@ -1,63 +1,64 @@
-import axios from 'axios'
+import axios from "axios";
 
 const api = axios.create({
-  timeout: "10000",
-})
+  timeout: "10000"
+});
 
 // 环境的切换
 switch (process.env.NODE_ENV) {
   case "development": {
-    api.defaults.baseURL = "http://localhost:8888"
-    break
+    api.defaults.baseURL = "http://localhost:8888";
+    break;
   }
   case "debug": {
-    api.defaults.baseURL = "http://146.56.206.160:8888"
-    break
+    api.defaults.baseURL = "http://146.56.206.160:8888";
+    break;
   }
   case "production": {
-    api.defaults.baseURL = "http://146.56.206.160:8888"
-    break
+    api.defaults.baseURL = "http://146.56.206.160:8888";
+    break;
   }
   default: {
-    api.defaults.baseURL = "http://localhost:8888"
+    api.defaults.baseURL = "http://localhost:8888";
   }
 }
 
-api.interceptors.response.use((config) => {
-    let {status, data} = config
+api.interceptors.response.use(
+  config => {
+    let { status, data } = config;
     switch (status) {
       case 200: {
         if (data.code == 200) {
-          return config
+          return config;
         }
       }
       case 400: {
-
-        return config
+        return config;
       }
       case 500: {
-        return config
+        return config;
       }
       case 302: {
-        return config
+        return config;
       }
       default: {
-        return config
+        return config;
       }
     }
   },
-  (error) => {
-    return new Promise.reject(error)
-  })
-
-api.interceptors.request.use((config) => {
-
-  let token = window.localStorage.getItem("token")
-  if (token) {
-    config.headers.authorization = token;    //将token放到请求头发送给服务器
+  error => {
+    return new Promise.reject(error);
   }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
-export {api}
+);
+
+api.interceptors.request.use(
+  config => {
+    config.headers.authorization = window.localStorage.getItem("authorization"); //将token放到请求头发送给服务器
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+export { api };

@@ -1,21 +1,19 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect, provide, type Ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useStore } from '@/stores';
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect, provide, type Ref} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useStore} from '@/stores';
+import {useRoute, useRouter} from 'vue-router';
 import TableVue from './components/MenuTable.vue'
-import MarkdownVue from '../Article/component/Markdown.vue';
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
-import { ElMessage } from 'element-plus';
-import { deleteManyMenu } from '@/api/BlogApi';
+import {ElMessage} from 'element-plus';
+
 const store = useStore()
 const menuList = ref([])
-
 const visible = ref(false)
-provide("visible", visible)
-
 const isDelete = ref(false)
 const isLoading = ref(false)
+provide("visible", visible)
+
 /**
  * 路由对象
  */
@@ -24,24 +22,13 @@ const route = useRoute();
  * 路由实例
  */
 const router = useRouter();
-//console.log('1-开始创建组件-setup')
-/**
- * 数据部分
- */
-const data = reactive({})
-onBeforeMount(async () => {
 
-
+onBeforeMount(() => {
 })
-onMounted(async () => { })
+onMounted(() => {
+})
 watchEffect(() => {
 })
-// 使用toRefs解构
-// let { } = { ...toRefs(data) } 
-defineExpose({
-  ...toRefs(data)
-})
-
 
 // 保存选中的节点
 function checkButton(selectorList: any) {
@@ -51,7 +38,7 @@ function checkButton(selectorList: any) {
 // 删除选择中的节点
 async function deleteSelectByMenuList() {
   isLoading.value = !isLoading.value
-  let { code, message } = await store.deleteManyMenu(menuList.value);
+  let {code, message} = await store.deleteManyMenu(menuList.value);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: '删除成功',
@@ -67,35 +54,6 @@ async function deleteSelectByMenuList() {
   isLoading.value = !isLoading.value
 }
 
-function changeMenu() {
-  // 修改选中的文章
-  visible.value = true
-  Object.keys(form).forEach((item) => {
-    form[item] = menuList.value[0][item]
-  })
-
-  console.log(menuList.value)
-
-
-
-}
-
-const form: formType = reactive({
-  name: '',
-  paragraph: '',
-  tag: '',
-  articlePath: '',
-  sideArticle: '',
-  hot: '',
-  picture: ''
-})
-
-const onSubmit = () => {
-  console.log(form)
-}
-
-
-
 
 </script>
 <template>
@@ -107,15 +65,12 @@ const onSubmit = () => {
 
   <TableVue @check="checkButton"></TableVue>
   <CreateMenu :change="visible"></CreateMenu>
-
   <el-dialog v-model="isDelete" title="删除菜单" width="30%" align-center>
     <span>是否删除菜单？</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="isDelete = false">
-          取消
-        </el-button>
-        <el-button :loading="isLoading" @click="deleteSelectByMenuList">确定</el-button>
+        <el-button type="primary" :loading="isLoading" @click="deleteSelectByMenuList">确定</el-button>
+        <el-button @click="isDelete = false">取消</el-button>
       </span>
     </template>
   </el-dialog>

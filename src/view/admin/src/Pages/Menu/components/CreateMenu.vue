@@ -12,14 +12,14 @@ import {
   ref,
   inject,
   nextTick,
-type Ref,
+  type Ref,
 } from "vue";
 import { useStore } from "@/stores";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import * as BlogApi from "@/api/BlogApi";
 import { ElMessage } from "element-plus";
-const visible:any = inject("visible");
+const visible: any = inject("visible");
 
 const store = useStore();
 const route = useRoute();
@@ -220,8 +220,8 @@ function submit() {
           <el-tab-pane label="菜单" name="C">
             <el-row class="grid gap-x-10">
               <!-- <el-form-item label="菜单图标">
-                                                                                  <el-input v-model="form.icon" />
-                                                                                </el-form-item> -->
+                                                                                    <el-input v-model="form.icon" />
+                                                                                  </el-form-item> -->
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
               </el-form-item>
@@ -277,8 +277,9 @@ function submit() {
 
     <template #footer>
       <span class="dialog-footer">
+        <el-button type="primary" @click="submit" :loading="isLoading">确定</el-button>
         <el-button @click="visible = !visible">取消</el-button>
-        <el-button @click="submit" :loading="isLoading" >确定</el-button>
+
       </span>
     </template>
   </el-dialog>

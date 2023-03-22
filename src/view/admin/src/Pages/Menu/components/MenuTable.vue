@@ -10,7 +10,7 @@ const pageInfo = ref();
 const columns = ref();
 
 onBeforeMount(async () => {
-  pageInfo.value = await store.queryManyMenu(1, 7)
+  pageInfo.value = await store.queryManyMenu(1, 10)
   menuList.value = pageInfo.value.result.list
   columns.value = await blogApi.queryMenuTableHeader();
 })
@@ -51,7 +51,7 @@ function handleSelectionChange(selection: any) {
 
 
 async function jump(current: number) {
-  pageInfo.value = await store.queryManyMenu(current * 1, 7)
+  pageInfo.value = await store.queryManyMenu(current * 1, 10)
   menuList.value = pageInfo.value.list;
 }
 
@@ -72,7 +72,7 @@ async function jump(current: number) {
 
         <template v-slot:default="{ row, column }">
           <div class="column">
-         
+    
             {{ row[column.rawColumnKey] }}
           
           </div>

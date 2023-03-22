@@ -1,47 +1,26 @@
 <template>
-  <div
-    class="
-      container
-      flex
-      h-screen
-      w-full
-      bg-white
-      justify-center
-      content-center
-      shadow-sm
-    "
-  >
-    <el-form
-      ref="loginForm"
-      :model="form"
-      :rules="rules"
-      class="bg-white w-4/12 h-4/12"
-    >
+  <div class="
+        container
+        flex
+        h-screen
+        w-full
+        bg-white
+        justify-center
+        content-center
+        shadow-sm
+      ">
+    <el-form ref="loginForm" :model="form" :rules="rules" class="bg-white w-4/12 h-4/12">
       <h3 class="login-title">欢迎登录</h3>
       <el-form-item label="账号" prop="username">
-        <el-input
-          v-model="form.username"
-          placeholder="请输入账号"
-          type="text"
-        />
+        <el-input v-model="form.username" placeholder="请输入账号" type="text" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input
-          v-model="form.password"
-          placeholder="请输入密码"
-          type="password"
-        />
+        <el-input v-model="form.password" placeholder="请输入密码" type="password" />
       </el-form-item>
       <el-form-item class="flex justify-between">
         <el-button @click="onSubmit('loginForm')">登录</el-button>
-        <el-button
-          class="iconfont icon-huaban88"
-          @click="oauth('github')"
-        ></el-button>
-        <el-button
-          class="iconfont icon-mayun"
-          @click="oauth('gitee')"
-        ></el-button>
+        <el-button class="iconfont icon-huaban88" @click="oauth('github')"></el-button>
+        <el-button class="iconfont icon-mayun" @click="oauth('gitee')"></el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -49,8 +28,8 @@
 
 <script>
 import qs from "qs";
-import {mapActions} from "vuex";
-import {getOauthInfo} from "../../api/BlogApi";
+import { mapActions } from "vuex";
+import { getOauthInfo } from "../../api/BlogApi";
 
 export default {
   name: "Login",
@@ -65,10 +44,10 @@ export default {
       // 表单验证，需要在 el-form-item 元素中增加 prop 属性
       rules: {
         username: [
-          {required: true, message: "账号不可为空", trigger: "blur"},
+          { required: true, message: "账号不可为空", trigger: "blur" },
         ],
         password: [
-          {required: true, message: "密码不可为空", trigger: "blur"},
+          { required: true, message: "密码不可为空", trigger: "blur" },
         ],
         // email: [
         //   { required: true, message: "邮箱不能为空", trigger: "blur" },
@@ -103,14 +82,14 @@ export default {
       // 为表单绑定验证功能
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          let {username: userName, password, email} = this.form;
-          let {data: result} = await this.$api.post(
+          let { username, password } = this.form;
+
+          let { data: result } = await this.$api.post(
             "/v1/login",
-            qs.stringify({userName, password, email}),
-            {headers: {"Content-Type": "application/x-www-form-urlencoded"}}
+            { account: username, password: password }
           );
           if (result.code == 200) {
-            localStorage.setItem("token", "Bearer " + result.data.token);
+            localStorage.setItem("authorization", result.data.token);
             this.$router.push("/");
           }
         } else {
@@ -163,7 +142,7 @@ export default {
         this.childWindow = this.openwindow(url, "", "500", "500");
       });
     },
-    ...mapActions({saveOauth: "saveOauth"}),
+    ...mapActions({ saveOauth: "saveOauth" }),
   },
 };
 </script>

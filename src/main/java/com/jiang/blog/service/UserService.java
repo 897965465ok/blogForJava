@@ -22,4 +22,6 @@ public interface UserService  extends IService<User> {
     List queryManyUser(Integer offset, Integer limit);
 
     int deleteManyUser(ArrayList<String> ids);
+
+    Object getInfo();
 }

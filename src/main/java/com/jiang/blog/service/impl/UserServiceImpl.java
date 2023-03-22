@@ -11,18 +11,21 @@ import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.UserService;
 import com.jiang.blog.utils.JwtUtil;
 import com.jiang.blog.utils.RedisCache;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Security;
 import java.util.*;
 
 @Service
@@ -141,6 +144,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  Us
         List<String> permissions = menuMapper.selectPermsByUserId(user.getUserId());
 
         return new LoginUser(user, permissions);
+    }
+
+    @Override
+    public  Object getInfo(){
+        // 获取当前登录用户基础信息
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long userid = loginUser.getUser().getUserId();
+        // 获取当前用户 权限字符
+        // 获取用户 角色
+        return   userid;
     }
 
 

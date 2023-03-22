@@ -1,5 +1,4 @@
 package com.jiang.blog.config;
-
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.util.TypeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 public class RedisConfig {
 
     @Bean
-    @SuppressWarnings(value = {"unchecked", "rawtypes"})
     @Autowired(required = false)//降级注入的检测级别
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
 
@@ -22,7 +20,6 @@ public class RedisConfig {
 //        ParserConfig.getGlobalInstance().addAccept("org.springframework.security.core.authority.");
 //        TypeUtils.addMapping("org.springframework.security.core.authority.SimpleGrantedAuthority",
 //                SimpleGrantedAuthority.class);
-
         //--------------------
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);

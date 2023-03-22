@@ -50,17 +50,14 @@ api.interceptors.response.use((config) => {
     }
   }
 },
-  (error) => {
+  (error):any => {
 
-    return new Promise.reject(error)
+    return new Promise.reject(error);
     
   })
 
 api.interceptors.request.use((config:any) => {
-
-  config.headers.authorization = window.localStorage.getItem("token");    //将token放到请求头发送给服务器
-
-
+  config.headers.authorization = window.localStorage.getItem("authorization");    //将token放到请求头发送给服务器
   return config;
 }, (error) => {
   return Promise.reject(error);
