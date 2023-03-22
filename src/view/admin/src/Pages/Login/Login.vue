@@ -82,9 +82,15 @@ export default {
             qs.stringify({ account, password, email }),
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           );
+
+
+
+
           if (result.code == 200) {
-            localStorage.setItem("authorization",result.result.token);
-            window.location.href = '/menu'
+
+            
+            localStorage.setItem("token",result.result.tokenValue);
+            window.location.href = '/'
           }
         } else {
           return false;

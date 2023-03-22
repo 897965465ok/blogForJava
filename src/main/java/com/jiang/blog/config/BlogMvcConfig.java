@@ -1,8 +1,12 @@
 package com.jiang.blog.config;
 
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 描述：     配置地址映射
  */
 @Configuration
-public class BlogWebMvcConfig implements WebMvcConfigurer {
+public class BlogMvcConfig implements WebMvcConfigurer {
 
 
     @Override
@@ -32,8 +36,8 @@ public class BlogWebMvcConfig implements WebMvcConfigurer {
 
     }
 
-
-    @Override
+    // CORS
+ /*   @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowCredentials(true)
@@ -41,5 +45,19 @@ public class BlogWebMvcConfig implements WebMvcConfigurer {
                 .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
                 .allowedHeaders("*")
                 .exposedHeaders("*");
-    }
+    }*/
+
+    // 注册拦截器
+    // 注册 Sa-Token 拦截器，定义详细认证规则
+ /*   @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SaInterceptor(handler -> {
+            // 指定一条 match 规则
+            SaRouter.match("/**")
+                    .notMatch("/v1/login")
+                    .check(r -> StpUtil.checkLogin());
+
+        })).addPathPatterns("/**");
+    }*/
+
 }

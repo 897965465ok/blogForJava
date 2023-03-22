@@ -226,3 +226,8 @@ export const deleteManyMenu = async (Menus: any) => {
   let response = await api.post("v1/deleteManyMenu", Menus);
   return response.data;
 };
+
+export const getAllRoles = async() =>{
+  let response = await api.post("v1/getAllRoles");
+  return response.data;
+}

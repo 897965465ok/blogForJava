@@ -1,20 +1,28 @@
-<script lang='ts' setup>
-import { nextTick, onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
-import { type Ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useStore } from '@/stores';
-import { useRoute, useRouter } from 'vue-router';
+<script lang="ts" setup>
+import {
+  nextTick,
+  onBeforeMount,
+  onMounted,
+  reactive,
+  ref,
+  toRefs,
+  watchEffect,
+} from "vue";
+import {type Ref} from "vue";
+import {storeToRefs} from "pinia";
+import {useStore} from "@/stores";
+import {useRoute, useRouter} from "vue-router";
 import * as blogApi from "@/api/BlogApi";
-import TableVue from './UserTable.vue'
-import { ElMessage } from 'element-plus';
+import TableVue from "./UserTable.vue";
+import {ElMessage} from "element-plus";
 
 /**
  * 仓库
  */
 const store = useStore();
-const { treeMap } = storeToRefs(store);
 const openDeleteBox = ref(false);
 const isCreateUser = ref(true);
+
 /**
  * 路由对象
  */
@@ -27,118 +35,105 @@ const router = useRouter();
 /**
  * 数据部分
  */
-const data = reactive({})
+
+onMounted(async () => {
+  let {result} = await store.queryManyRole(1, 9999);
+  form.roles = result.list;
+  console.log(form.roles);
+});
+
 const ruleFormRef = ref();
-
-watchEffect(() => {
-})
-// 使用toRefs解构
-// let { } = { ...toRefs(data) } 
-defineExpose({
-  ...toRefs(data)
-})
-
 const userList = ref([]);
-const dialogTableVisible = ref(false)
+const dialogTableVisible = ref(false);
+
 function checkButton(selectorList: any) {
-  userList.value = selectorList
+  userList.value = selectorList;
 }
-
-
 
 async function sureDeleteUserList() {
   let ids = userList.value.map((item: any) => item.userId);
-  let { code, message, result } = await blogApi.deleteManyUser(ids);
+  let {code, message, result} = await blogApi.deleteManyUser(ids);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: `删除成功，删除${result}条记录`,
-      type: 'success',
-    })
+      type: "success",
+    });
   } else {
     ElMessage.error({
-      message: '删除失败',
-      type: 'error',
-    })
+      message: "删除失败",
+      type: "error",
+    });
   }
   openDeleteBox.value = false;
 }
 
 // 创建用户函数
 async function createUser() {
-  let { code, message } = await blogApi.createUser(form);
+  let {code, message} = await blogApi.createUser(form);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
-      message: '创建用户成功',
-      type: 'success',
-    })
+      message: "创建用户成功",
+      type: "success",
+    });
   } else {
     ElMessage.error({
-      message: '创建用户失败',
-      type: 'error',
-    })
+      message: "创建用户失败",
+      type: "error",
+    });
   }
 }
-
 
 // 修改选中的用户
 async function changeUser() {
-
-  let { code, message } = await blogApi.userUpdate(form);
+  let {code, message} = await blogApi.userUpdate(form);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
-      message: '修改用户成功',
-      type: 'success',
-    })
+      message: "修改用户成功",
+      type: "success",
+    });
   } else {
     ElMessage.error({
-      message: '修改用户失败',
-      type: 'error',
-    })
+      message: "修改用户失败",
+      type: "error",
+    });
   }
 }
 
+// TODO  拿到所有角色列表
 
 const form: any = reactive({
-  "userId": "",
-  "userName": "",
-  "nickName": "",
-  "email": "",
-  "phonenumber": "",
-  "sex": "0",
-  "password": "",
-  "status": "0",
-  "roles": []
-})
+  userId: "",
+  userName: "",
+  nickName: "",
+  email: "",
+  phonenumber: "",
+  sex: "0",
+  password: "",
+  status: "0",
+  roles: [],
+});
 
 const rules = reactive({
-  nickName: [
-    { required: true, message: "请输入用户昵称", trigger: "blur" },
-  ],
-  userName: [
-    { required: true, message: "请输入账号", trigger: "blur" },
-  ],
-  password: [
-    { required: true, message: "请输入密码", trigger: "blur" },
-  ],
+  nickName: [{required: true, message: "请输入用户昵称", trigger: "blur"}],
+  userName: [{required: true, message: "请输入账号", trigger: "blur"}],
+  password: [{required: true, message: "请输入密码", trigger: "blur"}],
   email: [
-    { required: true, message: "请输入邮箱", trigger: "blur" },
+    {required: true, message: "请输入邮箱", trigger: "blur"},
     {
       pattern: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
       message: "请正确输入邮箱",
     },
   ],
   phonenumber: [
-    { required: true, message: "请输入手机号码", trigger: "blur", },
+    {required: true, message: "请输入手机号码", trigger: "blur"},
     {
       pattern: /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/,
       message: "请正确输入手机号码",
     },
   ],
-  sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
-  status: [{ required: true, message: "请选择账号状态", trigger: "blur" }],
-})
-
-
+  sex: [{required: true, message: "请选择性别", trigger: "blur"}],
+  status: [{required: true, message: "请选择账号状态", trigger: "blur"}],
+});
 
 //   <el-button :plain="true" @click="open1">message</el-button>
 //   <el-button :plain="true" @click="open2">success</el-button>
@@ -150,73 +145,79 @@ const onSubmit = () => {
   ruleFormRef.value.validate(async (valid: any) => {
     if (valid) {
       if (isCreateUser.value) {
-        await createUser()
+        await createUser();
       } else {
-        await changeUser()
+        await changeUser();
       }
     } else {
       return false;
     }
   });
-}
+};
 
 function openBox(number: Number) {
-  dialogTableVisible.value = true
+  dialogTableVisible.value = true;
   if (number == 2) {
     Object.keys(form).forEach((item) => {
-      form[item] = userList.value[0][item]
-    })
+      form[item] = userList.value[0][item];
+    });
   }
-  isCreateUser.value = (number == 1) ? true : false;
+  isCreateUser.value = number == 1 ? true : false;
 }
-
-
 </script>
 <template>
   <div class="button-wrapper">
     <el-button @click="openBox(1)">新增</el-button>
-    <el-button :disabled="(userList.length != 1)" @click="openBox(2)">修改</el-button>
-    <el-button :disabled="(userList.length < 1)" @click="openDeleteBox = true">删除</el-button>
-
+    <el-button :disabled="userList.length != 1" @click="openBox(2)"
+    >修改
+    </el-button
+    >
+    <el-button :disabled="userList.length < 1" @click="openDeleteBox = true"
+    >删除
+    </el-button
+    >
   </div>
   <TableVue @check="checkButton"></TableVue>
   <el-dialog v-model="dialogTableVisible" destroy-on-close title="添加用户">
     <el-form ref="ruleFormRef" :model="form" :rules="rules">
       <div class="flex flex-col">
-        <div class=" flex  flex-row    justify-around  font-black">
+        <div class="flex flex-row justify-around font-black">
           <div>
             <el-form-item prop="userName" label="用户账号">
-              <el-input v-model="form.userName" />
+              <el-input v-model="form.userName"/>
             </el-form-item>
             <el-form-item prop="nickName" label=" 用户昵称">
-              <el-input v-model="form.nickName" />
+              <el-input v-model="form.nickName"/>
             </el-form-item>
             <el-form-item prop="password" label="用户密码">
-              <el-input v-model="form.password" />
+              <el-input v-model="form.password"/>
             </el-form-item>
             <el-form-item prop="phonenumber" label="手机号码">
-              <el-input v-model="form.phonenumber" />
+              <el-input v-model="form.phonenumber"/>
             </el-form-item>
           </div>
           <div>
             <el-form-item prop="email" label="用户邮箱">
-              <el-input v-model="form.email" />
+              <el-input v-model="form.email"/>
             </el-form-item>
             <el-form-item prop="sex" label="用户性别">
               <el-select v-model="form.sex" placeholder="选择性别">
-                <el-option label="女孩子" value="0" />
-                <el-option label="男孩子" value="1" />
+                <el-option label="女孩子" value="0"/>
+                <el-option label="男孩子" value="1"/>
               </el-select>
             </el-form-item>
             <el-form-item label="用户角色">
               <el-select multiple v-model="form.roles" placeholder="用户角色">
-                <el-option label="CEO" value="董事长" />
+                <el-option label="roleKey" value="roleKey"/>
               </el-select>
             </el-form-item>
             <el-form-item prop="status" label="用户状态">
-              <el-switch active-value="1" inactive-value="0" v-model="form.status" />
+              <el-switch
+                  active-value="1"
+                  inactive-value="0"
+                  v-model="form.status"
+              />
             </el-form-item>
-
           </div>
         </div>
         <el-form-item>
@@ -225,7 +226,6 @@ function openBox(number: Number) {
         </el-form-item>
       </div>
     </el-form>
-
   </el-dialog>
 
   <!-- 删除遮罩层 -->
@@ -233,18 +233,14 @@ function openBox(number: Number) {
     <span>是否删除这些用户?</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="sureDeleteUserList">
-          确定
-        </el-button>
+        <el-button type="primary" @click="sureDeleteUserList"> 确定 </el-button>
         <el-button @click="openDeleteBox = false">取消</el-button>
-
       </span>
     </template>
   </el-dialog>
 </template>
 
-
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .form-header {
   display: flex;
 
@@ -271,7 +267,7 @@ function openBox(number: Number) {
 }
 
 :deep(.el-form-item__content) {
-  @apply justify-end
+  @apply justify-end;
 }
 
 :deep(.el-upload-list) {
@@ -299,5 +295,3 @@ function openBox(number: Number) {
   margin: 16px 0px;
 }
 </style>
-
-

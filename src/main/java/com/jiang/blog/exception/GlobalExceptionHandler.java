@@ -1,5 +1,6 @@
 package com.jiang.blog.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import com.jiang.blog.common.ApiRestResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +68,15 @@ public class GlobalExceptionHandler {
             return ApiRestResponse.error(BlogExceptionEnum.REQUEST_PARAM_ERROR);
         }
         return ApiRestResponse.error(BlogExceptionEnum.REQUEST_PARAM_ERROR.getCode(), list.toString());
+    }
+
+    // 全局异常拦截
+
+    @ExceptionHandler(NotLoginException.class)
+    @ResponseBody
+    public ApiRestResponse handleConstraintViolationException(NotLoginException e) {
+        log.error("NotLoginException: ", e);
+        return ApiRestResponse.error(10302, e.getMessage());
     }
 
 }

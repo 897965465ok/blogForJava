@@ -1,4 +1,7 @@
 package com.jiang.blog.service.impl;
+
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.jiang.blog.exception.BlogException;
@@ -6,30 +9,20 @@ import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.UserMapper;
-import com.jiang.blog.model.pojo.LoginUser;
+import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.User;
 import com.jiang.blog.service.UserService;
-import com.jiang.blog.utils.JwtUtil;
+import com.jiang.blog.utils.Crypt;
 import com.jiang.blog.utils.RedisCache;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
-import java.security.Security;
 import java.util.*;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  UserDetailsService ,UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     UserMapper userMapper;
 
@@ -37,14 +30,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  Us
     @Autowired
     MenuMapper menuMapper;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
 
     @Autowired
     RedisCache redisCache;
 
 
-
+    @Override
+    @CachePut(value = "queryRolesByUserId")
+    public List<Role> queryRolesByUserId(User user) {
+        return      userMapper.queryRolesByUserId(user.getUserId());
+    }
 
 
     @Override
@@ -52,7 +47,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  Us
     public UserTableHeader queryUserTableHeader() {
         return new UserTableHeader();
     }
-
 
 
     @Override
@@ -67,61 +61,56 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  Us
 
     @Override
     public int deleteManyUser(ArrayList<String> ids) {
-        int result =   userMapper.deleteBatchIds(ids);
-        return result ;
+        int result = userMapper.deleteBatchIds(ids);
+        return result;
     }
 
     @Override
     public int userUpdate(User user) {
-        int result =   userMapper.updateById(user);
-        return result ;
+        int result = userMapper.updateById(user);
+        return result;
     }
 
     @Override
     public Integer register(User user) {
-        Integer exists = userMapper.userExists(user.getPassword());
+        Integer exists = userMapper.userExists(user.getUserName());
         if (exists == 1) {
             throw new BlogException(BlogExceptionEnum.USER_EXISTS);
         } else {
-            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-            user.setPassword( bCryptPasswordEncoder.encode(user.getPassword()));
-            /* password = CryptUtils.GeneratePassword(password, 12);*/
-          /*  user.setCreateTime(new Date());*/
-
-            return    userMapper.insert(user);
+            user.setPassword(Crypt.encrypt(user.getPassword()));
+            return userMapper.insert(user);
         }
     }
 
 
     @Override
-    public Map userLogin(String account, String password) {
+    public SaTokenInfo userLogin(String account, String password) {
+        User user = userMapper.selectByUserName(account);
+        if (!Objects.isNull(user) && password.equals(Crypt.decrypt(user.getPassword()))) {
+            StpUtil.login(user.getUserId());
+            // 第2步，获取 Token  相关参数
+            return StpUtil.getTokenInfo();
 
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(account, password);
-
-        //authenticate 会调用 loadUserByUsername
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-
-
-        if (Objects.isNull(authenticate)) {
-            throw new BlogException(BlogExceptionEnum.USER_NOT_EXISTS);
+            //5系统用户相关所有信息放入redis
+            // redisCache.setCacheObject("login");
         }
-        /*authenticate.getPrincipal() 会返回loadUserByUsername的返回值*/
+        return null;
 
-        LoginUser loginUser = (LoginUser) (authenticate.getPrincipal());
-
-        String userId = loginUser.getUser().getUserId().toString();
-
-
-        String jwt = JwtUtil.createJWT(userId);
-        Map<String, String> map = new HashMap();
-        map.put("token", jwt);
-
-        //5系统用户相关所有信息放入redis
-        redisCache.setCacheObject("login:" + userId, loginUser);
-
-        return map;
     }
+
+    @Override
+    public User selectByUserName(String account) {
+        User user = userMapper.selectByUserName(account);
+        if (!Objects.isNull(user)) {
+            return user;
+            //5系统用户相关所有信息放入redis
+            // redisCache.setCacheObject("login");
+        }
+        return null;
+
+    }
+
+
 
 
 /*    public  void logout() {
@@ -131,31 +120,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements  Us
         redisCache.deleteObject("login:"+userid);
     }*/
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // 重数据库查询id
-        User user = userMapper.selectByUserName(username);
-
-        if (user == null) {
-            throw new BlogException(BlogExceptionEnum.USER_NOT_EXISTS);
-        }
-
-        // 重数据库拿字符 比如System:article:read
-        List<String> permissions = menuMapper.selectPermsByUserId(user.getUserId());
-
-        return new LoginUser(user, permissions);
-    }
 
     @Override
-    public  Object getInfo(){
+    public Object getInfo() {
         // 获取当前登录用户基础信息
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Long userid = loginUser.getUser().getUserId();
+
+
         // 获取当前用户 权限字符
         // 获取用户 角色
-        return   userid;
+        return null;
     }
+
 
 
 }

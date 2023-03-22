@@ -1,12 +1,13 @@
 package com.jiang.blog.service;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jiang.blog.model.VO.UserTableHeader;
+import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface UserService  extends IService<User> {
 
@@ -15,7 +16,7 @@ public interface UserService  extends IService<User> {
 
     Integer register(User user);
 
-    Map userLogin(String account, String password);
+    SaTokenInfo userLogin(String account, String password);
 
     UserTableHeader queryUserTableHeader();
 
@@ -23,5 +24,9 @@ public interface UserService  extends IService<User> {
 
     int deleteManyUser(ArrayList<String> ids);
 
+    User selectByUserName(String account);
+
     Object getInfo();
+
+    List<Role> queryRolesByUserId(User user);
 }

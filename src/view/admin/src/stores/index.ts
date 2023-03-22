@@ -73,6 +73,14 @@ export const useStore = defineStore('store', {
       let { result } = await BlogApi.getRouter()
       return this.generate(result)
     }
+    ,
+    async getAllRoles() {
+      let { result } = await BlogApi.getAllRoles()
+      return result;
+
+    }
+    
+
   }
 
 })

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
@@ -26,7 +27,7 @@ public class RoleController {
     @Autowired
     RoleService roleService;
 
-    @ApiOperation("获取所有用户")
+    @ApiOperation("获取所有所有")
     @GetMapping("/queryManyRole")
     public ApiRestResponse queryManyRole(Integer offset, Integer limit) {
         PageInfo pageInfo = roleService.queryManyRole(offset, limit);
@@ -66,7 +67,15 @@ public class RoleController {
         }
     }
 
-
-
+    @PostMapping("/getAllRoles")
+    @ApiOperation("获取多角色")
+    public ApiRestResponse getAllRoles() {
+       List<Role>  roles =  roleService.list();
+        if (!roles.isEmpty()) {
+            return ApiRestResponse.success(roles);
+        } else {
+            return ApiRestResponse.error(400, "没有角色");
+        }
+    }
 
 }
