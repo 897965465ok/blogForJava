@@ -47,17 +47,10 @@ public class BlogMvcConfig implements WebMvcConfigurer {
                 .exposedHeaders("*");
     }*/
 
-    // 注册拦截器
-    // 注册 Sa-Token 拦截器，定义详细认证规则
- /*   @Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SaInterceptor(handler -> {
-            // 指定一条 match 规则
-            SaRouter.match("/**")
-                    .notMatch("/v1/login")
-                    .check(r -> StpUtil.checkLogin());
-
-        })).addPathPatterns("/**");
-    }*/
+        // 注册 Sa-Token 拦截器，打开注解式鉴权功能
+        registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
+    }
 
 }

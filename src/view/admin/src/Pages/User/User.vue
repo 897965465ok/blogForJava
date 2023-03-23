@@ -22,7 +22,7 @@ import {ElMessage} from "element-plus";
 const store = useStore();
 const openDeleteBox = ref(false);
 const isCreateUser = ref(true);
-
+const options = ref([])
 /**
  * 路由对象
  */
@@ -36,10 +36,10 @@ const router = useRouter();
  * 数据部分
  */
 
+
 onMounted(async () => {
   let {result} = await store.queryManyRole(1, 9999);
-  form.roles = result.list;
-  console.log(form.roles);
+  options.value = result.list;
 });
 
 const ruleFormRef = ref();
@@ -69,7 +69,7 @@ async function sureDeleteUserList() {
 
 // 创建用户函数
 async function createUser() {
-  let {code, message} = await blogApi.createUser(form);
+  let {code, message} = await blogApi.createUser({user:form,rolesId:form.roles});
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: "创建用户成功",
@@ -99,7 +99,6 @@ async function changeUser() {
   }
 }
 
-// TODO  拿到所有角色列表
 
 const form: any = reactive({
   userId: "",
@@ -109,7 +108,7 @@ const form: any = reactive({
   phonenumber: "",
   sex: "0",
   password: "",
-  status: "0",
+  status: "1",
   roles: [],
 });
 
@@ -207,9 +206,24 @@ function openBox(number: Number) {
               </el-select>
             </el-form-item>
             <el-form-item label="用户角色">
-              <el-select multiple v-model="form.roles" placeholder="用户角色">
-                <el-option label="roleKey" value="roleKey"/>
+              <el-select
+                  v-model="form.roles"
+                  multiple
+                  filterable
+                  allow-create
+                  default-first-option
+                  :reserve-keyword="false"
+                  placeholder="选择角色"
+              >
+                <el-option
+                    v-for="item in options"
+                    :key="item.roleId"
+                    :label="item.roleKey"
+                    :value="item.roleId"
+                />
               </el-select>
+
+
             </el-form-item>
             <el-form-item prop="status" label="用户状态">
               <el-switch

@@ -1,11 +1,13 @@
 package com.jiang.blog.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
 
+import com.jiang.blog.model.VO.UserAndRolesIdVO;
 import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.User;
@@ -39,8 +41,9 @@ public class UserController {
 
     @PostMapping("/register")
     @ApiOperation("用户注册")
-    public ApiRestResponse userRegister(@RequestBody User user) {
-        if (userService.register(user) == 1) {
+    public ApiRestResponse userRegister(@RequestBody UserAndRolesIdVO userAndRolesIdVO) {
+
+        if (userService.register(userAndRolesIdVO) >= 1) {
             return ApiRestResponse.success();
         } else {
             return ApiRestResponse.error(BlogExceptionEnum.CREATED_FALL);
@@ -83,15 +86,6 @@ public class UserController {
             return ApiRestResponse.error(400, "删除失败");
         }
 
-    }
-
-    @GetMapping("/getInfo")
-    @ApiOperation("获取用户信息")
-    public ApiRestResponse getInfo() {
-
-        long userId = (long) userService.getInfo();
-
-        return ApiRestResponse.success(userId);
     }
 
 
@@ -144,16 +138,25 @@ public class UserController {
 
     @ApiOperation("根据用户查询出角色")
     @PostMapping("/queryRolesByUserId")
-    public ApiRestResponse queryRolesByUserId( @NotEmpty(message = "账号不能为空") @RequestParam String account,
-                                               @NotEmpty(message = "密码不能为空") @RequestParam String password) {
-        User user   =   userService.selectByUserName(account);
-        if (!Objects.isNull(user)){
-         List <Role>  roles =  userService.queryRolesByUserId(user);
+    public ApiRestResponse queryRolesByUserId(@NotEmpty(message = "账号不能为空") @RequestParam String account,
+                                              @NotEmpty(message = "密码不能为空") @RequestParam String password) {
+        User user = userService.selectByUserName(account);
+        if (!Objects.isNull(user)) {
+            List<Role> roles = userService.queryRolesByUserId(user);
             return ApiRestResponse.success(roles);
-        }else {
+        } else {
             return ApiRestResponse.error(400, "失败");
         }
 
+    }
+
+    @ApiOperation("获取用户基本信息")
+    @PostMapping("/getInfo")
+
+    @SaCheckLogin
+    public ApiRestResponse getInfo() {
+        Object obj = userService.getInfo();
+        return ApiRestResponse.success(obj);
     }
 
 
