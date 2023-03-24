@@ -2,12 +2,11 @@ package com.jiang.blog.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
-import com.baomidou.mybatisplus.extension.exceptions.ApiException;
-import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
 
 import com.jiang.blog.model.VO.UserAndRolesIdVO;
+import com.jiang.blog.model.VO.UserInfoVO;
 import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.User;
@@ -19,7 +18,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +25,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @RequestMapping("/v1")
@@ -152,11 +149,10 @@ public class UserController {
 
     @ApiOperation("获取用户基本信息")
     @PostMapping("/getInfo")
-
     @SaCheckLogin
     public ApiRestResponse getInfo() {
-        Object obj = userService.getInfo();
-        return ApiRestResponse.success(obj);
+       UserInfoVO userInfo = userService.getInfo();
+        return ApiRestResponse.success(userInfo);
     }
 
 

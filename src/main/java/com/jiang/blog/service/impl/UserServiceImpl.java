@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.VO.UserAndRolesIdVO;
+import com.jiang.blog.model.VO.UserInfoVO;
 import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.UserMapper;
@@ -96,7 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             user.setPassword(Crypt.encrypt(user.getPassword()));
             userMapper.insert(user);
-            Long id  =  user.getUserId();
+            Long id = user.getUserId();
             roleId.stream().forEach((String item) -> {
                 UserRole userRole = new UserRole();
                 userRole.setRoleId(Long.parseLong(item));
@@ -147,18 +148,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public Object getInfo() {
-
-        // 获取当前登录用户基础信息
-
-        // 获取当前用户 权限字符
-
-
-        //TODO 获取用户 角色 完成
-
+    public UserInfoVO getInfo() {
+        UserInfoVO info = new UserInfoVO();
+        String id  =  (String) StpUtil.getLoginId();
+        User user =  userMapper.selectById(id);
+        info.setUser(user);
+        List<String> permissions = StpUtil.getPermissionList();
         List<String> roles = StpUtil.getRoleList();
-
-        return roles;
+        info.setPermissions(permissions);
+        info.setRoles(roles);
+        return info;
     }
 
 
