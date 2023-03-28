@@ -19,23 +19,43 @@ import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import * as BlogApi from "@/api/BlogApi";
 import { ElMessage } from "element-plus";
-
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
-
-
-const visible: any = inject("visible");
+const visible: any = inject("showChangeVue");
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const data = ref();
 const isLoading = ref(false);
-
 const user = reactive({
   avatar: "jerry",
 });
 const ruleFormRef = ref();
 const popoverRef = ref()
+
+const form = reactive<Menu>({
+  menuId: "",
+  menuName: "",
+  parentId: "0",
+  orderNum: "1",
+  path: "",
+  component: "",
+  query: "",
+  isFrame: "0",
+  isCache: "0",
+  menuType: "M",
+  visible: "1",
+  status: "1",
+  perms: "",
+  icon: "Search",
+  createBy: "",
+  createTime: "",
+  updateBy: "",
+  updateTime: "",
+  remark: "",
+  fatherName: "",
+});
+
+
 
 const onClickOutside = () => {
   popoverRef.value.hidden();
@@ -49,9 +69,7 @@ watchEffect(() => {
 });
 // 使用toRefs解构
 // let { } = { ...toRefs(data) }
-defineExpose({
-  ...toRefs(user),
-});
+defineExpose({ ...toRefs(form) });
 
 function selectIcon($event: any) {
 
@@ -102,28 +120,10 @@ const SelectType = {
 // 校验类型
 const rules = ref<any>(SelectType["M"]);
 
-const form = reactive<Menu>({
-  menuId: "",
-  menuName: "",
-  parentId: "0",
-  orderNum: "1",
-  path: "",
-  component: "",
-  query: "",
-  isFrame: "0",
-  isCache: "0",
-  menuType: "M",
-  visible: "1",
-  status: "1",
-  perms: "",
-  icon: "Search",
-  createBy: "",
-  createTime: "",
-  updateBy: "",
-  updateTime: "",
-  remark: "",
-  fatherName: "",
-});
+
+
+
+
 
 // 选择节点
 function nodeClick(node: any) {
@@ -189,7 +189,7 @@ function submit() {
 }
 </script>
 <template>
-  <el-dialog v-model="visible" title="添加菜单" width="40%">
+  <el-dialog v-model="visible" title="修改菜单" width="40%">
     <el-row>
       <el-form class="grid flex-col w-full" :model="form" ref="ruleFormRef" :rules="rules">
         <el-tabs v-model="form.menuType" @tab-change="changeTable">
@@ -202,8 +202,7 @@ function submit() {
           </el-row>
 
           <!-- 创建目录UI -->
-          <el-tab-pane label="目录" name="M">
-
+          <el-tab-pane label="目录" name="M" :disabled="form.menuType != 'M'">
             <el-row class="grid gap-x-10  ">
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
@@ -235,7 +234,7 @@ function submit() {
           </el-tab-pane>
 
           <!-- 创建按钮UI -->
-          <el-tab-pane label="按钮" name="F">
+          <el-tab-pane label="按钮" name="F" :disabled="form.menuType != 'F'">
             <el-row class="grid gap-x-10">
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
@@ -245,10 +244,10 @@ function submit() {
               </el-form-item>
             </el-row>
             <el-row>
-            <el-form-item label="权限字符" prop="perms">
-              <el-input v-model="form.perms" />
-            </el-form-item>
-          </el-row>
+              <el-form-item label="权限字符" prop="perms">
+                <el-input v-model="form.perms" />
+              </el-form-item>
+            </el-row>
             <el-row @click="selectIcon">
               <el-form-item label="菜单图标" prop="icon">
                 <el-input v-model="form.icon" placeholder="查找图标" :prefix-icon="form.icon">
@@ -261,11 +260,11 @@ function submit() {
           </el-tab-pane>
 
           <!-- 创建菜单UI -->
-          <el-tab-pane label="菜单" name="C">
+          <el-tab-pane label="菜单" name="C" :disabled="form.menuType != 'C'">
             <el-row class="grid gap-x-10">
               <!-- <el-form-item label="菜单图标">
-                                                                                          <el-input v-model="form.icon" />
-                                                                                        </el-form-item> -->
+                                                                                                <el-input v-model="form.icon" />
+                                                                                              </el-form-item> -->
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
               </el-form-item>
@@ -325,6 +324,7 @@ function submit() {
             </el-row>
           </el-tab-pane>
         </el-tabs>
+
       </el-form>
     </el-row>
 

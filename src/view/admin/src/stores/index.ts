@@ -1,10 +1,10 @@
-import { ref, computed, type Ref, reactive, Comment } from 'vue'
-import { defineStore } from 'pinia'
-import * as BlogApi from '@/api/BlogApi'
+import { ref, computed, type Ref, reactive, Comment } from "vue";
+import { defineStore } from "pinia";
+import * as BlogApi from "@/api/BlogApi";
 // $reset() 重置
 // $patch 批量修改
 // $state 替换
-export const useStore = defineStore('store', {
+export const useStore = defineStore("store", {
   state: () => {
     return {
       sideSwitch: false,
@@ -12,47 +12,43 @@ export const useStore = defineStore('store', {
       treeMap: {},
       menuPages: {},
       UserPages: {},
-      RolePages: {}
-    }
+      RolePages: {},
+    };
   },
-  getters: {
-
-  },
+  getters: {},
   actions: {
-
     async deleteManyMenu(Menus: any) {
-  
-      return await BlogApi.deleteManyMenu(Menus)
+      return await BlogApi.deleteManyMenu(Menus);
     },
 
     async articles(offset: number, limit: number) {
-      let { result } = await BlogApi.getArticle(offset, limit)
+      let { result } = await BlogApi.getArticle(offset, limit);
       this.articlePages = result;
-      return this.articlePages
+      return this.articlePages;
     },
     async queryManyRole(offset: number, limit: number) {
-      this.RolePages = await BlogApi.queryManyRole(offset, limit)
-      return this.RolePages
+      this.RolePages = await BlogApi.queryManyRole(offset, limit);
+      return this.RolePages;
     },
 
     async queryManyMenu(offset: number, limit: number) {
-      this.menuPages = await BlogApi.queryManyMenu(offset, limit)
-      return this.menuPages
+      this.menuPages = await BlogApi.queryManyMenu(offset, limit);
+      return this.menuPages;
     },
 
     async queryManyUser(offset: number, limit: number) {
-      this.UserPages = await BlogApi.queryManyUser(offset, limit)
-      return this.UserPages
+      this.UserPages = await BlogApi.queryManyUser(offset, limit);
+      return this.UserPages;
     },
 
     async getRouter() {
-      let { result } = await BlogApi.getRouter()
-      this.treeMap = result
-      return this.treeMap
+      let { result } = await BlogApi.getRouter();
+      this.treeMap = result;
+      return this.treeMap;
     },
 
     setSideSwitch() {
-      this.sideSwitch = !this.sideSwitch
+      this.sideSwitch = !this.sideSwitch;
     },
 
     generate(result: any): any {
@@ -61,26 +57,21 @@ export const useStore = defineStore('store', {
           return {
             label: item.menuName,
             value: item.menuId,
-            children: this.generate(item.children)
-          }
-        })
+            children: this.generate(item.children),
+          };
+        });
       } else {
-        return []
+        return [];
       }
     },
 
     async generateTree() {
-      let { result } = await BlogApi.getRouter()
-      return this.generate(result)
-    }
-    ,
+      let { result } = await BlogApi.getRouter();
+      return this.generate(result);
+    },
     async getAllRoles() {
-      let { result } = await BlogApi.getAllRoles()
+      let { result } = await BlogApi.getAllRoles();
       return result;
-
-    }
-    
-
-  }
-
-})
+    },
+  },
+});

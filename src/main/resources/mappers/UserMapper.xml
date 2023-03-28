@@ -56,7 +56,7 @@
         select
         <include refid="com.jiang.blog.model.dao.UserMapper.Base_Column_List"/>
         from sys_user
-        where email = #{account ,jdbcType=VARCHAR}
+        where user_name = #{account ,jdbcType=VARCHAR}
     </select>
 
     <select id="queryManyUser" resultType="com.jiang.blog.model.pojo.User">

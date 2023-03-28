@@ -2,6 +2,7 @@ package com.jiang.blog.service.impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.jiang.blog.exception.BlogException;
@@ -22,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -54,7 +57,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 通过所有角色 查询菜单ID
         // 在拿到菜单
         List<Role> roles = userMapper.queryRolesByUserId(user.getUserId());
-        return null;
+        return roles;
     }
 
 
@@ -76,9 +79,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
+    @Transactional
     public int deleteManyUser(ArrayList<String> ids) {
-        int result = userMapper.deleteBatchIds(ids);
-        return result;
+            ids.stream().
+                    forEach((id) ->{
+                        LambdaQueryWrapper<UserRole> query = new LambdaQueryWrapper();
+                        query.eq(UserRole::getUserId, id);
+                        userRoleMapper.delete(query);
+                    });
+            return userMapper.deleteBatchIds(ids);
     }
 
     @Override
@@ -112,8 +121,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public SaTokenInfo userLogin(String account, String password) {
         User user = userMapper.selectByUserName(account);
+
         if (!Objects.isNull(user) && password.equals(Crypt.decrypt(user.getPassword()))) {
+
             StpUtil.login(user.getUserId());
+
             // 第2步，获取 Token  相关参数
             return StpUtil.getTokenInfo();
 
@@ -150,8 +162,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserInfoVO getInfo() {
         UserInfoVO info = new UserInfoVO();
-        String id  =  (String) StpUtil.getLoginId();
-        User user =  userMapper.selectById(id);
+        String id = (String) StpUtil.getLoginId();
+        User user = userMapper.selectById(id);
         info.setUser(user);
         List<String> permissions = StpUtil.getPermissionList();
         List<String> roles = StpUtil.getRoleList();

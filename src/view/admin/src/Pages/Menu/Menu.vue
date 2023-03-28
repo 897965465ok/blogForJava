@@ -5,14 +5,19 @@ import {useStore} from '@/stores';
 import {useRoute, useRouter} from 'vue-router';
 import TableVue from './components/MenuTable.vue'
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
+import ChangeMenuVue from "@/Pages/Menu/components/ChangeMenu.vue";
 import {ElMessage} from 'element-plus';
 
 const store = useStore()
 const menuList = ref([])
 const visible = ref(false)
+const showChangeVue = ref(false)
 const isDelete = ref(false)
 const isLoading = ref(false)
+const ChangeMenu = ref();
 provide("visible", visible)
+provide("showChangeVue",showChangeVue)
+
 
 /**
  * 路由对象
@@ -53,18 +58,27 @@ async function deleteSelectByMenuList() {
   isDelete.value = false
   isLoading.value = !isLoading.value
 }
+async  function  changeMenu(){
+   let  [first]   = toRefs( menuList.value)
+   let firstNode  =   (first as any) 
+   Object.keys(firstNode.value).forEach((key:any)=>{
+    ChangeMenu.value[key]=firstNode.value[key]
+   })
 
+   showChangeVue.value = !showChangeVue.value
+}
 
 </script>
 <template>
   <el-row class="button-wrapper">
     <el-button @click="visible = !visible">新增</el-button>
     <el-button :disabled="(menuList.length < 1)" @click="isDelete = !isDelete">删除</el-button>
-    <!-- <el-button :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button> -->
+     <el-button :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button>
   </el-row>
 
   <TableVue @check="checkButton"></TableVue>
   <CreateMenu :change="visible"></CreateMenu>
+  <ChangeMenuVue ref="ChangeMenu" ></ChangeMenuVue>
   <el-dialog v-model="isDelete" title="删除菜单" width="30%" align-center>
     <span>是否删除菜单？</span>
     <template #footer>
