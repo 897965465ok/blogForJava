@@ -112,8 +112,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public SaTokenInfo userLogin(String account, String password) {
         User user = userMapper.selectByUserName(account);
+
         if (!Objects.isNull(user) && password.equals(Crypt.decrypt(user.getPassword()))) {
+
             StpUtil.login(user.getUserId());
+
             // 第2步，获取 Token  相关参数
             return StpUtil.getTokenInfo();
 

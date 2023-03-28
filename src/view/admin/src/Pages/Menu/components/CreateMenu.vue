@@ -19,29 +19,48 @@ import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import * as BlogApi from "@/api/BlogApi";
 import { ElMessage } from "element-plus";
-const visible: any = inject("visible");
 
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+
+
+const visible: any = inject("visible");
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const data = ref();
 const isLoading = ref(false);
+
 const user = reactive({
   avatar: "jerry",
 });
 const ruleFormRef = ref();
+const popoverRef = ref()
 
-onBeforeMount(() => { });
+const onClickOutside = () => {
+  popoverRef.value.hidden();
+}
+onBeforeMount(() => {
+});
 onMounted(async () => {
   data.value = await store.generateTree();
 });
-watchEffect(() => { });
+watchEffect(() => {
+});
 // 使用toRefs解构
 // let { } = { ...toRefs(data) }
 defineExpose({
   ...toRefs(user),
 });
 
+function selectIcon($event: any) {
+
+  if ($event.target.nodeName == "BUTTON") {
+
+    form.icon = $event.target.getAttribute("icanName")
+
+  }
+}
 const SelectType = {
   M: {
     status: [{ required: true, message: "选择状态", trigger: "blur" }],
@@ -97,7 +116,7 @@ const form = reactive<Menu>({
   visible: "1",
   status: "1",
   perms: "",
-  icon: "",
+  icon: "Search",
   createBy: "",
   createTime: "",
   updateBy: "",
@@ -114,6 +133,7 @@ function nodeClick(node: any) {
     form.parentId = "0";
   }
 }
+
 // 切换标签时操作
 function changeTable(paneName: string) {
   form.menuType = paneName;
@@ -183,11 +203,13 @@ function submit() {
 
           <!-- 创建目录UI -->
           <el-tab-pane label="目录" name="M">
-            <el-row class="grid gap-x-10">
+
+            <el-row class="grid gap-x-10  ">
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
               </el-form-item>
             </el-row>
+
             <el-row class="grid gap-x-10">
               <el-form-item label="菜单顺序" prop="orderNum">
                 <el-input-number v-model.number="form.orderNum" :min="1" />
@@ -199,6 +221,17 @@ function submit() {
                 </el-radio-group>
               </el-form-item>
             </el-row>
+
+            <el-row @click="selectIcon">
+              <el-form-item label="菜单图标" prop="icon">
+                <el-input v-model="form.icon" placeholder="查找图标" :prefix-icon="form.icon">
+                </el-input>
+                <el-scrollbar>
+                  <el-button :icanName="item" v-for="item in Object.keys(ElementPlusIconsVue)" :key="item" :icon="item" />
+                </el-scrollbar>
+              </el-form-item>
+            </el-row>
+
           </el-tab-pane>
 
           <!-- 创建按钮UI -->
@@ -211,17 +244,28 @@ function submit() {
                 <el-input-number v-model.number="form.orderNum" :min="1" />
               </el-form-item>
             </el-row>
+            <el-row>
             <el-form-item label="权限字符" prop="perms">
               <el-input v-model="form.perms" />
             </el-form-item>
+          </el-row>
+            <el-row @click="selectIcon">
+              <el-form-item label="菜单图标" prop="icon">
+                <el-input v-model="form.icon" placeholder="查找图标" :prefix-icon="form.icon">
+                </el-input>
+                <el-scrollbar>
+                  <el-button :icanName="item" v-for="item in Object.keys(ElementPlusIconsVue)" :key="item" :icon="item" />
+                </el-scrollbar>
+              </el-form-item>
+            </el-row>
           </el-tab-pane>
 
           <!-- 创建菜单UI -->
           <el-tab-pane label="菜单" name="C">
             <el-row class="grid gap-x-10">
               <!-- <el-form-item label="菜单图标">
-                                                                                    <el-input v-model="form.icon" />
-                                                                                  </el-form-item> -->
+                                                                                          <el-input v-model="form.icon" />
+                                                                                        </el-form-item> -->
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
               </el-form-item>
@@ -270,6 +314,15 @@ function submit() {
                 </el-radio-group>
               </el-form-item>
             </el-row>
+            <el-row @click="selectIcon">
+              <el-form-item label="菜单图标" prop="icon">
+                <el-input v-model="form.icon" placeholder="查找图标" :prefix-icon="form.icon">
+                </el-input>
+                <el-scrollbar>
+                  <el-button :icanName="item" v-for="item in Object.keys(ElementPlusIconsVue)" :key="item" :icon="item" />
+                </el-scrollbar>
+              </el-form-item>
+            </el-row>
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -279,7 +332,6 @@ function submit() {
       <span class="dialog-footer">
         <el-button type="primary" @click="submit" :loading="isLoading">确定</el-button>
         <el-button @click="visible = !visible">取消</el-button>
-
       </span>
     </template>
   </el-dialog>
@@ -287,5 +339,21 @@ function submit() {
 <style lang="scss" scoped>
 :deep(.el-tabs__nav-wrap::after) {
   background: none;
+}
+
+:deep(.el-scrollbar) {
+
+  @apply h-96 relative top-2 left-0 bottom-0;
+}
+
+:deep(.el-scrollbar .el-button) {
+  @apply w-12 h-10 mx-1 my-1;
+
+  .el-icon,
+  svg {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
 }
 </style>
