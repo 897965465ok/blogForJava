@@ -1,7 +1,7 @@
 <script lang='ts' setup>
 import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
 import type { Ref } from 'vue'
-import { useStore } from '@/stores'
+import { useStore } from '@/stores/user'
 import { useRoute, useRouter } from 'vue-router';
 import * as blogApi from "@/api/BlogApi";
 const userList = ref();

@@ -1,14 +1,9 @@
 <script lang='ts' setup>
 import { onBeforeMount, onMounted, reactive, ref, toRaw, toRef, toRefs, unref, watch, watchEffect, type Ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useStore } from '@/stores';
+import { useStore } from '@/stores/article';
 import { useRoute, useRouter } from 'vue-router';
-import { deleteArticle } from "@/api/BlogApi";
 import TableVue from './component/ArticleTable.vue';
-import { createArticle } from '@/api/BlogApi';
-
-
-
 
 /**
  * 仓库

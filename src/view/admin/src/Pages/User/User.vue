@@ -10,7 +10,7 @@ import {
 } from "vue";
 import {type Ref} from "vue";
 import {storeToRefs} from "pinia";
-import {useStore} from "@/stores";
+import {useStore} from "@/stores/role";
 import {useRoute, useRouter} from "vue-router";
 import * as blogApi from "@/api/BlogApi";
 import TableVue from "./UserTable.vue";

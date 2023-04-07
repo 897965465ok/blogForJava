@@ -14,7 +14,7 @@ import {
   nextTick,
   type Ref,
 } from "vue";
-import { useStore } from "@/stores";
+import { useStore } from "@/stores/menu";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import * as BlogApi from "@/api/BlogApi";
@@ -31,6 +31,10 @@ const user = reactive({
 });
 const ruleFormRef = ref();
 const popoverRef = ref()
+ 
+
+
+
 
 const form = reactive<Menu>({
   menuId: "",
@@ -196,8 +200,10 @@ function submit() {
           <!-- 上级菜单 -->
           <el-row v-if="form.menuType != 'M'">
             <el-form-item label="上级菜单" prop="parentId">
+
               <el-tree-select @node-click="nodeClick" :data="data" v-model="form.fatherName" :check-strictly="true"
                 :render-after-expand="false" :accordion="true" :check-on-click-node="false" />
+
             </el-form-item>
           </el-row>
 

@@ -4,11 +4,11 @@ import * as BlogApi from "@/api/BlogApi";
 // $reset() 重置
 // $patch 批量修改
 // $state 替换
-export const useStore = defineStore("store", {
+export const useStore = defineStore("articleStore", {
   state: () => {
     return {
-      sideSwitch: false,
-      treeMap: {},
+      articlePages: {},
+      treeMap:{},
     };
   },
   getters: {},
@@ -18,9 +18,10 @@ export const useStore = defineStore("store", {
       this.treeMap = result;
       return this.treeMap;
     },
-    setSideSwitch() {
-      this.sideSwitch = !this.sideSwitch;
-    },
-
+    async articles(offset: number, limit: number) {
+      let { result } = await BlogApi.getArticle(offset, limit);
+      this.articlePages = result;
+      return this.articlePages;
+    }
   },
 });

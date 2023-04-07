@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
-import { useStore } from '@/stores'
+import { useStore } from '@/stores/menu'
 import { useRoute, useRouter } from 'vue-router';
 import * as blogApi from '@/api/BlogApi';
 

@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
-import { useStore } from '@/stores'
+import { useStore } from '@/stores/article'
 import { useRoute, useRouter } from 'vue-router';
 import * as blogApi from '@/api/BlogApi'
 const articleList = ref();

@@ -83,12 +83,7 @@ export default {
             { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
           );
 
-
-
-
           if (result.code == 200) {
-
-            
             localStorage.setItem("token",result.result.tokenValue);
             window.location.href = '/'
           }

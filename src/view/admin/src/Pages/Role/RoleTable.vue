@@ -1,6 +1,6 @@
 <script lang='ts' setup>
 import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
-import { useStore } from '@/stores'
+import { useStore } from '@/stores/role'
 import { useRoute, useRouter } from 'vue-router';
 import  * as BlogApi   from "@/api/BlogApi"
 const roleList = ref();

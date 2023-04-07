@@ -1,14 +1,16 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect, provide, type Ref} from 'vue';
-import {storeToRefs} from 'pinia';
-import {useStore} from '@/stores';
-import {useRoute, useRouter} from 'vue-router';
+import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect, provide, type Ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useStore } from '@/stores/menu';
+import { useRoute, useRouter } from 'vue-router';
 import TableVue from './components/MenuTable.vue'
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
 import ChangeMenuVue from "@/Pages/Menu/components/ChangeMenu.vue";
-import {ElMessage} from 'element-plus';
+import { ElMessage } from 'element-plus';
+
 
 const store = useStore()
+
 const menuList = ref([])
 const visible = ref(false)
 const showChangeVue = ref(false)
@@ -16,7 +18,9 @@ const isDelete = ref(false)
 const isLoading = ref(false)
 const ChangeMenu = ref();
 provide("visible", visible)
-provide("showChangeVue",showChangeVue)
+provide("showChangeVue", showChangeVue)
+
+const { menuPages } = storeToRefs(store);
 
 
 /**
@@ -43,7 +47,7 @@ function checkButton(selectorList: any) {
 // 删除选择中的节点
 async function deleteSelectByMenuList() {
   isLoading.value = !isLoading.value
-  let {code, message} = await store.deleteManyMenu(menuList.value);
+  let { code, message } = await store.deleteManyMenu(menuList.value);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: '删除成功',
@@ -58,14 +62,20 @@ async function deleteSelectByMenuList() {
   isDelete.value = false
   isLoading.value = !isLoading.value
 }
-async  function  changeMenu(){
-   let  [first]   = toRefs( menuList.value)
-   let firstNode  =   (first as any) 
-   Object.keys(firstNode.value).forEach((key:any)=>{
-    ChangeMenu.value[key]=firstNode.value[key]
-   })
+async function changeMenu() {
+  let [first] = toRefs(menuList.value)
+  let firstNode = (first as any)
 
-   showChangeVue.value = !showChangeVue.value
+  let list = menuPages.value.result.list
+
+  Object.keys(firstNode.value).forEach((key: any) => {
+    ChangeMenu.value[key] = firstNode.value[key]
+  })
+
+  let fatherName = list.find((item: any) => item.menuId == firstNode.value.parentId)
+  ChangeMenu.value["fatherName"] = fatherName.menuName
+
+  showChangeVue.value = !showChangeVue.value
 }
 
 </script>
@@ -73,12 +83,12 @@ async  function  changeMenu(){
   <el-row class="button-wrapper">
     <el-button @click="visible = !visible">新增</el-button>
     <el-button :disabled="(menuList.length < 1)" @click="isDelete = !isDelete">删除</el-button>
-     <el-button :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button>
+    <el-button :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button>
   </el-row>
 
   <TableVue @check="checkButton"></TableVue>
   <CreateMenu :change="visible"></CreateMenu>
-  <ChangeMenuVue ref="ChangeMenu" ></ChangeMenuVue>
+  <ChangeMenuVue ref="ChangeMenu"></ChangeMenuVue>
   <el-dialog v-model="isDelete" title="删除菜单" width="30%" align-center>
     <span>是否删除菜单？</span>
     <template #footer>
