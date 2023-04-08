@@ -14,7 +14,6 @@ import com.jiang.blog.model.pojo.RoleMenu;
 import com.jiang.blog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +34,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     RoleMenuMapper roleMenuMapper;
 
     @Override
-    @CachePut(value = "queryManyRole" ) // 修改时用这个
+    @CachePut(value = "queryManyRole") // 修改时用这个
     public PageInfo queryManyRole(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
@@ -74,6 +73,27 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     @Transactional
+    public int changeRole(Role role, Menu[] menus) {
+        LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
+        boolean result = this.saveOrUpdate(role);
+        query.eq(RoleMenu::getRoleId, role.getRoleId());
+        int count = roleMenuMapper.delete(query);
+        if (result && count > 0) {
+            Arrays.stream(menus).forEach((menu -> {
+                RoleMenu roleMenu = new RoleMenu();
+                roleMenu.setMenuId(menu.getMenuId());
+                roleMenu.setRoleId(role.getRoleId());
+                roleMenuMapper.insert(roleMenu);
+            }));
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    @Override
+    @Transactional
     public Long deleteManyRole(ArrayList<Role> roles) {
         LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
         List<Long> ids = roles.
@@ -90,7 +110,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                     return length;
                 }).count();
         long result = roleMapper.deleteBatchIds(ids);
-        if (result <=0) {
+        if (result <= 0) {
             throw new RuntimeException("删除角色错误");
         }
         return count + result;

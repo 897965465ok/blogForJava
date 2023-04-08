@@ -16,6 +16,10 @@ export const createRole = async (roleAndMenu: any) => {
     let response = await api.post("v1/createRole", roleAndMenu);
     return response.data;
 };
+export const changeRole = async (roleAndMenu: any) => {
+    let response = await api.post("v1/changeRole", roleAndMenu);
+    return response.data;
+};
 
 export const deleteManyRole = async (Roles: any) => {
     let response = await api.post("v1/deleteManyRole", Roles);

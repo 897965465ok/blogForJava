@@ -134,6 +134,13 @@ const isLoading: Ref<boolean> = ref(false);
 const openBox = async (index: number) => {
   dialogTableVisible.value = true;
   funcType.value = index;
+  if(index ==1){
+    Object.keys(form).forEach((item) => {
+      form[item] = RoleList.value[0][item];
+    });
+  }
+
+
 };
 
 // 删除角色
@@ -149,12 +156,22 @@ async function deleteRole() {
   isDelete.value = !isDelete.value;
 }
 
-function changeRole() {
+async function changeRole() {
+  let roleAndResource = {
+    role: form,
+    resource: treeTwo.value.getCheckedNodes(),
+  };
   // 修改选中的文章
+  let {code, message} = await BlogApi.changeRole(roleAndResource);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success("修改角色成功");
+  } else {
+    ElMessage.error("修改角色失败,系统错误");
+  }
+  dialogTableVisible.value = !dialogTableVisible.value;
+  isLoading.value = !isLoading.value;
   dialogTableVisible.value = true;
-  Object.keys(form).forEach((item) => {
-    form[item] = RoleList.value[0][item];
-  });
+
 }
 
 async function creatRole() {
@@ -182,6 +199,7 @@ async function dispatchFunction() {
       break;
     }
     case 1: {
+      changeRole()
       break;
     }
     default: {

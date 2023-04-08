@@ -2,6 +2,7 @@ package com.jiang.blog.config;
 
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.router.SaHttpMethod;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +51,15 @@ public class BlogMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
-        registry.addInterceptor(new SaInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new SaInterceptor(handle -> {
+
+            SaRouter.match("/v1/articles").check(r ->StpUtil.checkPermission("article:list"));
+            SaRouter.match("/v1/article").check(r -> StpUtil.checkPermission("article:plus"));
+
+/*            SaRouter.match(SaHttpMethod.PUT).match("/v1/article").check(r -> StpUtil.checkPermission("article:edit"));
+            SaRouter.match(SaHttpMethod.GET).match("/v1/article").check(r -> StpUtil.checkPermission("article:query"));
+            SaRouter.match(SaHttpMethod.DELETE).match("/v1/article").check(r -> StpUtil.checkPermission("article:delete"));*/
+        })).addPathPatterns("/**");
     }
 
 }

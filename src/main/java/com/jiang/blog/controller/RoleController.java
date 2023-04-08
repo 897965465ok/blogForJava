@@ -55,6 +55,18 @@ public class RoleController {
         }
     }
 
+    @PostMapping("/changeRole")
+    @ApiOperation("修改角色")
+    public ApiRestResponse changeRole(@RequestBody RoleAndMenuVO roleAndMenuVO) {
+
+        int result = roleService.changeRole(roleAndMenuVO.getRole(), roleAndMenuVO.getResource());
+        if (result == 1) {
+            return ApiRestResponse.success();
+        } else {
+            return ApiRestResponse.error(404, "创建失败");
+        }
+    }
+
 
     @PostMapping("/deleteManyRole")
     @ApiOperation("删除角色")

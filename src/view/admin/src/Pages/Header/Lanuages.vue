@@ -44,7 +44,7 @@ function changeLanuage(lang: string) {
 </script>
 
 <template>
-  <div class="lanuages">
+  <el-row class="lanuages">
     <el-dropdown>
       <el-icon>
         <SetUp/>
@@ -56,15 +56,13 @@ function changeLanuage(lang: string) {
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-  </div>
+  </el-row>
 </template>
 
 <style lang='scss' scoped>
 .lanuages {
-
   margin: 0 12px;
   cursor: pointer;
-
   .el-icon {
     font-size: 25px;
   }

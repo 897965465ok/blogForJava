@@ -18,5 +18,7 @@ public interface RoleService extends IService<Role> {
 
     int  createRole(Role role, Menu[] menus);
 
+    int changeRole(Role role, Menu[] menus);
+
     Long deleteManyRole(ArrayList<Role> roles);
 }

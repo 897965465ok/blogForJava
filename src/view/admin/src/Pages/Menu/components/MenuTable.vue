@@ -10,7 +10,7 @@ const pageInfo = ref();
 const columns = ref();
 
 onBeforeMount(async () => {
-  pageInfo.value = await store.queryManyMenu(1, 10)
+  pageInfo.value = await store.queryManyMenu(1, 9999)
   menuList.value = pageInfo.value.result.list
   columns.value = await blogApi.queryMenuTableHeader();
 })

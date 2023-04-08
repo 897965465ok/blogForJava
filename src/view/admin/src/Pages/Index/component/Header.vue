@@ -3,6 +3,9 @@ import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
 import {mapActions} from 'pinia';
 import {useStore} from '@/stores'
 import {useRoute, useRouter} from 'vue-router';
+import ScreenFull from "@/Pages/Header/ScreenFull.vue";
+import Lanuages from "@/Pages/Header/Lanuages.vue";
+import Avatar from "@/Pages/Header/Avatar.vue";
 
 
 /**
