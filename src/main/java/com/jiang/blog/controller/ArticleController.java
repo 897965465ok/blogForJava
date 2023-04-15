@@ -18,14 +18,14 @@ public class ArticleController {
     ArticleService articleService;
 
     @ApiOperation("查询文章列表")
-    @GetMapping("/articles")
+    @GetMapping("/queryManyArticle")
     public ApiRestResponse queryManyArticle(Integer offset, Integer limit) {
         PageInfo pageInfo = articleService.queryManyArticle(offset, limit);
         return ApiRestResponse.success(pageInfo);
     }
 
     @ApiOperation("删除文章")
-    @DeleteMapping("/article")
+    @DeleteMapping("/deleteArticle")
     public ApiRestResponse deleteArticle(@RequestParam(name = "id") Integer id) {
         Integer result = articleService.deleteOneArticle(id);
         if (result == 0) {
@@ -35,7 +35,7 @@ public class ArticleController {
     }
 
     @ApiOperation("查询一篇文章")
-    @GetMapping("/article")
+    @GetMapping("/queryOneArticle")
     public ApiRestResponse queryOneArticle(@RequestParam(name = "id") Integer id) {
         Article article = articleService.queryOneArticle(id);
         if (article == null) {

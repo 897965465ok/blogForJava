@@ -20,20 +20,19 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     @Autowired
     MenuMapper menuMapper;
     @Autowired
     UserRoleMapper userRoleMapper;
 
 
-
     @Override
     public boolean deleteManyMenu(List<Menu> Menus) {
-        List<Long>  ids =  Menus.stream().
-                map( (Menu menu)->menu.getMenuId()).
+        List<Long> ids = Menus.stream().
+                map((Menu menu) -> menu.getMenuId()).
                 collect(Collectors.toList());
-         return this.removeByIds(ids);
+        return this.removeByIds(ids);
     }
 
 
@@ -53,10 +52,8 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
     @Override
     @CachePut(value = "queryMenuTableHeader")
     public MenuTableHeader queryMenuTableHeader() {
-        return   new MenuTableHeader();
+        return new MenuTableHeader();
     }
-
-
 
 
     @Override
@@ -74,44 +71,33 @@ public class MenuServiceImpl  extends ServiceImpl<MenuMapper,Menu> implements Me
     @CachePut(value = "getRouter")
     public List getRouter() {
         // 根据用户生成路由器
-     /*   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-            Long userid = loginUser.getUser().getUserId();
-        // 先查 用户ID查出角色(user_role) -》
-        loginUser.getPermissions();*/
-        LambdaQueryWrapper<Menu> query =  new LambdaQueryWrapper();
-        query.eq(Menu::getMenuType,"M");
-        List<Menu> menus =   this.list(query);
-
-        LinkedList<Map>  treeMenus = new LinkedList<>();
-        for (Menu menu: menus) {
-           Map<String,Object>  result =   generatorTreeMenu(menu);
-           treeMenus.add(result);
-        }
-
-        return  treeMenus;
+        LambdaQueryWrapper<Menu> query = new LambdaQueryWrapper();
+        query.eq(Menu::getMenuType, "M");
+        List<Menu> menus = menuMapper.selectList(query);
+        return generatorTreeMenu(menus);
     }
 
-      private   Map generatorTreeMenu(Menu menu){
-        LambdaQueryWrapper<Menu> query =  new LambdaQueryWrapper();
-        query.eq(Menu::getParentId,menu.getMenuId());
-        Map<String, Object> menuMap = BeanUtil.beanToMap(menu);
-        menuMap.put("children", menuMapper.selectList(query));
-        return  menuMap;
+    private List<Map> generatorTreeMenu(List<Menu> menus) {
+        return menus.stream().map((Menu menu) -> {
+            LambdaQueryWrapper<Menu> query = new LambdaQueryWrapper();
+            query.eq(Menu::getParentId, menu.getMenuId());
+            List<Map> children = generatorTreeMenu(menuMapper.selectList(query));
+            Map<String, Object> complete = BeanUtil.beanToMap(menu);
+            complete.put("children", children);
+            return complete;
+        }).collect(Collectors.toList());
     }
 
 
     @Override
-    public  boolean deleteMenuByOne(String id){
-        return  this.removeById(id);
+    public boolean deleteMenuByOne(String id) {
+        return this.removeById(id);
     }
 
     @Override
-    public  boolean createMenu(Menu menu){
-        return  this.saveOrUpdate(menu);
+    public boolean createMenu(Menu menu) {
+        return this.saveOrUpdate(menu);
     }
-
-
 
 
 }

@@ -6,14 +6,14 @@ export const createArticle = async (from: any) => {
     return response;
 };
 export const getArticle = async (offset: any, limit: any) => {
-    let { data } = await api.get("v1/articles", {
+    let { data } = await api.get("v1/queryManyArticle", {
         params: { offset: offset, limit: limit },
     });
     return data;
 };
 
 export const deleteArticle = async (id: any) => {
-    let { data } = await api.delete("v1/articles", { params: { id } });
+    let { data } = await api.delete("v1/deleteArticle", { params: { id } });
     return data;
 };
 

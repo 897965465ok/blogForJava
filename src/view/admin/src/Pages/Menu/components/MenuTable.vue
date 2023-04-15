@@ -1,7 +1,7 @@
 <script lang='ts' setup>
-import { isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
-import { useStore } from '@/stores/menu'
-import { useRoute, useRouter } from 'vue-router';
+import {isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
+import {useStore} from '@/stores/menu'
+import {useRoute, useRouter} from 'vue-router';
 import * as blogApi from '@/api/BlogApi';
 
 const menuList = ref();
@@ -62,8 +62,9 @@ async function jump(current: number) {
     <el-table :data="menuList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
 
-      <el-table-column v-for="(item,index) in columns" :key="index" :label="item" :prop="item" :show-overflow-tooltip="true"
-        align="center" fixed="right">
+      <el-table-column v-for="(item,index) in columns" :key="index" :label="item" :prop="item"
+                       :show-overflow-tooltip="true"
+                       align="center" fixed="right">
         <template v-slot:header="{ column, $index }">
           <div class="column">
             {{ column.property }}
@@ -72,18 +73,18 @@ async function jump(current: number) {
 
         <template v-slot:default="{ row, column }">
           <div class="column">
-    
+
             {{ row[column.rawColumnKey] }}
-          
+
           </div>
         </template>
       </el-table-column>
-      
+
     </el-table>
 
     <div class="demo-pagination-block">
       <el-pagination v-if="pageInfo" @current-change="jump" :page-size="pageInfo.result.pageSize"
-        :total="pageInfo.result.total" layout="total, prev, pager, next, jumper" />
+                     :total="pageInfo.result.total" layout="total, prev, pager, next, jumper"/>
     </div>
 
   </div>
