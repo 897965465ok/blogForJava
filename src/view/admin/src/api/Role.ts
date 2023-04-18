@@ -30,3 +30,8 @@ export const getAllRoles = async() =>{
     let response = await api.post("v1/getAllRoles");
     return response.data;
 }
+
+export const getPermsByRoleId = async( role:any) =>{
+    let response = await api.post("v1/getPermsByRoleId",role);
+    return response.data;
+}

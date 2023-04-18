@@ -13,12 +13,13 @@ import {
   type Ref,
   nextTick,
 } from "vue";
-import { storeToRefs } from "pinia";
-import { useStore } from "@/stores";
-import { useRoute, useRouter } from "vue-router";
+import {storeToRefs} from "pinia";
+import {useStore} from "@/stores";
+import {useRoute, useRouter} from "vue-router";
 import TableVue from "./RoleTable.vue";
 import * as BlogApi from "@/api/BlogApi";
-import { ElMessage } from "element-plus";
+import {ElMessage} from "element-plus";
+import {getPermsByRoleId} from "@/api/BlogApi";
 
 /**
  * 仓库
@@ -28,7 +29,9 @@ const store = useStore();
 // const { treeMap } = storeToRefs(store);
 
 const treeMap = ref([]);
+
 const treeTwo = ref();
+
 const props = {
   value: "menuId", //   表头 id
   label: "menuName", // 表头 内容
@@ -62,6 +65,7 @@ const RoleList = ref([]);
 const dialogTableVisible: Ref<boolean> = ref(false);
 
 function checkButton(selectorList: any) {
+
   RoleList.value = selectorList;
 }
 
@@ -81,7 +85,7 @@ const form: any = reactive({
 });
 
 const keys: any[] = [];
-const strictly = ref(true);
+const strictly = ref(false);
 
 function GeneratorKeys(treeData: Array<Object>) {
   treeData.forEach((item: any) => {
@@ -130,23 +134,25 @@ const linkage = (isCheck: boolean) => {
 const funcType: Ref<number> = ref(0);
 const isLoading: Ref<boolean> = ref(false);
 
+const defaultKeys = ref([])
+
 // 打开窗口
 const openBox = async (index: number) => {
   dialogTableVisible.value = true;
   funcType.value = index;
-  if(index ==1){
+  if (index == 1) {
+    let {result} = await BlogApi.getPermsByRoleId(RoleList.value[0]);
+    result.forEach((item:any)=> {treeTwo.value.setChecked(item.menuId,true)});
     Object.keys(form).forEach((item) => {
       form[item] = RoleList.value[0][item];
     });
   }
-
-
 };
 
 // 删除角色
 async function deleteRole() {
   isLoading.value = !isLoading.value;
-  let { code, message } = await BlogApi.deleteManyRole(RoleList.value);
+  let {code, message} = await BlogApi.deleteManyRole(RoleList.value);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success("删除角色成功");
   } else {
@@ -179,7 +185,7 @@ async function creatRole() {
     role: form,
     resource: treeTwo.value.getCheckedNodes(),
   };
-  let { code, message } = await BlogApi.createRole(roleAndResource);
+  let {code, message} = await BlogApi.createRole(roleAndResource);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success("创建角色成功");
   } else {
@@ -245,13 +251,13 @@ async function dispatchFunction() {
           <!--          -->
           <div>
             <el-form-item label="角色名称">
-              <el-input v-model="form.roleName" />
+              <el-input v-model="form.roleName"/>
             </el-form-item>
             <el-form-item label=" 权限字符">
-              <el-input v-model="form.roleKey" />
+              <el-input v-model="form.roleKey"/>
             </el-form-item>
             <el-form-item label="角色顺序">
-              <el-input-number v-model="form.roleSort" :min="1" />
+              <el-input-number v-model="form.roleSort" :min="1"/>
             </el-form-item>
             <el-form-item label="状态">
               <el-radio-group v-model="form.status">
@@ -262,13 +268,17 @@ async function dispatchFunction() {
           </div>
           <div>
             <el-form-item label="菜单权限">
-              <el-checkbox label="展开/折叠" @change="allOpen" />
-              <el-checkbox label="全选/全不选" @change="allSelector" />
-              <el-checkbox label="父子联动" @change="linkage" />
+              <el-checkbox label="展开/折叠" @change="allOpen"/>
+              <el-checkbox label="全选/全不选" @change="allSelector"/>
+              <el-checkbox  :checked="true" label="父子联动" @change="linkage"/>
             </el-form-item>
 
-            <el-tree-v2 v-if="treeMap" ref="treeTwo" :data="treeMap" :props="props" show-checkbox :height="100"
-              :check-strictly="strictly">
+            <el-tree-v2
+
+                v-if="treeMap" ref="treeTwo"
+                :data="treeMap" :props="props"
+                show-checkbox :height="100"
+                :check-strictly="strictly">
             </el-tree-v2>
           </div>
         </div>

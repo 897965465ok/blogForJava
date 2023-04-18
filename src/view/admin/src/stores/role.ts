@@ -7,7 +7,6 @@ import * as BlogApi from "@/api/BlogApi";
 export const useStore = defineStore("roleStore", {
   state: () => {
     return {
-
       RolePages: {},
     };
   },

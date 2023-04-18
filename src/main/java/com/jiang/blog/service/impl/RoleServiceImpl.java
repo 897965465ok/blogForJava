@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.model.VO.RoleTableHeader;
+import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.dao.RoleMapper;
 import com.jiang.blog.model.dao.RoleMenuMapper;
 import com.jiang.blog.model.pojo.Menu;
@@ -32,6 +33,25 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     RoleMenuMapper roleMenuMapper;
+    @Autowired
+    MenuMapper menuMapper;
+
+    @Override
+    @CachePut(value = "getPermsByRoleId") // 修改时用这个
+    public List getPermsByRoleId(Role role) {
+        LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
+        query.eq(RoleMenu::getRoleId, role.getRoleId());
+        List<Long> menuId = roleMenuMapper.selectList(query).
+                stream().
+                map((RoleMenu item) -> item.getMenuId()).
+                collect(Collectors.toList());
+        return menuId.
+                stream().
+                map(id -> menuMapper.selectById(id)).
+                distinct().
+                collect(Collectors.toList());
+    }
+
 
     @Override
     @CachePut(value = "queryManyRole") // 修改时用这个

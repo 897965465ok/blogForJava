@@ -93,14 +93,14 @@ public class BlogMvcConfig implements WebMvcConfigurer {
             SaRouter.match(SaHttpMethod.POST).match("/v1/update").check(r -> StpUtil.checkPermission("tags:edit"));
 
             /*用户管理*/
+
+            SaRouter.match(SaHttpMethod.POST).match("/v1/register").check(r -> StpUtil.checkPermission("user:plus"));
             SaRouter.match(SaHttpMethod.POST).match("/v1/userUpdate").check(r -> StpUtil.checkPermission("user:edit"));
             SaRouter.match(SaHttpMethod.POST).match("/v1/deleteManyUser").check(r -> StpUtil.checkPermission("user:delete"));
-            SaRouter.match(SaHttpMethod.GET).match("/v1/queryUserTableHeader").check(r -> StpUtil.checkPermission("user:delete"));
+            SaRouter.match(SaHttpMethod.GET).match("/v1/queryUserTableHeader").check(r -> StpUtil.checkPermission("user:query"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/queryManyUser").check(r -> StpUtil.checkPermission("user:delete"));
             SaRouter.match(SaHttpMethod.POST).match("/v1/queryRolesByUserId").check(r -> StpUtil.checkPermission("tags:query"));
             SaRouter.match(SaHttpMethod.POST).match("/v1/getInfo").check(r -> StpUtil.checkPermission("tags:query"));
-
-
         })).addPathPatterns("/**");
     }
 

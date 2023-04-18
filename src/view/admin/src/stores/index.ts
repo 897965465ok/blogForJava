@@ -4,7 +4,7 @@ import * as BlogApi from "@/api/BlogApi";
 // $reset() 重置
 // $patch 批量修改
 // $state 替换
-export const useStore = defineStore("store", {
+export const useStore = defineStore("index", {
   state: () => {
     return {
       sideSwitch: false,

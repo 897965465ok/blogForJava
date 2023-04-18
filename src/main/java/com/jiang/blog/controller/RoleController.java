@@ -82,12 +82,20 @@ public class RoleController {
     @PostMapping("/getAllRoles")
     @ApiOperation("获取多角色")
     public ApiRestResponse getAllRoles() {
-       List<Role>  roles =  roleService.list();
+        List<Role> roles = roleService.list();
         if (!roles.isEmpty()) {
             return ApiRestResponse.success(roles);
         } else {
             return ApiRestResponse.error(400, "没有角色");
         }
     }
+
+    @PostMapping("/getPermsByRoleId")
+    @ApiOperation("根据角色ID获取权限字段")
+    public ApiRestResponse getPermsByRoleId(@RequestBody Role role) {
+        List permsList = roleService.getPermsByRoleId(role);
+        return ApiRestResponse.success(permsList);
+    }
+
 
 }
