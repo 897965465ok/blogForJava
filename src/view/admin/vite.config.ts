@@ -15,6 +15,7 @@ export default defineConfig({
         Components({
             resolvers: [ElementPlusResolver()],
         }),],
+    base:'./', // 解决首页白屏问题
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))

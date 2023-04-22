@@ -1,5 +1,4 @@
 # class
-
 ``` javascript
 super作为函数
 super作为对象

@@ -44,15 +44,14 @@
 	fmt.Println(One)   // [200 2 3 4 5]
 ```
 
-### 没有修改前
-
+###没有修改前
 ![](https://upload-images.jianshu.io/upload_images/7265016-8b41bd6f773095b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240#align=left&display=inline&height=141&margin=%5Bobject%20Object%5D&originHeight=141&originWidth=641&status=done&style=none&width=641)
 
 ### 修改后
 
 ![](https://upload-images.jianshu.io/upload_images/7265016-29044b01f4cf7146.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240#align=left&display=inline&height=71&margin=%5Bobject%20Object%5D&originHeight=71&originWidth=659&status=done&style=none&width=659)
 
-##### 由此得知数组和切片存在映射关系
+#####由此得知数组和切片存在映射关系
 
 # 分分合合 有时切片也会抛弃映射的数组
 

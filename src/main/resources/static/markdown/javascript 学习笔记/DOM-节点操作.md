@@ -76,7 +76,7 @@ var tmp = document.getElementById("idName");
  tmp.src=www.baidu.com;
 ```
 
-### 获取子节点和兄弟或者父节点
+###获取子节点和兄弟或者父节点
 
 **检查是否有子节点hasChildNode 如果有返回true否则返回false**
 
@@ -106,7 +106,7 @@ var tmp = document.getElementById("idName");
 
 `document.getElementsByTagName("li").previousSbiling`
 
-### 动态创建HTML内容
+###动态创建HTML内容
 
 **创建元素creatElement**
 
@@ -136,6 +136,6 @@ var tmp = document.getElementById("idName");
 
 `p_count.cloneNode(true)`
 
-### 文本写入
+###文本写入
 
 `document.write("<p>哈哈哈哈</p>") ,Element.innerHTML`

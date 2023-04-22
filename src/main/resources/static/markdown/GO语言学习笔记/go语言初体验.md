@@ -32,16 +32,19 @@ func main (){ //主函数
 
 #### 布尔类型：
 
+
 - 布尔型的值只可以是常量 true 或者 false 例子：var b bool = true
 
 #### 字符串类型:
 
-- string 例子：var a string = "我是字符串类型"
+
+- string  例子：var a string = "我是字符串类型"
 
 #### 派生类型:
 
-- 指针类型 (Pointer)  例子： var a  *int = &b
-- 数组类型 Array 例子:  var a [10]int{1,2,3,4,5}
+
+- 指针类型 (Pointer)  例子： var a  *int = &b
+- 数组类型 Array    例子:  var a [10]int{1,2,3,4,5}
 - 结构化类型(struct)
 - Channel 类型
 - 函数类型 (function)
@@ -50,6 +53,7 @@ func main (){ //主函数
 - Map 类型
 
 #### 数字类型:
+
 
 - uint8 无符号 8 位整型 (0 到 255)
 - uint16 无符号 16 位整型 (0 到 65535)
@@ -60,7 +64,11 @@ func main (){ //主函数
 - int32 有符号 32 位整型 (-2147483648 到 2147483
 - int64 有符号 64 位整型 (-9223372036854775808 到 9223372036854775807)
 
-#### 浮点型
+
+ #### 浮点型
+
+
+
 
 - float32 IEEE-754 32位浮点型数
 - float64 IEEE-754 64位浮点型数
@@ -68,6 +76,7 @@ func main (){ //主函数
 - complex128 64 位实数和虚数
 
 #### 其他数字类型
+
 
 - byte 类似 uint8
 - rune 类似 int32

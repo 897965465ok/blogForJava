@@ -1,6 +1,6 @@
 # v-on-methods 事件
 
-# vue 事件
+#vue 事件
 
 ```js
 <div id="App">

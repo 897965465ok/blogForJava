@@ -21,7 +21,7 @@ export const getComments = async articleId => {
   }
 };
 export const getArticle = async (offset, limit) => {
-  return await this.$api.get("v1/articles", {
+  return await this.$api.get("v1/queryManyArticle", {
     params: { offset: offset, limit: limit }
   }).data.result;
 };

@@ -2,7 +2,8 @@
 
 ---
 
-# Cmd Markdown 公式指导手册
+
+#Cmd Markdown 公式指导手册
 
 标签： Tutorial
 
@@ -34,17 +35,17 @@
 
 行中公式可以用如下方法表示：
 
-:        $ 数学公式 $
+:        $ 数学公式 $
 
 独立公式可以用如下方法表示：
 
-:        $$ 数学公式 $$
+:        $$ 数学公式 $$
 
 自动编号的公式可以用如下方法表示：
 
-:    若需要手动编号，参见 [大括号和行标的使用](#14%E5%A4%A7%E6%8B%AC%E5%8F%B7%E5%92%8C%E8%A1%8C%E6%A0%87%E7%9A%84%E4%BD%BF%E7%94%A8) 。
+:    若需要手动编号，参见 [大括号和行标的使用](#14%E5%A4%A7%E6%8B%AC%E5%8F%B7%E5%92%8C%E8%A1%8C%E6%A0%87%E7%9A%84%E4%BD%BF%E7%94%A8) 。
 
-:       \begin{equation}
+:       \begin{equation}
 
 数学公式
 
@@ -60,27 +61,23 @@
 $ J_\alpha(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha} \text {，行内公式示例} $
 ```
 
--
+- 
+显示：$ J_\alpha(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha} \text {，行内公式示例} $
 
-显示：$ J_\alpha(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m +
-\alpha} \text {，行内公式示例} $
-
--
-
+- 
 例子：
+
 
 ```
 $$ J_\alpha(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha} \text {，独立公式示例} $$
 ```
 
--
+- 
+显示：$$ J_\alpha(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m + \alpha} \text {，独立公式示例} $$
 
-显示：$$ J_\alpha(x) = \sum_{m=0}^\infty \frac{(-1)^m}{m! \Gamma (m + \alpha + 1)} {\left({ \frac{x}{2} }\right)}^{2m +
-\alpha} \text {，独立公式示例} $$
-
--
-
+- 
 例子：
+
 
 ```
 在公式 \eqref{eq:sample} 中，我们看到了这个被自动编号的公式。
@@ -103,7 +100,7 @@ E=mc^2 \text{，自动编号公式示例}
 
 \end{equation}
 
-## 2．如何输入上下标
+##2．如何输入上下标
 
 `^` 表示上标, `_` 表示下标。如果上下标的内容多于一个字符，需要用 `{}` 将这些内容括成一个整体。上下标可以嵌套，也可以同时使用。
 
@@ -125,7 +122,7 @@ $$ \sideset{^1_2}{^3_4}\bigotimes $$
 
 - 显示：$$\sideset{3_4}\bigotimes$$
 
-## 3．如何输入括号和分隔符
+##3．如何输入括号和分隔符
 
 `()`、`[]` 和 `|` 表示符号本身，使用 `\{\}` 来表示 `{}` 。当要显示大号的括号或分隔符时，要用 `\left` 和 `\right` 命令。
 
@@ -137,6 +134,7 @@ $$ \sideset{^1_2}{^3_4}\bigotimes $$
 | \\lceil | ![](https://g.yuque.com/gr/latex?%5Clceil#card=math&code=%5Clceil) | \\rceil | ![](https://g.yuque.com/gr/latex?%5Crceil#card=math&code=%5Crceil) |
 | \\lfloor | ![](https://g.yuque.com/gr/latex?%5Clfloor#card=math&code=%5Clfloor) | \\rfloor | ![](https://g.yuque.com/gr/latex?%5Crfloor#card=math&code=%5Crfloor) |
 | \\lbrace | ![](https://g.yuque.com/gr/latex?%5Clbrace#card=math&code=%5Clbrace) | \\rbrace | ![](https://g.yuque.com/gr/latex?%5Crbrace#card=math&code=%5Crbrace) |
+
 
 - 例子：
 
@@ -156,7 +154,7 @@ $$ \left. \frac{{\rm d}u}{{\rm d}x} \right| _{x=0} $$
 
 - 显示：$$ \left. \frac{{\rm d}u}{{\rm d}x} \right| _{x=0} $$
 
-## 4．如何输入分数
+##4．如何输入分数
 
 通常使用 `\frac {分子} {分母}` 命令产生一个分数，分数可嵌套。
 
@@ -172,7 +170,7 @@ $$\frac{a-1}{b-1} \quad and \quad {a+1\over b+1}$$
 
 - 显示：$$\frac{a-1}{b-1} \quad and \quad {a+1\over b+1}$$
 
-## 5．如何输入开方
+##5．如何输入开方
 
 使用 `\sqrt [根指数，省略时为2] {被开方数}` 命令输入开方。
 
@@ -184,7 +182,7 @@ $$\sqrt{2} \quad and \quad \sqrt[n]{3}$$
 
 - 显示：$$\sqrt{2} \quad and \quad \sqrt[n]{3}$$
 
-## 6．如何输入省略号
+##6．如何输入省略号
 
 数学公式中常见的省略号有两种，`\ldots` 表示与文本底线对齐的省略号，`\cdots` 表示与文本中线对齐的省略号。
 
@@ -196,7 +194,7 @@ $$f(x_1,x_2,\underbrace{\ldots}_{\rm ldots} ,x_n) = x_1^2 + x_2^2 + \underbrace{
 
 - 显示：$$f(x_1,x_2,\underbrace{\ldots}_{\rm ldots} ,x_n) = x_1^2 + x_2^2 + \underbrace{\cdots}_{\rm cdots} + x_n^2$$
 
-## 7．如何输入矢量
+##7．如何输入矢量
 
 使用 `\vec{矢量}` 来自动产生一个矢量。也可以使用 `\overrightarrow` 等命令自定义字母上方的符号。
 
@@ -206,13 +204,12 @@ $$f(x_1,x_2,\underbrace{\ldots}_{\rm ldots} ,x_n) = x_1^2 + x_2^2 + \underbrace{
 $$\vec{a} \cdot \vec{b}=0$$
 ```
 
--
-
+- 
 显示：$$\vec{a} \cdot \vec{b}=0$$
 
--
-
+- 
 例子：
+
 
 ```
 $$\overleftarrow{xy} \quad and \quad \overleftrightarrow{xy} \quad and \quad \overrightarrow{xy}$$
@@ -220,7 +217,7 @@ $$\overleftarrow{xy} \quad and \quad \overleftrightarrow{xy} \quad and \quad \ov
 
 - 显示：$$\overleftarrow{xy} \quad and \quad \overleftrightarrow{xy} \quad and \quad \overrightarrow{xy}$$
 
-## 8．如何输入积分
+##8．如何输入积分
 
 使用 `\int_积分下限^积分上限 {被积表达式}` 来输入一个积分。
 
@@ -234,7 +231,7 @@ $$\int_0^1 {x^2} \,{\rm d}x$$
 
 本例中 `\,` 和 `{\rm d}` 部分可省略，但建议加入，能使式子更美观。
 
-## 9．如何输入极限运算
+##9．如何输入极限运算
 
 使用 `\lim_{变量 \to 表达式} 表达式` 来输入一个极限。如有需求，可以更改 `\to` 符号至任意符号。
 
@@ -246,7 +243,7 @@ $$ \lim_{n \to +\infty} \frac{1}{n(n+1)} \quad and \quad \lim_{x\leftarrow{示�
 
 显示：$$\lim_{n \to +\infty} \frac{1}{n(n+1)} \quad and \quad \lim_{x\leftarrow{示例}} \frac{1}{n(n+1)}$$
 
-## 10．如何输入累加、累乘运算
+##10．如何输入累加、累乘运算
 
 使用 `\sum_{下标表达式}^{上标表达式} {累加表达式}` 来输入一个累加。
 
@@ -262,7 +259,7 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 
 - 显示：$$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad and \quad \bigcup_{i=1}^{2} R$$
 
-## 11．如何输入希腊字母
+##11．如何输入希腊字母
 
 输入 `\小写希腊字母英文全称` 和 `\首字母大写希腊字母英文全称` 来分别输入小写和大写希腊字母。
 
@@ -283,6 +280,7 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\phi | ![](https://g.yuque.com/gr/latex?%5Cphi#card=math&code=%5Cphi) | \\Phi | ![](https://g.yuque.com/gr/latex?%5CPhi#card=math&code=%5CPhi) | \\chi | ![](https://g.yuque.com/gr/latex?%5Cchi#card=math&code=%5Cchi) | X | ![](https://g.yuque.com/gr/latex?X#card=math&code=X) |
 | \\psi | ![](https://g.yuque.com/gr/latex?%5Cpsi#card=math&code=%5Cpsi) | \\Psi | ![](https://g.yuque.com/gr/latex?%5CPsi#card=math&code=%5CPsi) | \\omega | ![](https://g.yuque.com/gr/latex?%5Comega#card=math&code=%5Comega) | \\Omega | ![](https://g.yuque.com/gr/latex?%5COmega#card=math&code=%5COmega) |
 
+
 **部分字母有变量专用形式，以 `\var-` 开头。**
 
 | 小写形式 | 大写形式 | 变量形式 | 显示 |
@@ -293,14 +291,16 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\sigma | \\Sigma | \\varsigma | ![](https://g.yuque.com/gr/latex?%5Csigma%20%5Cmid%20%5CSigma%20%5Cmid%20%5Cvarsigma#card=math&code=%5Csigma%20%5Cmid%20%5CSigma%20%5Cmid%20%5Cvarsigma) |
 | \\phi | \\Phi | \\varphi | ![](https://g.yuque.com/gr/latex?%5Cphi%20%5Cmid%20%5CPhi%20%5Cmid%20%5Cvarphi#card=math&code=%5Cphi%20%5Cmid%20%5CPhi%20%5Cmid%20%5Cvarphi) |
 
-## 12．如何输入其它特殊字符
+
+##12．如何输入其它特殊字符
 
 > **若需要显示更大或更小的字符，在符号前插入 `\large` 或 `\small` 命令。**
 
 
 > 若找不到需要的符号，使用 [![](https://g.yuque.com/gr/latex?%5Crm%7BDetexify%5E2%7D#card=math&code=%5Crm%7BDetexify%5E2%7D)](http://detexify.kirelabs.org/classify.html) 来画出想要的符号。
 
-### (1)．关系运算符
+
+###(1)．关系运算符
 
 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -310,7 +310,8 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\geq | ![](https://g.yuque.com/gr/latex?%5Cgeq#card=math&code=%5Cgeq) | \\neq | ![](https://g.yuque.com/gr/latex?%5Cneq#card=math&code=%5Cneq) | \\approx | ![](https://g.yuque.com/gr/latex?%5Capprox#card=math&code=%5Capprox) | \\equiv | ![](https://g.yuque.com/gr/latex?%5Cequiv#card=math&code=%5Cequiv) |
 | \\sum | ![](https://g.yuque.com/gr/latex?%5Csum#card=math&code=%5Csum) | \\prod | ![](https://g.yuque.com/gr/latex?%5Cprod#card=math&code=%5Cprod) | \\coprod | ![](https://g.yuque.com/gr/latex?%5Ccoprod#card=math&code=%5Ccoprod) | \\backslash | ![](https://g.yuque.com/gr/latex?%5Cbackslash#card=math&code=%5Cbackslash) |
 
-### (2)．集合运算符
+
+###(2)．集合运算符
 
 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -319,13 +320,15 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\supseteq | ![](https://g.yuque.com/gr/latex?%5Csupseteq#card=math&code=%5Csupseteq) | \\bigcap | ![](https://g.yuque.com/gr/latex?%5Cbigcap#card=math&code=%5Cbigcap) | \\bigcup | ![](https://g.yuque.com/gr/latex?%5Cbigcup#card=math&code=%5Cbigcup) |
 | \\bigvee | ![](https://g.yuque.com/gr/latex?%5Cbigvee#card=math&code=%5Cbigvee) | \\bigwedge | ![](https://g.yuque.com/gr/latex?%5Cbigwedge#card=math&code=%5Cbigwedge) | \\biguplus | ![](https://g.yuque.com/gr/latex?%5Cbiguplus#card=math&code=%5Cbiguplus) |
 
-### (3)．对数运算符
+
+###(3)．对数运算符
 
 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | \\log | ![](https://g.yuque.com/gr/latex?%5Clog#card=math&code=%5Clog) | \\lg | ![](https://g.yuque.com/gr/latex?%5Clg#card=math&code=%5Clg) | \\ln | ![](https://g.yuque.com/gr/latex?%5Cln#card=math&code=%5Cln) |
 
-### (4)．三角运算符
+
+###(4)．三角运算符
 
 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -333,7 +336,8 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\sin | ![](https://g.yuque.com/gr/latex?%5Csin#card=math&code=%5Csin) | \\cos | ![](https://g.yuque.com/gr/latex?%5Ccos#card=math&code=%5Ccos) | \\tan | ![](https://g.yuque.com/gr/latex?%5Ctan#card=math&code=%5Ctan) |
 | \\csc | ![](https://g.yuque.com/gr/latex?%5Ccsc#card=math&code=%5Ccsc) | \\sec | ![](https://g.yuque.com/gr/latex?%5Csec#card=math&code=%5Csec) | \\cot | ![](https://g.yuque.com/gr/latex?%5Ccot#card=math&code=%5Ccot) |
 
-### (5)．微积分运算符
+
+###(5)．微积分运算符
 
 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -341,7 +345,8 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\iiiint | ![](https://g.yuque.com/gr/latex?%5Ciiiint#card=math&code=%5Ciiiint) | \\oint | ![](https://g.yuque.com/gr/latex?%5Coint#card=math&code=%5Coint) | \\prime | ![](https://g.yuque.com/gr/latex?%5Cprime#card=math&code=%5Cprime) |
 | \\lim | ![](https://g.yuque.com/gr/latex?%5Clim#card=math&code=%5Clim) | \\infty | ![](https://g.yuque.com/gr/latex?%5Cinfty#card=math&code=%5Cinfty) | \\nabla | ![](https://g.yuque.com/gr/latex?%5Cnabla#card=math&code=%5Cnabla) |
 
-### (6)．逻辑运算符
+
+###(6)．逻辑运算符
 
 | 输入 | 显示 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -349,7 +354,8 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\forall | ![](https://g.yuque.com/gr/latex?%5Cforall#card=math&code=%5Cforall) | \\exists | ![](https://g.yuque.com/gr/latex?%5Cexists#card=math&code=%5Cexists) | \\not\\subset | ![](https://g.yuque.com/gr/latex?%5Cnot%5Csubset#card=math&code=%5Cnot%5Csubset) |
 | \\not< | ![](https://g.yuque.com/gr/latex?%5Cnot%3C#card=math&code=%5Cnot%3C) | \\not> | ![](https://g.yuque.com/gr/latex?%5Cnot%3E#card=math&code=%5Cnot%3E) | \\not= | ![](https://g.yuque.com/gr/latex?%5Cnot%3D#card=math&code=%5Cnot%3D) |
 
-### (7)．戴帽符号
+
+###(7)．戴帽符号
 
 | 输入 | 显示 | 输入 | 显示 |
 | :---: | :---: | :---: | :---: |
@@ -358,7 +364,8 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\check{x} | ![](https://g.yuque.com/gr/latex?%5Ccheck%7Bx%7D#card=math&code=%5Ccheck%7Bx%7D) | \\breve{y} | ![](https://g.yuque.com/gr/latex?%5Cbreve%7By%7D#card=math&code=%5Cbreve%7By%7D) |
 | \\grave{x} | ![](https://g.yuque.com/gr/latex?%5Cgrave%7Bx%7D#card=math&code=%5Cgrave%7Bx%7D) | \\acute{y} | ![](https://g.yuque.com/gr/latex?%5Cacute%7By%7D#card=math&code=%5Cacute%7By%7D) |
 
-### (8)．连线符号
+
+###(8)．连线符号
 
 | 输入 | 显示 |
 | :---: | :---: |
@@ -377,10 +384,10 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\underbrace{a\\cdot a\\cdots a}_{b\\text{ times}} | ![](https://g.yuque.com/gr/latex?%5Cunderbrace%7Ba%5Ccdot%20a%5Ccdots%20a%7D_%7Bb%5Ctext%7B%20times%7D%7D#card=math&code=%5Cunderbrace%7Ba%5Ccdot%20a%5Ccdots%20a%7D_%7Bb%5Ctext%7B%20times%7D%7D) |
 | \\underrightarrow{1℃/min} | ![](https://g.yuque.com/gr/latex?%5Cunderrightarrow%7B1%E2%84%83%2Fmin%7D#card=math&code=%5Cunderrightarrow%7B1%E2%84%83%2Fmin%7D) |
 
-### (9)．箭头符号
 
--
+###(9)．箭头符号
 
+- 
 推荐使用符号：
 
 |输入|显示|输入|显示|输入|显示|
@@ -391,8 +398,7 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 
 |\implies|![](https://g.yuque.com/gr/latex?%5Cimplies#card=math&code=%5Cimplies)|\iff|![](https://g.yuque.com/gr/latex?%5Ciff#card=math&code=%5Ciff)|\impliedby|![](https://g.yuque.com/gr/latex?%5Cimpliedby#card=math&code=%5Cimpliedby)|
 
--
-
+- 
 其它可用符号：
 
 |输入|显示|输入|显示|
@@ -415,10 +421,10 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 
 |\longleftrightarrow|![](https://g.yuque.com/gr/latex?%5Clongleftrightarrow#card=math&code=%5Clongleftrightarrow)|\Longleftrightarrow|![](https://g.yuque.com/gr/latex?%5CLongleftrightarrow#card=math&code=%5CLongleftrightarrow)|
 
-## 13．如何进行字体转换
 
-若要对公式的某一部分字符进行字体转换，可以用 `{\字体 {需转换的部分字符}}` 命令，其中 `\字体`
-部分可以参照下表选择合适的字体。一般情况下，公式默认为意大利体 ![](https://g.yuque.com/gr/latex?italic#card=math&code=italic) 。
+##13．如何进行字体转换
+
+若要对公式的某一部分字符进行字体转换，可以用 `{\字体 {需转换的部分字符}}` 命令，其中 `\字体` 部分可以参照下表选择合适的字体。一般情况下，公式默认为意大利体 ![](https://g.yuque.com/gr/latex?italic#card=math&code=italic) 。
 
 示例中 **全部大写** 的字体仅大写可用。
 
@@ -430,6 +436,7 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 | \\sf | 等线体 | ![](https://g.yuque.com/gr/latex?%5Csf%7BSample%7D#card=math&code=%5Csf%7BSample%7D) | \\scr | 手写体 | ![](https://g.yuque.com/gr/latex?%5Cscr%7BSAMPLE%7D#card=math&code=%5Cscr%7BSAMPLE%7D) |
 | \\tt | 打字机体 | ![](https://g.yuque.com/gr/latex?%5Ctt%7BSample%7D#card=math&code=%5Ctt%7BSample%7D) |  |  |  |
 | \\frak | 旧德式字体 | ![](https://g.yuque.com/gr/latex?%5Cfrak%7BSample%7D#card=math&code=%5Cfrak%7BSample%7D) |  |  |  |
+
 
 转换字体十分常用，例如在积分中：
 
@@ -455,13 +462,11 @@ $$\sum_{i=1}^n \frac{1}{i^2} \quad and \quad \prod_{i=1}^n \frac{1}{i^2} \quad a
 
 \end{array}
 
-注意比较两个式子间 ![](https://g.yuque.com/gr/latex?dx#card=math&code=dx)
-与 ![](https://g.yuque.com/gr/latex?%7B%5Crm%20d%7D%20x#card=math&code=%7B%5Crm%20d%7D%20x) 的不同。
+注意比较两个式子间 ![](https://g.yuque.com/gr/latex?dx#card=math&code=dx) 与 ![](https://g.yuque.com/gr/latex?%7B%5Crm%20d%7D%20x#card=math&code=%7B%5Crm%20d%7D%20x) 的不同。
 
-使用 `\operatorname`
-命令也可以达到相同的效果，详见 [定义新的符号 \operatorname](#1%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E7%AC%A6%E5%8F%B7-operatorname) 。
+使用 `\operatorname` 命令也可以达到相同的效果，详见 [定义新的符号 \operatorname](#1%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E7%AC%A6%E5%8F%B7-operatorname) 。
 
-## 14．大括号和行标的使用
+##14．大括号和行标的使用
 
 使用 `\left` 和 `\right` 来创建自动匹配高度的 (圆括号)，[方括号] 和 {花括号} 。
 
@@ -528,12 +533,11 @@ $$
 
 ![](https://g.yuque.com/gr/latex?%5Cleft%5Clangle%20%20%0A%20%20q%0A%5Cmiddle%5C%7C%0A%20%20%5Cfrac%7B%5Cfrac%7Bx%7D%7By%7D%7D%7B%5Cfrac%7Bu%7D%7Bv%7D%7D%0A%5Cmiddle%7C%20%0A%20%20%20p%20%0A%5Cright%5Crangle%0A#card=math&code=%5Cleft%5Clangle%20%20%0A%20%20q%0A%5Cmiddle%5C%7C%0A%20%20%5Cfrac%7B%5Cfrac%7Bx%7D%7By%7D%7D%7B%5Cfrac%7Bu%7D%7Bv%7D%7D%0A%5Cmiddle%7C%20%0A%20%20%20p%20%0A%5Cright%5Crangle%0A)
 
-## 15．其它命令
+##15．其它命令
 
-### (1)．定义新的符号 \operatorname
+###(1)．定义新的符号 \operatorname
 
-查询 [关于此命令的定义](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference/15077#15077)
-和 [关于此命令的讨论](http://meta.math.stackexchange.com/search?q=operatorname) 来进一步了解此命令。
+查询 [关于此命令的定义](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference/15077#15077) 和 [关于此命令的讨论](http://meta.math.stackexchange.com/search?q=operatorname) 来进一步了解此命令。
 
 - 例子：
 
@@ -543,7 +547,7 @@ $$ \operatorname{Symbol} A $$
 
 - 显示： $$\operatorname{Symbol} A$$
 
-### (2)．添加注释文字 \text
+###(2)．添加注释文字 \text
 
 在 `\text {文字}` 中仍可以使用 `$公式$` 插入其它公式。
 
@@ -557,7 +561,7 @@ $$ f(n)= \begin{cases} n/2, & \text {if $n$ is even} \\ 3n+1, & \text{if $n$ is 
 
 ![](https://g.yuque.com/gr/latex?f(n)%3D%20%5Cbegin%7Bcases%7D%20n%2F2%2C%20%26%20%5Ctext%20%7Bif%20%24n%24%20is%20even%7D%20%5C%5C%203n%2B1%2C%20%26%20%5Ctext%7Bif%20%24n%24%20is%20odd%7D%20%5Cend%7Bcases%7D%20%0A#card=math&code=f%28n%29%3D%20%5Cbegin%7Bcases%7D%20n%2F2%2C%20%26%20%5Ctext%20%7Bif%20%24n%24%20is%20even%7D%20%5C%5C%203n%2B1%2C%20%26%20%5Ctext%7Bif%20%24n%24%20is%20odd%7D%20%5Cend%7Bcases%7D%20%0A)
 
-### (3)．在字符间加入空格
+###(3)．在字符间加入空格
 
 有四种宽度的空格可以使用： `\,`、`\;`、`\quad` 和 `\qquad` 。
 
@@ -571,7 +575,7 @@ $$ a \, b \mid a \; b \mid a \quad b \mid a \qquad b $$
 
 当然，使用 `\text {n个空格}` 也可以达到同样效果。
 
-### (4)．更改文字颜色
+###(4)．更改文字颜色
 
 使用 `\color{颜色}{文字}` 来更改特定的文字颜色。
 
@@ -589,6 +593,7 @@ $$ a \, b \mid a \; b \mid a \quad b \mid a \qquad b $$
 | teal | ![](https://g.yuque.com/gr/latex?%5Ccolor%7Bteal%7D%7Btext%7D#card=math&code=%5Ccolor%7Bteal%7D%7Btext%7D) | auqa | ![](https://g.yuque.com/gr/latex?%5Ccolor%7Bauqa%7D%7Btext%7D#card=math&code=%5Ccolor%7Bauqa%7D%7Btext%7D) |
 | blue | ![](https://g.yuque.com/gr/latex?%5Ccolor%7Bblue%7D%7Btext%7D#card=math&code=%5Ccolor%7Bblue%7D%7Btext%7D) | navy | ![](https://g.yuque.com/gr/latex?%5Ccolor%7Bnavy%7D%7Btext%7D#card=math&code=%5Ccolor%7Bnavy%7D%7Btext%7D) |
 | purple | ![](https://g.yuque.com/gr/latex?%5Ccolor%7Bpurple%7D%7Btext%7D#card=math&code=%5Ccolor%7Bpurple%7D%7Btext%7D) | fuchsia | ![](https://g.yuque.com/gr/latex?%5Ccolor%7Bfuchsia%7D%7Btext%7D#card=math&code=%5Ccolor%7Bfuchsia%7D%7Btext%7D) |
+
 
 对于较新的浏览器（HTML5与CSS3），额外的124种颜色将被支持：
 
@@ -610,8 +615,7 @@ $$ a \, b \mid a \; b \mid a \quad b \mid a \qquad b $$
 \end{array}
 ```
 
--
-
+- 
 显示：
 
 \begin{array}{|rrrrrrrr|}\hline
@@ -636,9 +640,9 @@ $$ a \, b \mid a \; b \mid a \quad b \mid a \qquad b $$
 
 \end{array}
 
--
-
+- 
 例子：
+
 
 ```
 \begin{array}{|rrrrrrrr|}
@@ -667,51 +671,39 @@ $$ a \, b \mid a \; b \mid a \quad b \mid a \qquad b $$
 
 \hline
 
-\verb+#000+ & \color{#000}{text} & \verb+#005+ & \color{#005}{text} & \verb+#00A+ & \color{#00A}{text} & \verb+#00F+ &
-\color{#00F}{text} \
+\verb+#000+ & \color{#000}{text} & \verb+#005+ & \color{#005}{text} & \verb+#00A+ & \color{#00A}{text} & \verb+#00F+ & \color{#00F}{text}  \
 
-\verb+#500+ & \color{#500}{text} & \verb+#505+ & \color{#505}{text} & \verb+#50A+ & \color{#50A}{text} & \verb+#50F+ &
-\color{#50F}{text} \
+\verb+#500+ & \color{#500}{text} & \verb+#505+ & \color{#505}{text} & \verb+#50A+ & \color{#50A}{text} & \verb+#50F+ & \color{#50F}{text}  \
 
-\verb+#A00+ & \color{#A00}{text} & \verb+#A05+ & \color{#A05}{text} & \verb+#A0A+ & \color{#A0A}{text} & \verb+#A0F+ &
-\color{#A0F}{text} \
+\verb+#A00+ & \color{#A00}{text} & \verb+#A05+ & \color{#A05}{text} & \verb+#A0A+ & \color{#A0A}{text} & \verb+#A0F+ & \color{#A0F}{text}  \
 
-\verb+#F00+ & \color{#F00}{text} & \verb+#F05+ & \color{#F05}{text} & \verb+#F0A+ & \color{#F0A}{text} & \verb+#F0F+ &
-\color{#F0F}{text} \
+\verb+#F00+ & \color{#F00}{text} & \verb+#F05+ & \color{#F05}{text} & \verb+#F0A+ & \color{#F0A}{text} & \verb+#F0F+ & \color{#F0F}{text}  \
 
 \hline
 
-\verb+#080+ & \color{#080}{text} & \verb+#085+ & \color{#085}{text} & \verb+#08A+ & \color{#08A}{text} & \verb+#08F+ &
-\color{#08F}{text} \
+\verb+#080+ & \color{#080}{text} & \verb+#085+ & \color{#085}{text} & \verb+#08A+ & \color{#08A}{text} & \verb+#08F+ & \color{#08F}{text}  \
 
-\verb+#580+ & \color{#580}{text} & \verb+#585+ & \color{#585}{text} & \verb+#58A+ & \color{#58A}{text} & \verb+#58F+ &
-\color{#58F}{text} \
+\verb+#580+ & \color{#580}{text} & \verb+#585+ & \color{#585}{text} & \verb+#58A+ & \color{#58A}{text} & \verb+#58F+ & \color{#58F}{text}  \
 
-\verb+#A80+ & \color{#A80}{text} & \verb+#A85+ & \color{#A85}{text} & \verb+#A8A+ & \color{#A8A}{text} & \verb+#A8F+ &
-\color{#A8F}{text} \
+\verb+#A80+ & \color{#A80}{text} & \verb+#A85+ & \color{#A85}{text} & \verb+#A8A+ & \color{#A8A}{text} & \verb+#A8F+ & \color{#A8F}{text}  \
 
-\verb+#F80+ & \color{#F80}{text} & \verb+#F85+ & \color{#F85}{text} & \verb+#F8A+ & \color{#F8A}{text} & \verb+#F8F+ &
-\color{#F8F}{text} \
+\verb+#F80+ & \color{#F80}{text} & \verb+#F85+ & \color{#F85}{text} & \verb+#F8A+ & \color{#F8A}{text} & \verb+#F8F+ & \color{#F8F}{text}  \
 
 \hline
 
-\verb+#0F0+ & \color{#0F0}{text} & \verb+#0F5+ & \color{#0F5}{text} & \verb+#0FA+ & \color{#0FA}{text} & \verb+#0FF+ &
-\color{#0FF}{text} \
+\verb+#0F0+ & \color{#0F0}{text} & \verb+#0F5+ & \color{#0F5}{text} & \verb+#0FA+ & \color{#0FA}{text} & \verb+#0FF+ & \color{#0FF}{text}  \
 
-\verb+#5F0+ & \color{#5F0}{text} & \verb+#5F5+ & \color{#5F5}{text} & \verb+#5FA+ & \color{#5FA}{text} & \verb+#5FF+ &
-\color{#5FF}{text} \
+\verb+#5F0+ & \color{#5F0}{text} & \verb+#5F5+ & \color{#5F5}{text} & \verb+#5FA+ & \color{#5FA}{text} & \verb+#5FF+ & \color{#5FF}{text}  \
 
-\verb+#AF0+ & \color{#AF0}{text} & \verb+#AF5+ & \color{#AF5}{text} & \verb+#AFA+ & \color{#AFA}{text} & \verb+#AFF+ &
-\color{#AFF}{text} \
+\verb+#AF0+ & \color{#AF0}{text} & \verb+#AF5+ & \color{#AF5}{text} & \verb+#AFA+ & \color{#AFA}{text} & \verb+#AFF+ & \color{#AFF}{text}  \
 
-\verb+#FF0+ & \color{#FF0}{text} & \verb+#FF5+ & \color{#FF5}{text} & \verb+#FFA+ & \color{#FFA}{text} & \verb+#FFF+ &
-\color{#FFF}{text} \
+\verb+#FF0+ & \color{#FF0}{text} & \verb+#FF5+ & \color{#FF5}{text} & \verb+#FFA+ & \color{#FFA}{text} & \verb+#FFF+ & \color{#FFF}{text}  \
 
 \hline
 
 \end{array}
 
-### (5)．添加删除线
+###(5)．添加删除线
 
 使用删除线功能必须声明 `$$` 符号。
 
@@ -762,13 +754,11 @@ $$
 
 ![](https://g.yuque.com/gr/latex?%5Crequire%7Benclose%7D%5Cbegin%7Barray%7D%7Brl%7D%0A%5Cverb%7C%5Cenclose%7Bhorizontalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bhorizontalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bverticalstrike%7D%7B%5Cfrac%20xy%7D%7C%20%26%20%5Cenclose%7Bverticalstrike%7D%7B%5Cfrac%20xy%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bupdiagonalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bupdiagonalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bdowndiagonalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bdowndiagonalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bhorizontalstrike%2Cupdiagonalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bhorizontalstrike%2Cupdiagonalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cend%7Barray%7D%0A#card=math&code=%5Crequire%7Benclose%7D%5Cbegin%7Barray%7D%7Brl%7D%0A%5Cverb%7C%5Cenclose%7Bhorizontalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bhorizontalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bverticalstrike%7D%7B%5Cfrac%20xy%7D%7C%20%26%20%5Cenclose%7Bverticalstrike%7D%7B%5Cfrac%20xy%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bupdiagonalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bupdiagonalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bdowndiagonalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bdowndiagonalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cverb%7C%5Cenclose%7Bhorizontalstrike%2Cupdiagonalstrike%7D%7Bx%2By%7D%7C%20%26%20%5Cenclose%7Bhorizontalstrike%2Cupdiagonalstrike%7D%7Bx%2By%7D%5C%5C%0A%5Cend%7Barray%7D%0A)
 
-此外， `\enclose`
-命令还可以产生包围的边框和圆等，参见 [MathML Menclose Documentation](https://developer.mozilla.org/en-US/docs/Web/MathML/Element/menclose)
-以查看更多效果。
+此外， `\enclose` 命令还可以产生包围的边框和圆等，参见 [MathML Menclose Documentation](https://developer.mozilla.org/en-US/docs/Web/MathML/Element/menclose) 以查看更多效果。
 
-# 二、矩阵使用参考
+#二、矩阵使用参考
 
-## 1．如何输入无框矩阵
+##1．如何输入无框矩阵
 
 在开头使用 `begin{matrix}`，在结尾使用 `end{matrix}`，在中间插入矩阵元素，每个元素之间插入 `&` ，并在每行结尾处使用 `\\` 。
 
@@ -790,7 +780,7 @@ $$
 
 ![](https://g.yuque.com/gr/latex?%20%20%20%20%20%20%20%20%5Cbegin%7Bmatrix%7D%0A%20%20%20%20%20%20%20%201%20%26%20x%20%26%20x%5E2%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20y%20%26%20y%5E2%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20z%20%26%20z%5E2%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cend%7Bmatrix%7D%0A#card=math&code=%20%20%20%20%20%20%20%20%5Cbegin%7Bmatrix%7D%0A%20%20%20%20%20%20%20%201%20%26%20x%20%26%20x%5E2%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20y%20%26%20y%5E2%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20z%20%26%20z%5E2%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cend%7Bmatrix%7D%0A)
 
-## 2．如何输入边框矩阵
+##2．如何输入边框矩阵
 
 在开头将 `matrix` 替换为 `pmatrix` `bmatrix` `Bmatrix` `vmatrix` `Vmatrix` 。
 
@@ -811,19 +801,13 @@ $ \begin{Vmatrix} 1 & 2 \\ 3 & 4 \\ \end{Vmatrix} $
 
 |:--:|:--:|:--:|:--:|:--:|:--:|
 
-|$ \begin{matrix} 1 & 2 \ 3 & 4 \ \end{matrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{pmatrix}
-1 & 2 \ 3 & 4 \ \end{pmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{bmatrix} 1 & 2 \ 3 & 4 \
-\end{bmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{Bmatrix} 1 & 2 \ 3 & 4 \
-\end{Bmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{vmatrix} 1 & 2 \ 3 & 4 \
-\end{vmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{Vmatrix} 1 & 2 \ 3 & 4 \ \end{Vmatrix} $|
+|$ \begin{matrix} 1 & 2 \ 3 & 4 \ \end{matrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{pmatrix} 1 & 2 \ 3 & 4 \ \end{pmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{bmatrix} 1 & 2 \ 3 & 4 \ \end{bmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{Bmatrix} 1 & 2 \ 3 & 4 \ \end{Bmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{vmatrix} 1 & 2 \ 3 & 4 \ \end{vmatrix} ![](https://g.yuque.com/gr/latex?%7C#card=math&code=%7C) \begin{Vmatrix} 1 & 2 \ 3 & 4 \ \end{Vmatrix} $|
 
 　　　　
 
-## 3．如何输入带省略符号的矩阵
+##3．如何输入带省略符号的矩阵
 
-使用 `\cdots` ![](https://g.yuque.com/gr/latex?%5Ccdots#card=math&code=%5Ccdots)
-, `\ddots` ![](https://g.yuque.com/gr/latex?%5Cddots#card=math&code=%5Cddots)
-, `\vdots` ![](https://g.yuque.com/gr/latex?%5Cvdots#card=math&code=%5Cvdots) 来输入省略符号。
+使用 `\cdots` ![](https://g.yuque.com/gr/latex?%5Ccdots#card=math&code=%5Ccdots) , `\ddots` ![](https://g.yuque.com/gr/latex?%5Cddots#card=math&code=%5Cddots) , `\vdots` ![](https://g.yuque.com/gr/latex?%5Cvdots#card=math&code=%5Cvdots) 来输入省略符号。
 
 - 例子：
 
@@ -842,7 +826,7 @@ $$
 
 ![](https://g.yuque.com/gr/latex?%20%20%20%20%20%20%20%20%5Cbegin%7Bpmatrix%7D%0A%20%20%20%20%20%20%20%201%20%26%20a_1%20%26%20a_1%5E2%20%26%20%5Ccdots%20%26%20a_1%5En%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20a_2%20%26%20a_2%5E2%20%26%20%5Ccdots%20%26%20a_2%5En%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cddots%20%26%20%5Cvdots%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20a_m%20%26%20a_m%5E2%20%26%20%5Ccdots%20%26%20a_m%5En%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cend%7Bpmatrix%7D%0A#card=math&code=%20%20%20%20%20%20%20%20%5Cbegin%7Bpmatrix%7D%0A%20%20%20%20%20%20%20%201%20%26%20a_1%20%26%20a_1%5E2%20%26%20%5Ccdots%20%26%20a_1%5En%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20a_2%20%26%20a_2%5E2%20%26%20%5Ccdots%20%26%20a_2%5En%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cddots%20%26%20%5Cvdots%20%5C%5C%0A%20%20%20%20%20%20%20%201%20%26%20a_m%20%26%20a_m%5E2%20%26%20%5Ccdots%20%26%20a_m%5En%20%5C%5C%0A%20%20%20%20%20%20%20%20%5Cend%7Bpmatrix%7D%0A)
 
-## 4．如何输入带分割符号的矩阵
+##4．如何输入带分割符号的矩阵
 
 详见"[数组使用参考](#%E4%BA%94%E6%95%B0%E7%BB%84%E4%B8%8E%E8%A1%A8%E6%A0%BC%E4%BD%BF%E7%94%A8%E5%8F%82%E8%80%83)"。
 
@@ -865,7 +849,7 @@ $$
 
 其中 `cc|c` 代表在一个三列矩阵中的第二和第三列之间插入分割线。
 
-## 5．如何输入行中矩阵
+##5．如何输入行中矩阵
 
 若想在一行内显示矩阵，
 
@@ -877,13 +861,11 @@ $$
 这是一个行中矩阵的示例 $\bigl( \begin{smallmatrix} a & b \\ c & d \end{smallmatrix} \bigr)$ 。
 ```
 
--
-显示：这是一个行中矩阵的示例 ![](https://g.yuque.com/gr/latex?%5Cbigl(%20%5Cbegin%7Bsmallmatrix%7D%20a%20%26%20b%20%5C%5C%20c%20%26%20d%20%5Cend%7Bsmallmatrix%7D%20%5Cbigr)#card=math&code=%5Cbigl%28%20%5Cbegin%7Bsmallmatrix%7D%20a%20%26%20b%20%5C%5C%20c%20%26%20d%20%5Cend%7Bsmallmatrix%7D%20%5Cbigr%29)
-。
+- 显示：这是一个行中矩阵的示例 ![](https://g.yuque.com/gr/latex?%5Cbigl(%20%5Cbegin%7Bsmallmatrix%7D%20a%20%26%20b%20%5C%5C%20c%20%26%20d%20%5Cend%7Bsmallmatrix%7D%20%5Cbigr)#card=math&code=%5Cbigl%28%20%5Cbegin%7Bsmallmatrix%7D%20a%20%26%20b%20%5C%5C%20c%20%26%20d%20%5Cend%7Bsmallmatrix%7D%20%5Cbigr%29) 。
 
-# 三、方程式序列使用参考
+#三、方程式序列使用参考
 
-## 1．如何输入一个方程式序列
+##1．如何输入一个方程式序列
 
 人们经常想要一列整齐且居中的方程式序列。使用 `\begin{align}…\end{align}` 来创造一列方程式，其中在每行结尾处使用 `\\` 。
 
@@ -921,7 +903,7 @@ $$
 
 本例中每行公式的编号续自 [如何插入公式](#1%E5%A6%82%E4%BD%95%E6%8F%92%E5%85%A5%E5%85%AC%E5%BC%8F) 中的自动编号公式 \eqref{eq:sample} 。
 
-## 2．在一个方程式序列的每一行中注明原因
+##2．在一个方程式序列的每一行中注明原因
 
 在 `{align}` 中灵活组合 `\text` 和 `\tag` 语句。`\tag` 语句编号优先级高于自动编号。
 
@@ -939,20 +921,19 @@ $$
 
 \begin{align}
 
-v + w & = 0 &\text{Given} \tag 1\
+v + w & = 0  &\text{Given} \tag 1\
 
 -w & = -w + 0 & \text{additive identity} \tag 2\
 
--w + 0 & = -w + (v + w) & \text{equations ![](https://g.yuque.com/gr/latex?(1)#card=math&code=%281%29)
-and ![](https://g.yuque.com/gr/latex?(2)#card=math&code=%282%29)}
+-w + 0 & = -w + (v + w) & \text{equations ![](https://g.yuque.com/gr/latex?(1)#card=math&code=%281%29) and ![](https://g.yuque.com/gr/latex?(2)#card=math&code=%282%29)}
 
 \end{align}
 
 本例中第一、第二行的自动编号被 `\tag` 语句覆盖，第三行的编号为自动编号。
 
-# 四、条件表达式使用参考
+#四、条件表达式使用参考
 
-## 1．如何输入一个条件表达式
+##1．如何输入一个条件表达式
 
 使用 `begin{cases}` 来创造一组条件表达式，在每一行条件中插入 `&` 来指定需要对齐的内容，并在每一行结尾处使用 `\\`，以 `end{cases}` 结束。
 
@@ -974,7 +955,7 @@ $$
 
 ![](https://g.yuque.com/gr/latex?%20%20%20%20%20%20%20%20f(n)%20%3D%0A%20%20%20%20%20%20%20%20%5Cbegin%7Bcases%7D%0A%20%20%20%20%20%20%20%20n%2F2%2C%20%20%26%20%5Ctext%7Bif%20%24n%24%20is%20even%7D%20%5C%5C%0A%20%20%20%20%20%20%20%203n%2B1%2C%20%26%20%5Ctext%7Bif%20%24n%24%20is%20odd%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Bcases%7D%0A#card=math&code=%20%20%20%20%20%20%20%20f%28n%29%20%3D%0A%20%20%20%20%20%20%20%20%5Cbegin%7Bcases%7D%0A%20%20%20%20%20%20%20%20n%2F2%2C%20%20%26%20%5Ctext%7Bif%20%24n%24%20is%20even%7D%20%5C%5C%0A%20%20%20%20%20%20%20%203n%2B1%2C%20%26%20%5Ctext%7Bif%20%24n%24%20is%20odd%7D%0A%20%20%20%20%20%20%20%20%5Cend%7Bcases%7D%0A)
 
-## 2．如何输入一个左侧对齐的条件表达式
+##2．如何输入一个左侧对齐的条件表达式
 
 若想让文字在 **左侧对齐显示** ，则有如下方式：
 
@@ -996,7 +977,7 @@ $$
 
 ![](https://g.yuque.com/gr/latex?%20%20%20%20%20%20%20%20%5Cleft.%0A%20%20%20%20%20%20%20%20%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20%20%20%20%20%20%20%5Ctext%7Bif%20%24n%24%20is%20even%3A%7D%26n%2F2%5C%5C%0A%20%20%20%20%20%20%20%20%5Ctext%7Bif%20%24n%24%20is%20odd%3A%7D%263n%2B1%0A%20%20%20%20%20%20%20%20%5Cend%7Barray%7D%0A%20%20%20%20%20%20%20%20%5Cright%5C%7D%0A%20%20%20%20%20%20%20%20%3Df(n)%0A#card=math&code=%20%20%20%20%20%20%20%20%5Cleft.%0A%20%20%20%20%20%20%20%20%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20%20%20%20%20%20%20%5Ctext%7Bif%20%24n%24%20is%20even%3A%7D%26n%2F2%5C%5C%0A%20%20%20%20%20%20%20%20%5Ctext%7Bif%20%24n%24%20is%20odd%3A%7D%263n%2B1%0A%20%20%20%20%20%20%20%20%5Cend%7Barray%7D%0A%20%20%20%20%20%20%20%20%5Cright%5C%7D%0A%20%20%20%20%20%20%20%20%3Df%28n%29%0A)
 
-## 3．如何使条件表达式适配行高
+##3．如何使条件表达式适配行高
 
 在一些情况下，条件表达式中某些行的行高为非标准高度，此时使用 `\\[2ex]` 语句代替该行末尾的 `\\` 来让编辑器适配。
 
@@ -1017,10 +998,10 @@ f(n) =
 \end{cases}
 $$
 ```
-
 | 适配[2ex] |
 | :---: |
 |  |
+
 
 ```
 $$
@@ -1044,7 +1025,7 @@ f(n) =
 
 \begin{cases}
 
-\frac{n}{2}, & \text{if ![](https://g.yuque.com/gr/latex?n#card=math&code=n) is even} \
+\frac{n}{2},  & \text{if ![](https://g.yuque.com/gr/latex?n#card=math&code=n) is even} \
 
 3n+1, & \text{if ![](https://g.yuque.com/gr/latex?n#card=math&code=n) is odd}
 
@@ -1056,7 +1037,7 @@ f(n) =
 
 \begin{cases}
 
-\frac{n}{2}, & \text{if ![](https://g.yuque.com/gr/latex?n#card=math&code=n) is even} \[2ex]
+\frac{n}{2},  & \text{if ![](https://g.yuque.com/gr/latex?n#card=math&code=n) is even} \[2ex]
 
 3n+1, & \text{if ![](https://g.yuque.com/gr/latex?n#card=math&code=n) is odd}
 
@@ -1296,8 +1277,7 @@ x = a_0 + \frac{1^2}{a_1+}
 
 ![](https://g.yuque.com/gr/latex?%0A%E8%BF%9E%E5%88%86%E6%95%B0%E9%80%9A%E5%B8%B8%E9%83%BD%E5%A4%AA%E5%A4%A7%E4%BB%A5%E8%87%B3%E4%BA%8E%E4%B8%8D%E6%98%93%E6%8E%92%E7%89%88%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BB%BA%E8%AE%AE%E5%9C%A8%E8%BF%9E%E5%88%86%E6%95%B0%E5%89%8D%E5%90%8E%E5%A3%B0%E6%98%8E%20%60%24%24%60%20%E7%AC%A6%E5%8F%B7%EF%BC%8C%E6%88%96%E4%BD%BF%E7%94%A8%E5%83%8F%20%60%5Ba0%3Ba1%2Ca2%2Ca3%2C%E2%80%A6%5D%60%20%E4%B8%80%E6%A0%B7%E7%9A%84%E7%B4%A7%E7%BC%A9%E8%AE%B0%E6%B3%95%E3%80%82%0A%0A%23%E4%B8%83%E3%80%81%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%E4%BD%BF%E7%94%A8%E5%8F%82%E8%80%83%0A%0A%23%231%EF%BC%8E%E5%A6%82%E4%BD%95%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%0A%0A%E4%BD%BF%E7%94%A8%E4%B8%80%E8%A1%8C%20%60%24%20%5Crequire%7BAMScd%7D%20%24%60%20%E8%AF%AD%E5%8F%A5%E6%9D%A5%E5%85%81%E8%AE%B8%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%E7%9A%84%E6%98%BE%E7%A4%BA%E3%80%82%0A%E5%A3%B0%E6%98%8E%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%E5%90%8E%EF%BC%8C%E8%AF%AD%E6%B3%95%E4%B8%8E%E7%9F%A9%E9%98%B5%E7%9B%B8%E4%BC%BC%EF%BC%8C%E5%9C%A8%E5%BC%80%E5%A4%B4%E4%BD%BF%E7%94%A8%20%60begin%7BCD%7D%60%EF%BC%8C%E5%9C%A8%E7%BB%93%E5%B0%BE%E4%BD%BF%E7%94%A8%20%60end%7BCD%7D%60%EF%BC%8C%E5%9C%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E5%9B%BE%E8%A1%A8%E5%85%83%E7%B4%A0%EF%BC%8C%E6%AF%8F%E4%B8%AA%E5%85%83%E7%B4%A0%E4%B9%8B%E9%97%B4%E6%8F%92%E5%85%A5%20%60%26%60%20%EF%BC%8C%E5%B9%B6%E5%9C%A8%E6%AF%8F%E8%A1%8C%E7%BB%93%E5%B0%BE%E5%A4%84%E4%BD%BF%E7%94%A8%20%60%5C%5C%60%20%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%24%5Crequire%7BAMScd%7D%24%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3Ea%3E%3E%20B%5C%5C%0A%20%20%20%20%40V%20b%20V%20V%5C%23%20%40VV%20c%20V%5C%5C%0A%20%20%20%20C%20%40%3E%3Ed%3E%20D%0A%5Cend%7BCD%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%24%5Crequire%7BAMScd%7D%24%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3Ea%3E%3E%20B%5C%5C%0A%20%20%20%20%40V%20b%20V%20V%5C%23%20%40VV%20c%20V%5C%5C%0A%20%20%20%20C%20%40%3E%3Ed%3E%20D%0A%5Cend%7BCD%7D%0A%0A%E5%85%B6%E4%B8%AD%EF%BC%8C%60%40%3E%3E%3E%60%20%E4%BB%A3%E8%A1%A8%E5%8F%B3%E7%AE%AD%E5%A4%B4%E3%80%81%60%40%3C%3C%3C%60%20%E4%BB%A3%E8%A1%A8%E5%B7%A6%E7%AE%AD%E5%A4%B4%E3%80%81%60%40VVV%60%20%E4%BB%A3%E8%A1%A8%E4%B8%8B%E7%AE%AD%E5%A4%B4%E3%80%81%60%40AAA%60%20%E4%BB%A3%E8%A1%A8%E4%B8%8A%E7%AE%AD%E5%A4%B4%E3%80%81%60%40%3D%60%20%E4%BB%A3%E8%A1%A8%E6%B0%B4%E5%B9%B3%E5%8F%8C%E5%AE%9E%E7%BA%BF%E3%80%81%60%40%7C%60%20%E4%BB%A3%E8%A1%A8%E7%AB%96%E7%9B%B4%E5%8F%8C%E5%AE%9E%E7%BA%BF%E3%80%81%60%40.%60%E4%BB%A3%E8%A1%A8%E6%B2%A1%E6%9C%89%E7%AE%AD%E5%A4%B4%E3%80%82%0A%E5%9C%A8%20%60%40%3E%3E%3E%60%20%E7%9A%84%20%60%3E%3E%3E%60%20%E4%B9%8B%E9%97%B4%E4%BB%BB%E6%84%8F%E6%8F%92%E5%85%A5%E6%96%87%E5%AD%97%E5%8D%B3%E4%BB%A3%E8%A1%A8%E8%AF%A5%E7%AE%AD%E5%A4%B4%E7%9A%84%E6%B3%A8%E9%87%8A%E6%96%87%E5%AD%97%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3E%3E%3E%20B%20%40%3E%7B%5Ctext%7Bvery%20long%20label%7D%7D%3E%3E%20C%20%5C%5C%0A%20%20%20%20%40.%20%40AAA%20%40%7C%20%5C%5C%0A%20%20%20%20D%20%40%3D%20E%20%40%3C%3C%3C%20F%0A%5Cend%7BCD%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3E%3E%3E%20B%20%40%3E%7B%5Ctext%7Bvery%20long%20label%7D%7D%3E%3E%20C%20%5C%5C%0A%20%20%20%20%40.%20%40AAA%20%40%7C%20%5C%5C%0A%20%20%20%20D%20%40%3D%20E%20%40%3C%3C%3C%20F%0A%5Cend%7BCD%7D%0A%0A%E5%9C%A8%E6%9C%AC%E4%BE%8B%E4%B8%AD%EF%BC%8C%20%22very%20long%20label%22%E8%87%AA%E5%8A%A8%E5%BB%B6%E9%95%BF%E4%BA%86%E5%AE%83%E6%89%80%E5%9C%A8%E7%AE%AD%E5%A4%B4%E4%BB%A5%E5%8F%8A%E5%AF%B9%E5%BA%94%E7%AE%AD%E5%A4%B4%E7%9A%84%E9%95%BF%E5%BA%A6%E3%80%82%0A%0A%0A%23%E5%85%AB%E3%80%81%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%0A%0A%7C**!!%20%E6%9C%AC%E6%AE%B5%E5%86%85%E5%AE%B9%E4%B8%BA%E4%B8%AA%E4%BA%BA%E7%BF%BB%E8%AF%91%EF%BC%8C%E5%8F%AF%E8%83%BD%E6%9C%89%E4%B8%8D%E5%87%86%E7%A1%AE%E4%B9%8B%E5%A4%84%20!!**%7C%0A%7C%3A--%3A%7C%0A%0AThese%20are%20issues%20that%20won't%20affect%20the%20correctness%20of%20formulas%2C%20but%20might%20make%20them%20look%20significantly%20better%20or%20worse.%20Beginners%20should%20feel%20free%20to%20ignore%20this%20advice%3B%20someone%20else%20will%20correct%20it%20for%20them%2C%20or%20more%20likely%20nobody%20will%20care.%0A%0A%E7%8E%B0%E5%9C%A8%E6%8C%87%E5%87%BA%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E5%B9%B6%E4%B8%8D%E4%BC%9A%E5%BD%B1%E5%93%8D%E6%96%B9%E7%A8%8B%E5%BC%8F%E5%8F%8A%E5%85%AC%E5%BC%8F%E7%AD%89%E7%9A%84%E6%AD%A3%E7%A1%AE%E6%98%BE%E7%A4%BA%EF%BC%8C%E4%BD%86%E8%83%BD%E8%AE%A9%E5%AE%83%E4%BB%AC%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%98%8E%E6%98%BE%E6%9B%B4%E5%A5%BD%E7%9C%8B%E3%80%82%E5%88%9D%E5%AD%A6%E8%80%85%E5%8F%AF%E6%97%A0%E8%A7%86%E8%BF%99%E4%BA%9B%E5%BB%BA%E8%AE%AE%EF%BC%8C%E8%87%AA%E7%84%B6%E4%BC%9A%E6%9C%89%E5%BC%BA%E8%BF%AB%E7%97%87%E6%82%A3%E8%80%85%E6%9B%BF%E4%BD%A0%E4%BB%AC%E6%94%B9%E6%8E%89%E5%AE%83%E7%9A%84%EF%BC%8C%E6%88%96%E8%80%85%E6%9B%B4%E5%8F%AF%E8%83%BD%E5%9C%B0%EF%BC%8C%E6%A0%B9%E6%9C%AC%E6%B2%A1%E4%BA%BA%E5%8F%91%E7%8E%B0%E8%BF%99%E4%BA%9B%E9%97%AE%E9%A2%98%E3%80%82%0A%0ADon't%20use%20%60%5Cfrac%60%20in%20exponents%20or%20limits%20of%20integrals%3B%20it%20looks%20bad%20and%20can%20be%20confusing%2C%20which%20is%20why%20it%20is%20rarely%20done%20in%20professional%20mathematical%20typesetting.%20Write%20the%20fraction%20horizontally%2C%20with%20a%20slash%3A%0A%0A%E5%9C%A8%E4%BB%A5e%E4%B8%BA%E5%BA%95%E7%9A%84%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E3%80%81%E6%9E%81%E9%99%90%E5%92%8C%E7%A7%AF%E5%88%86%E4%B8%AD%E5%B0%BD%E9%87%8F%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%20%60%5Cfrac%60%20%E7%AC%A6%E5%8F%B7%EF%BC%9A%E5%AE%83%E4%BC%9A%E4%BD%BF%E6%95%B4%E6%AE%B5%E5%87%BD%E6%95%B0%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%BE%88%E6%80%AA%EF%BC%8C%E8%80%8C%E4%B8%94%E5%8F%AF%E8%83%BD%E4%BA%A7%E7%94%9F%E6%AD%A7%E4%B9%89%E3%80%82%E4%B9%9F%E6%AD%A3%E6%98%AF%E5%9B%A0%E6%AD%A4%E5%AE%83%E5%9C%A8%E4%B8%93%E4%B8%9A%E6%95%B0%E5%AD%A6%E6%8E%92%E7%89%88%E4%B8%AD%E5%87%A0%E4%B9%8E%E4%BB%8E%E4%B8%8D%E5%87%BA%E7%8E%B0%E3%80%82%0A%E6%A8%AA%E7%9D%80%E5%86%99%E8%BF%99%E4%BA%9B%E5%88%86%E5%BC%8F%EF%BC%8C%E4%B8%AD%E9%97%B4%E4%BD%BF%E7%94%A8%E6%96%9C%E7%BA%BF%E9%97%B4%E9%9A%94%20%60%2F%60%20%EF%BC%88%E7%94%A8%E6%96%9C%E7%BA%BF%E4%BB%A3%E6%9B%BF%E5%88%86%E6%95%B0%E7%BA%BF%EF%BC%89%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0Ae%5E%7Bi%5Cfrac%7B%5Cpi%7D2%7D%20%5Cquad%20e%5E%7B%5Cfrac%7Bi%5Cpi%7D2%7D%26%20e%5E%7Bi%5Cpi%2F2%7D%20%5C%5C%0A%5Cint_%7B-%5Cfrac%5Cpi2%7D%5E%5Cfrac%5Cpi2%20%5Csin%20x%5C%2Cdx%20%26%20%5Cint_%7B-%5Cpi%2F2%7D%5E%7B%5Cpi%2F2%7D%5Csin%20x%5C%2Cdx%20%5C%5C%0A%5Cend%7Barray%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0Ae%5E%7Bi%5Cfrac%7B%5Cpi%7D2%7D%20%5Cquad%20e%5E%7B%5Cfrac%7Bi%5Cpi%7D2%7D%26%20e%5E%7Bi%5Cpi%2F2%7D%20%5C%5C%0A%5Cint_%7B-%5Cfrac%5Cpi2%7D%5E%5Cfrac%5Cpi2%20%5Csin%20x%5C%2Cdx%20%26%20%5Cint_%7B-%5Cpi%2F2%7D%5E%7B%5Cpi%2F2%7D%5Csin%20x%5C%2Cdx%20%5C%5C%0A%5Cend%7Barray%7D%0A%0AThe%20%60%7C%60%20symbol%20has%20the%20wrong%20spacing%20when%20it%20is%20used%20as%20a%20divider%2C%20for%20example%20in%20set%20comprehensions.%20Use%20%60%5Cmid%60%20instead%3A%0A%0A%60%7C%60%20%E7%AC%A6%E5%8F%B7%E5%9C%A8%E8%A2%AB%E5%BD%93%E4%BD%9C%E5%88%86%E9%9A%94%E7%AC%A6%E6%97%B6%E4%BC%9A%E4%BA%A7%E7%94%9F%E9%94%99%E8%AF%AF%E7%9A%84%E9%97%B4%E9%9A%94%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%9C%A8%E9%9C%80%E8%A6%81%E5%88%86%E9%9A%94%E6%97%B6%E6%9C%80%E5%A5%BD%E4%BD%BF%E7%94%A8%20%60%5Cmid%60%20%E6%9D%A5%E4%BB%A3%E6%9B%BF%E5%AE%83%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%3A%0A%60%60%60%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5C%7Bx%7Cx%5E2%5Cin%5CBbb%20Z%5C%7D%20%26%20%5C%7Bx%5Cmid%20x%5E2%5Cin%5CBbb%20Z%5C%7D%20%5C%5C%0A%5Cend%7Barray%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5C%7Bx%7Cx%5E2%5Cin%5CBbb%20Z%5C%7D%20%26%20%5C%7Bx%5Cmid%20x%5E2%5Cin%5CBbb%20Z%5C%7D%20%5C%5C%0A%5Cend%7Barray%7D%0A%0AFor%20double%20and%20triple%20integrals%2C%20don't%20use%20%60%5Cint%5Cint%60%20or%20%60%5Cint%5Cint%5Cint%60.%20Instead%20use%20the%20special%20forms%20%60%5Ciint%60%20and%20%60%5Ciiint%60%3A%0A%0A%E4%BD%BF%E7%94%A8%E5%A4%9A%E9%87%8D%E7%A7%AF%E5%88%86%E7%AC%A6%E5%8F%B7%E6%97%B6%EF%BC%8C%E4%B8%8D%E8%A6%81%E5%A4%9A%E6%AC%A1%E4%BD%BF%E7%94%A8%20%60%5Cint%60%20%E6%9D%A5%E5%A3%B0%E6%98%8E%EF%BC%8C%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%20%60%5Ciint%60%20%E6%9D%A5%E8%A1%A8%E7%A4%BA%20**%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86**%20%EF%BC%8C%E4%BD%BF%E7%94%A8%20%60%5Ciiint%60%20%E6%9D%A5%E8%A1%A8%E7%A4%BA%20**%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86**%20%E7%AD%89%E3%80%82%E5%AF%B9%E4%BA%8E%E6%97%A0%E9%99%90%E6%AC%A1%E7%A7%AF%E5%88%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%94%A8%20%60%5Cint%20%5Ccdots%20%5Cint%60%20%E8%A1%A8%E7%A4%BA%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5Cint%5Cint_S%20f(x)%5C%2Cdy%5C%2Cdx%20%26%20%5Ciint_S%20f(x)%5C%2Cdy%5C%2Cdx%20%5C%5C%0A%5Cint%5Cint%5Cint_V%20f(x)%5C%2Cdz%5C%2Cdy%5C%2Cdx%20%26%20%5Ciiint_V%20f(x)%5C%2Cdz%5C%2Cdy%5C%2Cdx%0A%5Cend%7Barray%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5Cint%5Cint_S%20f(x)%5C%2Cdy%5C%2Cdx%20%26%20%5Ciint_S%20f(x)%5C%2Cdy%5C%2Cdx%20%5C%5C%0A%5Cint%5Cint%5Cint_V%20f(x)%5C%2Cdz%5C%2Cdy%5C%2Cdx%20%26%20%5Ciiint_V%20f(x)%5C%2Cdz%5C%2Cdy%5C%2Cdx%0A%5Cend%7Barray%7D%0A%0A%24%24%E6%97%A0%E9%99%90%E6%AC%A1%E7%A7%AF%E5%88%86%EF%BC%9A%5Cint%20%5Ccdots%20%5Cint#card=math&code=%0A%E8%BF%9E%E5%88%86%E6%95%B0%E9%80%9A%E5%B8%B8%E9%83%BD%E5%A4%AA%E5%A4%A7%E4%BB%A5%E8%87%B3%E4%BA%8E%E4%B8%8D%E6%98%93%E6%8E%92%E7%89%88%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BB%BA%E8%AE%AE%E5%9C%A8%E8%BF%9E%E5%88%86%E6%95%B0%E5%89%8D%E5%90%8E%E5%A3%B0%E6%98%8E%20%60%24%24%60%20%E7%AC%A6%E5%8F%B7%EF%BC%8C%E6%88%96%E4%BD%BF%E7%94%A8%E5%83%8F%20%60%5Ba0%3Ba1%2Ca2%2Ca3%2C%E2%80%A6%5D%60%20%E4%B8%80%E6%A0%B7%E7%9A%84%E7%B4%A7%E7%BC%A9%E8%AE%B0%E6%B3%95%E3%80%82%0A%0A%23%E4%B8%83%E3%80%81%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%E4%BD%BF%E7%94%A8%E5%8F%82%E8%80%83%0A%0A%23%231%EF%BC%8E%E5%A6%82%E4%BD%95%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%0A%0A%E4%BD%BF%E7%94%A8%E4%B8%80%E8%A1%8C%20%60%24%20%5Crequire%7BAMScd%7D%20%24%60%20%E8%AF%AD%E5%8F%A5%E6%9D%A5%E5%85%81%E8%AE%B8%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%E7%9A%84%E6%98%BE%E7%A4%BA%E3%80%82%0A%E5%A3%B0%E6%98%8E%E4%BA%A4%E6%8D%A2%E5%9B%BE%E8%A1%A8%E5%90%8E%EF%BC%8C%E8%AF%AD%E6%B3%95%E4%B8%8E%E7%9F%A9%E9%98%B5%E7%9B%B8%E4%BC%BC%EF%BC%8C%E5%9C%A8%E5%BC%80%E5%A4%B4%E4%BD%BF%E7%94%A8%20%60begin%7BCD%7D%60%EF%BC%8C%E5%9C%A8%E7%BB%93%E5%B0%BE%E4%BD%BF%E7%94%A8%20%60end%7BCD%7D%60%EF%BC%8C%E5%9C%A8%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5%E5%9B%BE%E8%A1%A8%E5%85%83%E7%B4%A0%EF%BC%8C%E6%AF%8F%E4%B8%AA%E5%85%83%E7%B4%A0%E4%B9%8B%E9%97%B4%E6%8F%92%E5%85%A5%20%60%26%60%20%EF%BC%8C%E5%B9%B6%E5%9C%A8%E6%AF%8F%E8%A1%8C%E7%BB%93%E5%B0%BE%E5%A4%84%E4%BD%BF%E7%94%A8%20%60%5C%5C%60%20%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%24%5Crequire%7BAMScd%7D%24%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3Ea%3E%3E%20B%5C%5C%0A%20%20%20%20%40V%20b%20V%20V%5C%23%20%40VV%20c%20V%5C%5C%0A%20%20%20%20C%20%40%3E%3Ed%3E%20D%0A%5Cend%7BCD%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%24%5Crequire%7BAMScd%7D%24%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3Ea%3E%3E%20B%5C%5C%0A%20%20%20%20%40V%20b%20V%20V%5C%23%20%40VV%20c%20V%5C%5C%0A%20%20%20%20C%20%40%3E%3Ed%3E%20D%0A%5Cend%7BCD%7D%0A%0A%E5%85%B6%E4%B8%AD%EF%BC%8C%60%40%3E%3E%3E%60%20%E4%BB%A3%E8%A1%A8%E5%8F%B3%E7%AE%AD%E5%A4%B4%E3%80%81%60%40%3C%3C%3C%60%20%E4%BB%A3%E8%A1%A8%E5%B7%A6%E7%AE%AD%E5%A4%B4%E3%80%81%60%40VVV%60%20%E4%BB%A3%E8%A1%A8%E4%B8%8B%E7%AE%AD%E5%A4%B4%E3%80%81%60%40AAA%60%20%E4%BB%A3%E8%A1%A8%E4%B8%8A%E7%AE%AD%E5%A4%B4%E3%80%81%60%40%3D%60%20%E4%BB%A3%E8%A1%A8%E6%B0%B4%E5%B9%B3%E5%8F%8C%E5%AE%9E%E7%BA%BF%E3%80%81%60%40%7C%60%20%E4%BB%A3%E8%A1%A8%E7%AB%96%E7%9B%B4%E5%8F%8C%E5%AE%9E%E7%BA%BF%E3%80%81%60%40.%60%E4%BB%A3%E8%A1%A8%E6%B2%A1%E6%9C%89%E7%AE%AD%E5%A4%B4%E3%80%82%0A%E5%9C%A8%20%60%40%3E%3E%3E%60%20%E7%9A%84%20%60%3E%3E%3E%60%20%E4%B9%8B%E9%97%B4%E4%BB%BB%E6%84%8F%E6%8F%92%E5%85%A5%E6%96%87%E5%AD%97%E5%8D%B3%E4%BB%A3%E8%A1%A8%E8%AF%A5%E7%AE%AD%E5%A4%B4%E7%9A%84%E6%B3%A8%E9%87%8A%E6%96%87%E5%AD%97%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3E%3E%3E%20B%20%40%3E%7B%5Ctext%7Bvery%20long%20label%7D%7D%3E%3E%20C%20%5C%5C%0A%20%20%20%20%40.%20%40AAA%20%40%7C%20%5C%5C%0A%20%20%20%20D%20%40%3D%20E%20%40%3C%3C%3C%20F%0A%5Cend%7BCD%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7BCD%7D%0A%20%20%20%20A%20%40%3E%3E%3E%20B%20%40%3E%7B%5Ctext%7Bvery%20long%20label%7D%7D%3E%3E%20C%20%5C%5C%0A%20%20%20%20%40.%20%40AAA%20%40%7C%20%5C%5C%0A%20%20%20%20D%20%40%3D%20E%20%40%3C%3C%3C%20F%0A%5Cend%7BCD%7D%0A%0A%E5%9C%A8%E6%9C%AC%E4%BE%8B%E4%B8%AD%EF%BC%8C%20%22very%20long%20label%22%E8%87%AA%E5%8A%A8%E5%BB%B6%E9%95%BF%E4%BA%86%E5%AE%83%E6%89%80%E5%9C%A8%E7%AE%AD%E5%A4%B4%E4%BB%A5%E5%8F%8A%E5%AF%B9%E5%BA%94%E7%AE%AD%E5%A4%B4%E7%9A%84%E9%95%BF%E5%BA%A6%E3%80%82%0A%0A%0A%23%E5%85%AB%E3%80%81%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%0A%0A%7C%2A%2A%21%21%20%E6%9C%AC%E6%AE%B5%E5%86%85%E5%AE%B9%E4%B8%BA%E4%B8%AA%E4%BA%BA%E7%BF%BB%E8%AF%91%EF%BC%8C%E5%8F%AF%E8%83%BD%E6%9C%89%E4%B8%8D%E5%87%86%E7%A1%AE%E4%B9%8B%E5%A4%84%20%21%21%2A%2A%7C%0A%7C%3A--%3A%7C%0A%0AThese%20are%20issues%20that%20won%27t%20affect%20the%20correctness%20of%20formulas%2C%20but%20might%20make%20them%20look%20significantly%20better%20or%20worse.%20Beginners%20should%20feel%20free%20to%20ignore%20this%20advice%3B%20someone%20else%20will%20correct%20it%20for%20them%2C%20or%20more%20likely%20nobody%20will%20care.%0A%0A%E7%8E%B0%E5%9C%A8%E6%8C%87%E5%87%BA%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%E5%B9%B6%E4%B8%8D%E4%BC%9A%E5%BD%B1%E5%93%8D%E6%96%B9%E7%A8%8B%E5%BC%8F%E5%8F%8A%E5%85%AC%E5%BC%8F%E7%AD%89%E7%9A%84%E6%AD%A3%E7%A1%AE%E6%98%BE%E7%A4%BA%EF%BC%8C%E4%BD%86%E8%83%BD%E8%AE%A9%E5%AE%83%E4%BB%AC%E7%9C%8B%E8%B5%B7%E6%9D%A5%E6%98%8E%E6%98%BE%E6%9B%B4%E5%A5%BD%E7%9C%8B%E3%80%82%E5%88%9D%E5%AD%A6%E8%80%85%E5%8F%AF%E6%97%A0%E8%A7%86%E8%BF%99%E4%BA%9B%E5%BB%BA%E8%AE%AE%EF%BC%8C%E8%87%AA%E7%84%B6%E4%BC%9A%E6%9C%89%E5%BC%BA%E8%BF%AB%E7%97%87%E6%82%A3%E8%80%85%E6%9B%BF%E4%BD%A0%E4%BB%AC%E6%94%B9%E6%8E%89%E5%AE%83%E7%9A%84%EF%BC%8C%E6%88%96%E8%80%85%E6%9B%B4%E5%8F%AF%E8%83%BD%E5%9C%B0%EF%BC%8C%E6%A0%B9%E6%9C%AC%E6%B2%A1%E4%BA%BA%E5%8F%91%E7%8E%B0%E8%BF%99%E4%BA%9B%E9%97%AE%E9%A2%98%E3%80%82%0A%0ADon%27t%20use%20%60%5Cfrac%60%20in%20exponents%20or%20limits%20of%20integrals%3B%20it%20looks%20bad%20and%20can%20be%20confusing%2C%20which%20is%20why%20it%20is%20rarely%20done%20in%20professional%20mathematical%20typesetting.%20Write%20the%20fraction%20horizontally%2C%20with%20a%20slash%3A%0A%0A%E5%9C%A8%E4%BB%A5e%E4%B8%BA%E5%BA%95%E7%9A%84%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0%E3%80%81%E6%9E%81%E9%99%90%E5%92%8C%E7%A7%AF%E5%88%86%E4%B8%AD%E5%B0%BD%E9%87%8F%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%20%60%5Cfrac%60%20%E7%AC%A6%E5%8F%B7%EF%BC%9A%E5%AE%83%E4%BC%9A%E4%BD%BF%E6%95%B4%E6%AE%B5%E5%87%BD%E6%95%B0%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%BE%88%E6%80%AA%EF%BC%8C%E8%80%8C%E4%B8%94%E5%8F%AF%E8%83%BD%E4%BA%A7%E7%94%9F%E6%AD%A7%E4%B9%89%E3%80%82%E4%B9%9F%E6%AD%A3%E6%98%AF%E5%9B%A0%E6%AD%A4%E5%AE%83%E5%9C%A8%E4%B8%93%E4%B8%9A%E6%95%B0%E5%AD%A6%E6%8E%92%E7%89%88%E4%B8%AD%E5%87%A0%E4%B9%8E%E4%BB%8E%E4%B8%8D%E5%87%BA%E7%8E%B0%E3%80%82%0A%E6%A8%AA%E7%9D%80%E5%86%99%E8%BF%99%E4%BA%9B%E5%88%86%E5%BC%8F%EF%BC%8C%E4%B8%AD%E9%97%B4%E4%BD%BF%E7%94%A8%E6%96%9C%E7%BA%BF%E9%97%B4%E9%9A%94%20%60%2F%60%20%EF%BC%88%E7%94%A8%E6%96%9C%E7%BA%BF%E4%BB%A3%E6%9B%BF%E5%88%86%E6%95%B0%E7%BA%BF%EF%BC%89%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0Ae%5E%7Bi%5Cfrac%7B%5Cpi%7D2%7D%20%5Cquad%20e%5E%7B%5Cfrac%7Bi%5Cpi%7D2%7D%26%20e%5E%7Bi%5Cpi%2F2%7D%20%5C%5C%0A%5Cint_%7B-%5Cfrac%5Cpi2%7D%5E%5Cfrac%5Cpi2%20%5Csin%20x%5C%2Cdx%20%26%20%5Cint_%7B-%5Cpi%2F2%7D%5E%7B%5Cpi%2F2%7D%5Csin%20x%5C%2Cdx%20%5C%5C%0A%5Cend%7Barray%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0Ae%5E%7Bi%5Cfrac%7B%5Cpi%7D2%7D%20%5Cquad%20e%5E%7B%5Cfrac%7Bi%5Cpi%7D2%7D%26%20e%5E%7Bi%5Cpi%2F2%7D%20%5C%5C%0A%5Cint_%7B-%5Cfrac%5Cpi2%7D%5E%5Cfrac%5Cpi2%20%5Csin%20x%5C%2Cdx%20%26%20%5Cint_%7B-%5Cpi%2F2%7D%5E%7B%5Cpi%2F2%7D%5Csin%20x%5C%2Cdx%20%5C%5C%0A%5Cend%7Barray%7D%0A%0AThe%20%60%7C%60%20symbol%20has%20the%20wrong%20spacing%20when%20it%20is%20used%20as%20a%20divider%2C%20for%20example%20in%20set%20comprehensions.%20Use%20%60%5Cmid%60%20instead%3A%0A%0A%60%7C%60%20%E7%AC%A6%E5%8F%B7%E5%9C%A8%E8%A2%AB%E5%BD%93%E4%BD%9C%E5%88%86%E9%9A%94%E7%AC%A6%E6%97%B6%E4%BC%9A%E4%BA%A7%E7%94%9F%E9%94%99%E8%AF%AF%E7%9A%84%E9%97%B4%E9%9A%94%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%9C%A8%E9%9C%80%E8%A6%81%E5%88%86%E9%9A%94%E6%97%B6%E6%9C%80%E5%A5%BD%E4%BD%BF%E7%94%A8%20%60%5Cmid%60%20%E6%9D%A5%E4%BB%A3%E6%9B%BF%E5%AE%83%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%3A%0A%60%60%60%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5C%7Bx%7Cx%5E2%5Cin%5CBbb%20Z%5C%7D%20%26%20%5C%7Bx%5Cmid%20x%5E2%5Cin%5CBbb%20Z%5C%7D%20%5C%5C%0A%5Cend%7Barray%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5C%7Bx%7Cx%5E2%5Cin%5CBbb%20Z%5C%7D%20%26%20%5C%7Bx%5Cmid%20x%5E2%5Cin%5CBbb%20Z%5C%7D%20%5C%5C%0A%5Cend%7Barray%7D%0A%0AFor%20double%20and%20triple%20integrals%2C%20don%27t%20use%20%60%5Cint%5Cint%60%20or%20%60%5Cint%5Cint%5Cint%60.%20Instead%20use%20the%20special%20forms%20%60%5Ciint%60%20and%20%60%5Ciiint%60%3A%0A%0A%E4%BD%BF%E7%94%A8%E5%A4%9A%E9%87%8D%E7%A7%AF%E5%88%86%E7%AC%A6%E5%8F%B7%E6%97%B6%EF%BC%8C%E4%B8%8D%E8%A6%81%E5%A4%9A%E6%AC%A1%E4%BD%BF%E7%94%A8%20%60%5Cint%60%20%E6%9D%A5%E5%A3%B0%E6%98%8E%EF%BC%8C%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%20%60%5Ciint%60%20%E6%9D%A5%E8%A1%A8%E7%A4%BA%20%2A%2A%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86%2A%2A%20%EF%BC%8C%E4%BD%BF%E7%94%A8%20%60%5Ciiint%60%20%E6%9D%A5%E8%A1%A8%E7%A4%BA%20%2A%2A%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86%2A%2A%20%E7%AD%89%E3%80%82%E5%AF%B9%E4%BA%8E%E6%97%A0%E9%99%90%E6%AC%A1%E7%A7%AF%E5%88%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%94%A8%20%60%5Cint%20%5Ccdots%20%5Cint%60%20%E8%A1%A8%E7%A4%BA%E3%80%82%0A%0A-%20%E4%BE%8B%E5%AD%90%EF%BC%9A%0A%60%60%60%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5Cint%5Cint_S%20f%28x%29%5C%2Cdy%5C%2Cdx%20%26%20%5Ciint_S%20f%28x%29%5C%2Cdy%5C%2Cdx%20%5C%5C%0A%5Cint%5Cint%5Cint_V%20f%28x%29%5C%2Cdz%5C%2Cdy%5C%2Cdx%20%26%20%5Ciiint_V%20f%28x%29%5C%2Cdz%5C%2Cdy%5C%2Cdx%0A%5Cend%7Barray%7D%0A%60%60%60%0A%0A-%20%E6%98%BE%E7%A4%BA%EF%BC%9A%0A%5Cbegin%7Barray%7D%7Bcc%7D%0A%5Cmathrm%7BBad%7D%20%26%20%5Cmathrm%7BBetter%7D%20%5C%5C%0A%5Chline%20%5C%5C%0A%5Cint%5Cint_S%20f%28x%29%5C%2Cdy%5C%2Cdx%20%26%20%5Ciint_S%20f%28x%29%5C%2Cdy%5C%2Cdx%20%5C%5C%0A%5Cint%5Cint%5Cint_V%20f%28x%29%5C%2Cdz%5C%2Cdy%5C%2Cdx%20%26%20%5Ciiint_V%20f%28x%29%5C%2Cdz%5C%2Cdy%5C%2Cdx%0A%5Cend%7Barray%7D%0A%0A%24%24%E6%97%A0%E9%99%90%E6%AC%A1%E7%A7%AF%E5%88%86%EF%BC%9A%5Cint%20%5Ccdots%20%5Cint)
 
-Use `\,`, to insert a thin space before differentials; without
-this ![](https://g.yuque.com/gr/latex?%5CTeX#card=math&code=%5CTeX) will mash them together:
+Use `\,`, to insert a thin space before differentials; without this ![](https://g.yuque.com/gr/latex?%5CTeX#card=math&code=%5CTeX) will mash them together:
 
 在微分符号前加入 `\,` 来插入一个小的间隔空隙；没有 `\,` 符号的话，![](https://g.yuque.com/gr/latex?%5CTeX#card=math&code=%5CTeX) 将会把不同的微分符号堆在一起。
 
@@ -1327,9 +1307,7 @@ this ![](https://g.yuque.com/gr/latex?%5CTeX#card=math&code=%5CTeX) will mash th
 
 感谢您花费时间阅读这份指导手册，本手册内容可能有疏漏之处，欢迎更改指正。
 
-更多语法请参见：[Cmd Markdown 简明语法手册](https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown)，[Cmd
-Markdown
-高阶语法手册](https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#cmd-markdown-%E9%AB%98%E9%98%B6%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C)。
+更多语法请参见：[Cmd Markdown 简明语法手册](https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown)，[Cmd Markdown 高阶语法手册](https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown#cmd-markdown-%E9%AB%98%E9%98%B6%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C)。
 
 祝您记录、阅读、分享愉快！
 

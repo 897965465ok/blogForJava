@@ -1,7 +1,6 @@
 # typescript 笔记
 
 ## 基础类型：
-
 ``` typescript 
     Boolean: 布尔类型;   let isDone: boolean = false;
     Number: 数值类型;    let decLiteral: number = 6;
@@ -15,9 +14,7 @@
     Never：永远不存在的类型 目前不了解 可能抛出错误是会用吧;
    
 ```
-
 ## 接口约束
-
 ``` typescript
     interface SquareConfig {
 
@@ -45,9 +42,7 @@ class Clock implements ClockInterface {
 
 
 ```
-
 # 需要记忆的东西
-
 ``` typescript
     ReadonlyArray<T>:只读数组类型;  
     protected:   受保护的 当前类 和子类可以访问
@@ -62,8 +57,9 @@ class Clock implements ClockInterface {
     a = ro as number[]; // yes
 ```
 
-# 函数
 
+
+# 函数
 ``` typescript
 
 // 重载
@@ -87,6 +83,8 @@ function getInfo(str:any ):any{
 
 ```
 
+
+
 // console.log(getInfo('18'))
 
 // function getInfo(name:string):string;
@@ -95,15 +93,15 @@ function getInfo(str:any ):any{
 
 // function getInfo(name:any,age?:any):any{
 
-// if(age){
+//     if(age){
 
-// return '我叫:'+name+'我的年龄是'+age
+//         return '我叫:'+name+'我的年龄是'+age
 
-// }else{
+//     }else{
 
-// return '我叫:'+name;
+//         return '我叫:'+name;
 
-// }
+//     }
 
 // }
 
@@ -113,49 +111,49 @@ function getInfo(str:any ):any{
 
 // class Box {
 
-// name: string;
+//     name: string;
 
-// age: number;
+//     age: number;
 
-// constructor(name: string, age: number) {
+//     constructor(name: string, age: number) {
 
-// this.name = name;
+//         this.name = name;
 
-// this.age = age;
+//         this.age = age;
 
-// }
+//     }
 
-// print(): void {
+//     print(): void {
 
-// console.log(this.name, this.age)
+//         console.log(this.name, this.age)
 
-// }
+//     }
 
 // }
 
 // class Iphon extends Box {
 
-// width: string;
+//     width: string;
 
-// hight: number;
+//     hight: number;
 
-// constructor(width: string, hight: number, name: string, age: number) {
+//     constructor(width: string, hight: number, name: string, age: number) {
 
-// super(name, age)
+//         super(name, age)
 
-// this.width = width;
+//         this.width = width;
 
-// this.hight = hight;
+//         this.hight = hight;
 
-// }
+//     }
 
-// get() {
+//     get() {
 
-// // console.log(this.name,this.age,this.width,this.hight)
+//         //    console.log(this.name,this.age,this.width,this.hight)
 
-// super.print()
+//         super.print()
 
-// }
+//     }
 
 // }
 
@@ -167,29 +165,29 @@ function getInfo(str:any ):any{
 
 // class Box {
 
-// name: String
+//    name: String
 
-// age: Number
+//    age: Number
 
-// constructor(name: String, age: Number) {
+//     constructor(name: String, age: Number) {
 
-// this.name = name;
+//         this.name = name;
 
-// this.age = age;
+//         this.age = age;
 
-// }
+//     }
 
-// protected printf(){
+//     protected printf(){
 
-// console.log(this.name , this.age)
+//         console.log(this.name , this.age)
 
-// }
+//     }
 
-// arr (){
+//     arr (){
 
-// this.printf()
+//         this.printf()
 
-// }
+//     }
 
 // }
 
@@ -201,51 +199,51 @@ function getInfo(str:any ):any{
 
 // class Animal {
 
-// name:string;
+//     name:string;
 
-// constructor(name:string) {
+//     constructor(name:string) {
 
-// this.name = name;
+//      this.name = name;
 
-// }
+//     }
 
-// eat() { //具体吃什么 不知道
+//     eat() { //具体吃什么 不知道
 
-// console.log('吃')
+//       console.log('吃')
 
-// }
+//     }
 
 // }
 
 // class Dog extends Animal{
 
-// constructor(name:string){
+//      constructor(name:string){
 
-// super(name)
+//          super(name)
 
-// }
+//      }
 
-// eat(){
+//      eat(){
 
-// return this.name+'吃肉'
+//          return this.name+'吃肉'
 
-// }
+//      }
 
 // }
 
 // class Cat extends Animal{
 
-// constructor(name:string){
+//     constructor(name:string){
 
-// super(name)
+//         super(name)
 
-// }
+//     }
 
-// eat(){
+//     eat(){
 
-// return this.name+'吃鱼'
+//         return this.name+'吃鱼'
 
-// }
+//     }
 
 // }
 
@@ -261,33 +259,33 @@ function getInfo(str:any ):any{
 
 // abstract class Animal { //语法 抽象类只能用来定义标准 无法被实例化
 
-// public name: string;
+//     public name: string;
 
-// constructor(name: string) {
+//     constructor(name: string) {
 
-// this.name = name
+//         this.name = name
 
-// }
+//     }
 
-// abstract eat(): void;
+//     abstract eat(): void;
 
 // }
 
 // class Dog extends Animal {
 
-// constructor(name: string) {
+//     constructor(name: string) {
 
-// super(name)
+//         super(name)
 
-// }
+//     }
 
-// //抽象类的子类必须实现抽象类里面的抽象方法
+//      //抽象类的子类必须实现抽象类里面的抽象方法
 
-// eat() {
+//     eat() {
 
-// console.log(this.name+'粮食')
+//    console.log(this.name+'粮食')
 
-// }
+//     }
 
 // }
 
@@ -329,7 +327,7 @@ typescript中的接口
 
 // function dog (food:{mlik:string}):void{ //这个平常的用法
 
-// console.log(food)
+//     console.log(food)
 
 // }
 
@@ -341,39 +339,39 @@ typescript中的接口
 
 // interface FullName{ //定义接口
 
-// name:string; //接口必须以;结束
+//     name:string; //接口必须以;结束
 
-// age:number;
+//     age:number;
 
 // }
 
 // let obj = {
 
-// name:'小明',
+//     name:'小明',
 
-// age:18,
+//     age:18,
 
-// eat:'dog'
+//     eat:'dog'
 
 // }
 
 // function printName(name:FullName){ //奇怪的使用方式
 
-// //必须传入对象 name 和age
+//     //必须传入对象  name 和age
 
-// console.log(name.name);
+//     console.log(name.name);
 
-// console.log(name.age);
+//     console.log(name.age);
 
 // }
 
 // // printName('小明'，123)错误的写法
 
-// // printName({ //正确的写法 这样写必须一 一对应
+// // printName({ //正确的写法  这样写必须一 一对应
 
-// // name:'张三',
+// //     name:'张三',
 
-// // age:123
+// //     age:123
 
 // // })
 
@@ -383,87 +381,87 @@ typescript中的接口
 
 // interface FullName{
 
-// name:string;
+//     name:string;
 
-// age?:number; //加上这个可传可不传
+//     age?:number; //加上这个可传可不传
 
 // }
 
 // function getName (info:FullName){
 
-// console.log(info.name,info.age)
+//  console.log(info.name,info.age)
 
 // }
 
 // getName({
 
-// name:'小明',
+//     name:'小明',
 
-// age:189
+//     age:189
 
 // })
 
 // interface RequestCinfig {
 
-// type: string;
+//     type: string;
 
-// url: string;
+//     url: string;
 
-// ascync: boolean;
+//     ascync: boolean;
 
-// data?: object;
+//     data?: object;
 
 // }
 
 // function myajax(config:RequestCinfig) {
 
-// let ajax: any;
+//     let ajax: any;
 
-// if (XMLHttpRequest) {
+//     if (XMLHttpRequest) {
 
-// ajax = new XMLHttpRequest()
+//         ajax = new XMLHttpRequest()
 
-// } else {
+//     } else {
 
-// ajax = new ActiveXObject('Microsoft.XMLTTP')
+//         ajax = new ActiveXObject('Microsoft.XMLTTP')
 
-// }
+//     }
 
-// ajax.open(config.type,config.url,config.ascync)
+//     ajax.open(config.type,config.url,config.ascync)
 
-// ajax.send(config.data)
+//     ajax.send(config.data)
 
-// ajax.onreadystatechange = () => {
+//     ajax.onreadystatechange = () => {
 
-// if (ajax.readyState == 4 && ajax.status == 200) {
+//         if (ajax.readyState == 4 && ajax.status == 200) {
 
-// console.log(ajax.responseText)
+//          console.log(ajax.responseText)
 
-// } else {
+//         } else {
 
-// console.log(ajax.responseText)
+//             console.log(ajax.responseText)
 
-// }
+//         }
 
-// }
+//     }
 
 // }
 
 // myajax({
 
-// type:'get',
+//     type:'get',
 
-// url:'www.baidu.com',
+//     url:'www.baidu.com',
 
-// ascync:true,
+//     ascync:true,
 
-// data:{
+//     data:{
 
-// name:'小明',
+//         name:'小明',
 
-// age:18
+//         age:18
 
-// }
+//     }
 
 // })
 
@@ -471,13 +469,13 @@ typescript中的接口
 
 // interface fun{
 
-//     (key:string,value:string):string;
+//     (key:string,value:string):string;
 
 // }
 
 // let add:fun = function(key:string,value:string):string{ //要这样用
 
-// return ''
+//     return ''
 
 // }
 
@@ -493,7 +491,7 @@ typescript中的接口
 
 // interface userArr{
 
-//     [index:number]:string
+//     [index:number]:string
 
 // }
 
@@ -503,7 +501,7 @@ typescript中的接口
 
 // interface UserObj{
 
-//     [index:string]:string
+//     [index:string]:string
 
 // }
 
@@ -513,55 +511,55 @@ typescript中的接口
 
 // interface CLASS{
 
-// name:string;
+//     name:string;
 
-// eat(str:string):void;
+//     eat(str:string):void;
 
 // }
 
 // class Dog implements CLASS{
 
-// name:string;
+//     name:string;
 
-// constructor(){
+//     constructor(){
 
-// this.name = name;
+//         this.name = name;
 
-// }
+//     }
 
-// eat(str:string){
+//     eat(str:string){
 
-// }
+//     }
 
 // }
 
 //接口扩展; 接口可以继承接口
 
-// interface Animal { //接口继承
+// interface Animal {  //接口继承
 
-// eat(): void;
+//     eat(): void;
 
 // }
 
 // interface Person extends Animal {
 
-// work(): void;
+//     work(): void;
 
 // }
 
 // class web implements Person {
 
-// constructor() {
+//     constructor() {
 
-// }
+//     }
 
-// eat() {
+//     eat() {
 
-// }
+//     }
 
-// work() {
+//     work() {
 
-// }
+//     }
 
 // }
 
@@ -573,7 +571,7 @@ typescript中的接口
 
 // 3. 泛型类
 
-// 4 泛型接口
+// 4  泛型接口
 
 /*
 
@@ -593,7 +591,7 @@ typescript中的接口
 
 // function getData(value:string):string{
 
-// return value;
+//     return value;
 
 // }
 
@@ -605,7 +603,7 @@ typescript中的接口
 
 // function getData(value:T):T{ //语法
 
-// return value;
+//     return value;
 
 // }
 
@@ -615,7 +613,7 @@ typescript中的接口
 
 // function getData(value:T):number{ //语法
 
-// return 12346;
+//     return 12346;
 
 // }
 
@@ -625,13 +623,13 @@ typescript中的接口
 
 // class myajax{
 
-// public list: T[] = [];
+//     public list: T[] = [];
 
-// add(value: T): void {
+//     add(value: T): void {
 
-// this.list.push(value);
+//         this.list.push(value);
 
-// }
+//     }
 
 // }
 
@@ -641,13 +639,13 @@ typescript中的接口
 
 // interface Config{
 
-//     (value:T,age:T):T;
+//     (value:T,age:T):T;
 
 // }
 
 // var getData:Config = function(value:T):T{
 
-// return value
+//   return value
 
 // }
 
@@ -657,13 +655,13 @@ typescript中的接口
 
 // interface Config{
 
-//     (value:T,age:T):T;
+//     (value:T,age:T):T;
 
 // }
 
 // function getData(value:T):T{
 
-// return value
+//     return value
 
 // }
 
@@ -679,9 +677,9 @@ typescript中的接口
 
 //导出方法
 
-// export class printf {
+//     export class printf {
 
-// }
+//     }
 
 // }
 
@@ -689,7 +687,7 @@ typescript中的接口
 
 导入模块 这种方式要在 html页面引入所以js文件不好
 
-///
+/// 
 
 let mi = new modell.printf()
 

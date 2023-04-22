@@ -1,9 +1,8 @@
 # ---------formidable表单提交模块
 
-今天来说一下 formidable, 这个模块的主要功能上拿来提交表单和，文件
+今天来说一下   formidable, 这个模块的主要功能上拿来提交表单和，文件
 
 接下来看怎么用。
-
 ```
 if (req.url=="/favicon.ioc"){return ;};
 

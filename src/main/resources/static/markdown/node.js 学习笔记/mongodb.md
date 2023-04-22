@@ -6,8 +6,7 @@ MongoDB 简介
 
 MongDB 是一款跨平台，面向文档的数据库，可以实现高性能，高可用性，并且能够轻松扩展，是一个基于分布式文件存储的开源数据库系统。在高负载的情况下，添加更多的节点，可以保证服务器性能。
 
-MongoDB 也是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。不采用关系模型主要是为了获得更好的拓展性，MongoDB 不再有“行”(row)的概念，其运行方式主要基于两个概念：集合(
-collection)与文档(document)。
+MongoDB 也是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。不采用关系模型主要是为了获得更好的拓展性，MongoDB 不再有“行”(row)的概念，其运行方式主要基于两个概念：集合(collection)与文档(document)。
 
 MongoDB 的特点
 
@@ -23,13 +22,11 @@ MongoDB 支持各种编程语言：Ruby、Python、Java、C++、PHP、C# 等各�
 
 MongoDB 适用领域
 
-MongoDB 可以为 Web 应用提供可拓展的高性能数据存储解决方案。MongoDB 主要适用领域有网站数据、分布式场景、数据缓存和 JSON
-文档格式存储。适合大数据量、高并发、弱事务的互联网应用，其内置的水平拓展机制提供了从几百万到十亿级别的数据处理能力，可以很好地满足 Web2.0 和移动互联网应用数据存储的要求。
+MongoDB 可以为 Web 应用提供可拓展的高性能数据存储解决方案。MongoDB 主要适用领域有网站数据、分布式场景、数据缓存和 JSON 文档格式存储。适合大数据量、高并发、弱事务的互联网应用，其内置的水平拓展机制提供了从几百万到十亿级别的数据处理能力，可以很好地满足 Web2.0 和移动互联网应用数据存储的要求。
 
 MongoDB 4.0 的安装
 
-MongoDB 提供了 Linux 平台上的安装包，可以从官方网站 [http://www.mongodb.org/downloads](http://www.mongodb.org/downloads) 下载。本次我们选择使用最新版
-MongoDB4.0 来安装并实验。
+MongoDB 提供了 Linux 平台上的安装包，可以从官方网站 [http://www.mongodb.org/downloads](http://www.mongodb.org/downloads) 下载。本次我们选择使用最新版 MongoDB4.0 来安装并实验。
 
 下载 MongoDB4.0 软件包
 
@@ -51,25 +48,25 @@ mv /opt/mongodb-linux-x86_64-4.0.0/ /usr/local/mongodb
 
 # vim /usr/local/mongodb/mongodb1.conf  //添加下面的行
 
-dbpath=/data/mongodb1 #数据存储目录
+dbpath=/data/mongodb1    #数据存储目录
 
-logpath=/data/logs/mongodb/mongodb1.log #日志文件
+logpath=/data/logs/mongodb/mongodb1.log    #日志文件
 
-port=27017 #默认服务器端口
+port=27017    #默认服务器端口
 
-logappend=true #使用追加方式写日志
+logappend=true    #使用追加方式写日志
 
-fork=true #后台运行
+fork=true    #后台运行
 
-maxConns=5000 #最大同时连接数，默认2000
+maxConns=5000  #最大同时连接数，默认2000
 
-storageEngine=mmapv1 #指定存储引擎为内存映射文件
+storageEngine=mmapv1    #指定存储引擎为内存映射文件
 
 设置内核参数
 
 echo 0 > /proc/sys/vm/zone_reclaim_mode
 
-sysctl -w vm.zone_reclaim_mode=0 #永久设置
+sysctl -w vm.zone_reclaim_mode=0    #永久设置
 
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 
@@ -85,9 +82,9 @@ source /etc/profile
 
 启动 mongodb 服务进程，查看端口（默认27017）
 
-mongod --config /usr/local/mongodb/mongodb1.conf #开启MongoDB
+mongod --config /usr/local/mongodb/mongodb1.conf  #开启MongoDB
 
-mongod --config /usrlocal/mongodb/mongodb1.conf --shutdown #停止MongoDB
+mongod --config /usrlocal/mongodb/mongodb1.conf --shutdown  #停止MongoDB
 
 netstat -ntap | grep mongod
 
@@ -103,7 +100,7 @@ cd /usr/local/mongodb/
 
 cp mongodb1.conf mongodb2.conf
 
-vim mongodb2.conf #修改如下
+vim mongodb2.conf   #修改如下
 
 # dbpath=/data/mongodb2    #数据存储目录
 
@@ -125,62 +122,62 @@ touch /data/logs/mongodb/mongodb2.log
 
 chmod -R 777 /data/logs/mongodb/mongodb2.log
 
-mongod --config /usr/local/mongodb/mongodb2.conf #开启多实例
+mongod --config /usr/local/mongodb/mongodb2.conf  #开启多实例
 
 MongoDB 逻辑存储结构
 
-MongoDB 的逻辑结构主要由文档（document）、集合（collection）和数据库（database）三部分组成。其中文档是 MongoDB 的核心概念，它是 MongoDB
-逻辑存储的最小单元，相当于关系型数据库中的一行记录，多个文档组成集合，集合相当于关系型数据库中的表的概念，多个几个组成数据库。
+MongoDB 的逻辑结构主要由文档（document）、集合（collection）和数据库（database）三部分组成。其中文档是 MongoDB 的核心概念，它是 MongoDB 逻辑存储的最小单元，相当于关系型数据库中的一行记录，多个文档组成集合，集合相当于关系型数据库中的表的概念，多个几个组成数据库。
 
-SQL 术语/概念 MongoDB 术语/概念 解释/说明
+SQL 术语/概念	MongoDB 术语/概念	解释/说明
 
-database database 数据库
+database	database	数据库
 
-table collection 数据库表/集合
+table	collection	数据库表/集合
 
-row document 数据记录行/文档
+row	document	数据记录行/文档
 
-column field 数据字段/域
+column	field	数据字段/域
 
-index index 索引
+index	index	索引
 
-table joins 表连接，MongoDB不支持
+table joins		表连接，MongoDB不支持
 
-primary key primary key 主键，MongoDB自动将 _id字段设置为主键
+primary key	primary key	主键，MongoDB自动将 _id字段设置为主键
 
 MongoDB 基本操作
 
 登录、退出
 
-# 本地登录（默认实例端口号：--port=27017，可以不写）
+#本地登录（默认实例端口号：--port=27017，可以不写）
 
 > mongo
 
-# 登录远程主机的实例
+#登录远程主机的实例
 
 mongo --host 192.168.1.2 --port =27017
 
-# 退出MongoDB
+#退出MongoDB
 
 exit
 
 数据库操作
 
-# 创建数据库（如果数据库不存在，则创建数据库，否则切换到指定数据库）
+
+#创建数据库（如果数据库不存在，则创建数据库，否则切换到指定数据库）
 
 > use school
 
-# 查看所有数据库
+#查看所有数据库
 
 show dbs
 
-# 删除school数据库
+#删除school数据库
 
 use school
 
 db.dropDatabase()
 
-# 显示数据库操作命令
+#显示数据库操作命令
 
 db.help()
 
@@ -188,11 +185,12 @@ db.help()
 
 MongoDB 的数据保存在集合中，所有存储在集合中的数据都是 Binary JSON 格式，简称 BSON。BSON 是一种类似于 JSON 的二进制形式的存储格式。
 
-# 创建info集合
+
+#创建info集合
 
 > db.createcollection('info')
 
-# 查看集合
+#查看集合
 
 方法一：
 
@@ -202,7 +200,7 @@ show tabels
 
 show colletctions
 
-# 显示info集合操作命令
+#显示info集合操作命令
 
 db.info.help()
 
@@ -210,45 +208,47 @@ db.info.help()
 
 插入
 
-# 插入一条记录
+#插入一条记录
 
 db.info.insert({"id":1,"name":"jack","hobby":["game","talk","sport"]})
 
-# 向指定集合中插入一条文档数据
+#向指定集合中插入一条文档数据
 
 db.collection.insertOne()
 
-# 向指定集合中插入多条文档数据
+#向指定集合中插入多条文档数据
 
 db.collection.insertMany()
 
-# 通过循环批量插入数据
+#通过循环批量插入数据
 
 for(var i=1;i<100;i++)db.info.insert({"id":i,"name":"jack"+i})
 
 删除
 
-# 删除info集合中id=1的文档
+
+#删除info集合中id=1的文档
 
 > db.info.remove({"id":"1"})
 
 修改
 
-# 修改info集合id=1的name值为"zhangsan"文档
+
+#修改info集合id=1的name值为"zhangsan"文档
 
 db.info.update({"id":"1"},{$set:{"name":"wzn"}})
 
 查询
 
-# 查询info集合所有文档
+#查询info集合所有文档
 
 > db.info.find()
 
-# 查询info集合id为1的文档
+#查询info集合id为1的文档
 
 db.info.findOne({id:1})
 
-# 统计记录数
+#统计记录数
 
 db.info.count()
 
@@ -276,6 +276,7 @@ db.info.count()
 
 3 ： -o ：备份数据存放的目录 该目录需提前创建。
 
+
 复制数据库
 
 > db.copyDatabase("db1","db2")     //复制数据库db1 到db2 中
@@ -283,6 +284,7 @@ db.info.count()
 克隆集合
 
 把数据库 db1 的 info 集合克隆到实例端口：27018
+
 
 # mongo --port 27018
 
@@ -312,7 +314,7 @@ port=27017
 
 超级用户角色：root
 
-# 在db1数据库创建超级用户root,密码：123123
+#在db1数据库创建超级用户root,密码：123123
 
 > use db1
 
@@ -320,19 +322,20 @@ db.createUser({"user":"root","pwd":"123123","roles":["root"]})
 
 exit
 
-#  
 
-# 关闭 mongodb 服务
+# 
+
+#关闭 mongodb 服务
 
 mongod -f /usr/local/mongodb/mongodb1.conf --shutdown
 
-#  
+# 
 
 # 使用带认证参数的方式启动 mongodb 服务
 
 mongod -f /usr/local/mongodb/mongodb1.conf --auth
 
-#  
+# 
 
 # 此时查询数据不显示内容，需要进行授权认证
 
@@ -340,15 +343,16 @@ mongod -f /usr/local/mongodb/mongodb1.conf --auth
 
 db.auth("root":"123123")
 
-#  
+
+# 
 
 # 当然，实际情况中，我们可以修改配置文件，
 
-# 这样别人在访问我们的 MongoDB 时，我们可以指定一个有相应权限的用户给他进行登录并操作
+#这样别人在访问我们的 MongoDB 时，我们可以指定一个有相应权限的用户给他进行登录并操作
 
 vim /usr/local/mongodb/mongodb1.conf
 
-auth=true //添加
+auth=true    //添加
 
 进程管理
 
@@ -380,9 +384,10 @@ db.users.dataSize()
 
 此外，我们可以通过 Web 界面查看系统监控信息，只需要修改配置文件
 
+
 # vim /usr/local/mongodb/mongodb1.conf
 
-httpinterface=true //添加
+httpinterface=true    //添加
 
 通过 Web 页面可以看到：
 

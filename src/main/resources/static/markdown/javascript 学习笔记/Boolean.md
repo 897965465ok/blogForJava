@@ -2,7 +2,7 @@
 
 js 布尔值详细规则
 
-`true`                `false`
+`true`                `false`
 
 Boolean类型
 
@@ -10,7 +10,7 @@ true 是真; false 是假
 
 string类型
 
-任何非空字符串都是true;   " "空的字符串都是false;
+任何非空字符串都是true;   " "空的字符串都是false;
 
 Number类型
 
@@ -22,6 +22,6 @@ Object类型
 
 Undefined类型
 
-n/a是true; undefined 是false;
+n/a是true;  undefined 是false;
 
 n/a或N/A是英语“不适用

@@ -2,7 +2,9 @@
 
 # BFC 块级格式化
 
+
 ### BFC触发方式
+
 
 1. 根元素，即HTML标签
 1. float的值不是none。
@@ -10,7 +12,10 @@
 1. display的值是inline-block、table-cell、flex、table-caption或者inline-flex
 1. overflow的值不是visible
 
+
+
 ### 效果
+
 
 1. 内部的Box会在垂直方向，一个接一个地放置。
 1. Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠

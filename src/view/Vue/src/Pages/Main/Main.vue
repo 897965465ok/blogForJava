@@ -82,7 +82,7 @@ export default {
     // console.log(this.$store.state.pictures.length )
     if (this.$store.state.pictures.length <= 1) {
       let pictures = await api.wallhaven()
-   
+
       await this.wallhaven(pictures.list);
     }
     await this.setRecommen({
@@ -90,7 +90,7 @@ export default {
 
     });
 
-    await this.changeAll((await this.$api.get("v1/articles", {
+    await this.changeAll((await this.$api.get("v1/queryManyArticle", {
       params: {
         offset: 0,
         limit: 0

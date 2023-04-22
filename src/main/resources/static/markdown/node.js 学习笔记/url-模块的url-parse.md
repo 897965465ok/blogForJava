@@ -35,7 +35,7 @@ console.log(jinashu);//在控制台输出
 
 7 hash 哈希 #以及后面的
 
-8 search 搜索 search它和 query 类似区别在于 search 会把 ? 以及后面的内容完整地用字符串显示
+8 search 搜索  search它和 query 类似区别在于 search 会把 ? 以及后面的内容完整地用字符串显示
 
 9 query 查询？后面的比如?name="gay"&age="28"
 

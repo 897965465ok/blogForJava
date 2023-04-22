@@ -1,6 +1,6 @@
 # promise
 
-1. promise 有三种状态，进行中 成功(resolve) 失败(reject)
+1. promise 有三种状态，进行中   成功(resolve) 失败(reject)
 2. promise 只能是进行中到成功或者失败
 3. promise 使用场景异步的时候使用
 
@@ -61,7 +61,6 @@ c.then((value) => {
 ```
 
 ## Promise.race()
-
 ```javascript
 let a = Promise.resolve("aaa");
 let b = Promise.reject("bbb");

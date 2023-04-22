@@ -1,17 +1,12 @@
 # ES6函数语法糖
-
 ## 箭头函数
-
 1. 如果是匿名函数可以省略function
-
 ``` javascript
 () => {
 
 }
 ```
-
 2. 如果是只有一个参数可以省略括号
-
 ``` javascript
 message => {
 
@@ -29,7 +24,6 @@ message = > ({  //注意这个是代码块返回的是一个对象
 ```
 
 4. 箭头函数中的this将指向他外层的function的this
-
 ``` javascript
    setInterval//在默认情况下指向windows
    let test = {

@@ -1671,7 +1671,7 @@ delimiter ;
 
 create table my_goods(
 
-id int primary key auto_increment,
+id int primary key   auto_increment,
 
 name varchar(20) not null,
 
