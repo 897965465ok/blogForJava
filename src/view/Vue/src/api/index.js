@@ -25,7 +25,7 @@ switch (process.env.NODE_ENV) {
 
 api.interceptors.response.use(
   config => {
-    let { status, data } = config;
+    let {status, data} = config;
     switch (status) {
       case 200: {
         if (data.code == 200) {
@@ -61,4 +61,4 @@ api.interceptors.request.use(
   }
 );
 
-export { api };
+export {api};

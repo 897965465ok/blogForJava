@@ -1,9 +1,9 @@
-import { api } from "./index";
-import axios, { qs } from "axios";
+import {api} from "./index";
+import axios, {qs} from "axios";
 
 export const getComments = async articleId => {
-  let { data: comment } = await api.get("v1/comment", {
-    params: { articleId }
+  let {data: comment} = await api.get("v1/comment", {
+    params: {articleId}
   });
   // 如果有评论
   if (Array.isArray(comment.result)) {
@@ -22,7 +22,7 @@ export const getComments = async articleId => {
 };
 export const getArticle = async (offset, limit) => {
   return await this.$api.get("v1/queryManyArticle", {
-    params: { offset: offset, limit: limit }
+    params: {offset: offset, limit: limit}
   }).data.result;
 };
 export const comment = async (articleId, content, replyArticle, userName) => {
@@ -59,7 +59,7 @@ export const generateJSON = async () => {
 
 export const wallhaven = async params => {
   try {
-    let { data } = await api.get("v1/wallhaven", {
+    let {data} = await api.get("v1/wallhaven", {
       params: {
         limit: 216,
         offset: 1
@@ -88,7 +88,7 @@ export const GetUrl = async () => {
 };
 export const getOauthInfo = async userInfo => {
   let url;
-  const { access_token, scope, origin } = userInfo;
+  const {access_token, scope, origin} = userInfo;
   origin == "gitee" ? (url = "https://gitee.com/api/v5/user") : (url = "");
   return await api.get(url, {
     params: {

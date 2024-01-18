@@ -3,17 +3,14 @@ import { onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
 import { useStore } from '@/stores/article'
 import { useRoute, useRouter } from 'vue-router';
 import * as blogApi from '@/api/BlogApi'
+
 const articleList = ref();
 const store = useStore();
 const { articles } = store;
 const columns = ref();
 const pageInfo = ref();
 
-onBeforeMount(async () => {
-  pageInfo.value = await articles(1, 7)
-  articleList.value = pageInfo.value.list;
-  columns.value = await blogApi.queryArticleTableHeader();
-})
+
 
 /**
  * 仓库
@@ -32,9 +29,13 @@ const router = useRouter();
  * 数据部分
  */
 const data = reactive({})
-onBeforeMount(() => {
-  //console.log('2.组件挂载页面之前执行----onBeforeMount')
+
+onBeforeMount(async () => {
+  pageInfo.value = await articles(1, 7)
+  articleList.value = pageInfo.value.list;
+  columns.value = await blogApi.queryArticleTableHeader();
 })
+
 onMounted(() => {
   //console.log('3.-组件挂载到页面之后执行-------onMounted')
 })
@@ -61,9 +62,8 @@ async function jump(current: number) {
 <template>
   <el-table :data="articleList" border @selection-change="handleSelectionChange">
     <el-table-column class="column" type="selection"></el-table-column>
-    <el-table-column
-      v-for=" ( item , index ) in columns" :key="index" :label="item" :prop="item" :show-overflow-tooltip="true"
-      align="center" fixed="right">
+    <el-table-column v-for=" ( item, index ) in columns" :key="index" :label="item" :prop="item"
+      :show-overflow-tooltip="true" align="center" fixed="right">
 
       <template v-slot:header="{ column, $index }">
         <div class="column">
@@ -72,18 +72,22 @@ async function jump(current: number) {
       </template>
       <template v-slot:default="{ row, column }">
         <div class="column">
-         
-         {{ row[column.rawColumnKey] }}
-       
-       </div>
+
+          {{ row[column.rawColumnKey] }}
+
+        </div>
       </template>
 
     </el-table-column>
   </el-table>
-  <div class="demo-pagination-block">
-    <el-pagination v-if="pageInfo" @current-change="jump" v-model:page-size="pageInfo.pageSize" :total="pageInfo.total"
-      layout="total, prev, pager, next, jumper" />
-  </div>
+
+  
+    <el-pagination  v-if="pageInfo"  @current-change="jump" v-model:page-size="pageInfo.pageSize" :total="pageInfo.total"
+      layout="total, prev, pager, next, jumper" >
+    </el-pagination>
+     
+  
+
 </template>
 
 <style lang="scss" scoped>
@@ -98,5 +102,9 @@ async function jump(current: number) {
   overflow: hidden;
   white-space: nowrap;
   display: block;
+}
+.demo-pagination-block{
+  height: 35px;
+  width: 100%;
 }
 </style>

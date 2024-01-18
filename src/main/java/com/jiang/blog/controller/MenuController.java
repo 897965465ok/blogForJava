@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-
 @RestController
 @RequestMapping("/v1")
 public class MenuController {
@@ -75,6 +74,7 @@ public class MenuController {
 
     @ApiOperation("查询一个菜单列表")
     @GetMapping("/menu")
+
     public ApiRestResponse queryOneMenu(Integer id) {
         menuService.queryOneMenu(id);
         return ApiRestResponse.success();

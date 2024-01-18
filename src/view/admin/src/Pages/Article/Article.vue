@@ -164,6 +164,7 @@ const props = {
     <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
     <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
   </div>
+  
   <TableVue @check="checkButton"></TableVue>
 
   <el-dialog v-model="dialogTableVisible" destroy-on-close title="修改文章">
@@ -214,8 +215,6 @@ const props = {
           <el-button type="primary" @submit="onSubmit">修改</el-button>
           <el-button @click="dialogTableVisible = !dialogTableVisible">取消</el-button>
         </el-form-item>
-
-
       </el-form>
     </template>
   </el-dialog>
