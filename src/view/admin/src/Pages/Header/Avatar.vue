@@ -1,8 +1,9 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, toRefs, watchEffect } from 'vue';
-import { useStore } from '@/stores'
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
+import {useStore} from '@/stores'
+import {useRoute, useRouter} from 'vue-router';
 import jerry from '@/assets/jerry.png';
+
 /**
  * 仓库
  */

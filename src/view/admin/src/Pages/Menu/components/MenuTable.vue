@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import {isRef, nextTick, onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
+import {onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
 import {useStore} from '@/stores/menu'
 import {useRoute, useRouter} from 'vue-router';
 import * as blogApi from '@/api/BlogApi';
@@ -84,7 +84,7 @@ async function jump(current: number) {
 
     <div class="demo-pagination-block">
       <el-pagination v-if="pageInfo" @current-change="jump" :page-size="pageInfo.result.pageSize"
-                     :total="pageInfo.result.total" layout="total, prev, pager, next, jumper"/>
+                     :total="Number(pageInfo.result.total)" layout="total, prev, pager, next, jumper"/>
     </div>
 
   </div>

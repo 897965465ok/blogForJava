@@ -23,7 +23,7 @@
 </template>
 <script>
 import qs from "qs";
-import { api } from "@/api";
+import {api} from "@/api";
 
 export default {
   name: "Login",

@@ -3,19 +3,22 @@ package com.jiang.blog.controller;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.ArticleAndFileVO;
 import com.jiang.blog.model.VO.ArticleTableHeader;
-import com.jiang.blog.model.VO.MenuTableHeader;
 import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/v1")
 public class ArticleController {
     @Autowired
     ArticleService articleService;
+
 
     @ApiOperation("查询文章列表")
     @GetMapping("/queryManyArticle")
@@ -47,9 +50,21 @@ public class ArticleController {
     @ApiOperation("查询文章表格头")
     @GetMapping("/queryArticleTableHeader")
     public ApiRestResponse queryArticleTableHeader() {
-        ArticleTableHeader articleTableHeader =  articleService.ArticleTableHeader();
+        ArticleTableHeader articleTableHeader = articleService.ArticleTableHeader();
         return ApiRestResponse.success(articleTableHeader);
     }
 
     //TODO 修改  增加
+    @ApiOperation("新增文章")
+    @PostMapping("/addOneArticle")
+    public ApiRestResponse addOneArticle(@ModelAttribute ArticleAndFileVO articleAndFileVO) {
+        try {
+            articleService.addOneArticle(articleAndFileVO);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ApiRestResponse.success();
+    }
+
 }

@@ -1,8 +1,9 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useStore } from '@/stores'
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useStore} from '@/stores'
+import {useRoute, useRouter} from 'vue-router';
+
 /**
  * 仓库
  */

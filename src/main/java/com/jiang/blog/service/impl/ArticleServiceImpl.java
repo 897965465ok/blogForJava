@@ -5,24 +5,29 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.ArticleAndFileVO;
 import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.dao.ArticleMapper;
-import com.jiang.blog.model.dao.MenuMapper;
 import com.jiang.blog.model.pojo.Article;
-import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.service.ArticleService;
+import com.jiang.blog.utils.MinioServiceClient;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> implements ArticleService {
+public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
     @Autowired
     ArticleMapper articleMapper;
+
+    @Autowired
+    MinioServiceClient minioServiceClient;
+
 
     @Override
     // 根据标签查询
@@ -83,8 +88,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> imple
 
     @Override
     @CachePut(value = "ArticleTableHeader")
-    public ArticleTableHeader ArticleTableHeader(){
-        return  new ArticleTableHeader();
+    public ArticleTableHeader ArticleTableHeader() {
+        return new ArticleTableHeader();
+    }
+
+    @Override
+    public boolean addOneArticle(ArticleAndFileVO articleAndFileVO) {
+        Article target = new Article();
+        BeanUtils.copyProperties(articleAndFileVO, target);
+        HashMap<String, Object> fileMap = minioServiceClient.putObject(articleAndFileVO.getFile());
+        target.setParagraph(fileMap.get("url").toString());
+        return this.saveOrUpdate(target);
+
     }
 
 

@@ -3,20 +3,14 @@ package com.jiang.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
-import com.jiang.blog.exception.BlogExceptionEnum;
-import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.VO.RoleAndMenuVO;
 import com.jiang.blog.model.VO.RoleTableHeader;
-import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.service.RoleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -27,9 +27,8 @@
 </template>
 
 <script>
-import qs from "qs";
-import { mapActions } from "vuex";
-import { getOauthInfo } from "../../api/BlogApi";
+import {mapActions} from "vuex";
+import {getOauthInfo} from "../../api/BlogApi";
 
 export default {
   name: "Login",

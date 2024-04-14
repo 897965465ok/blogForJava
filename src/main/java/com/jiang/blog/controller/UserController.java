@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
-
 import com.jiang.blog.model.VO.UserAndRolesIdVO;
 import com.jiang.blog.model.VO.UserInfoVO;
 import com.jiang.blog.model.VO.UserTableHeader;
@@ -119,9 +118,11 @@ public class UserController {
 
     @ApiOperation("单文件上传")
     @PostMapping("/updateFile")
-    public ApiRestResponse updateFile(@RequestParam(name = "jerry") MultipartFile file) {
+    public ApiRestResponse updateFile(@RequestParam(name = "file") MultipartFile file) {
+
         String fileName = file.getOriginalFilename();
-        String filePath = "F:\\JAVA\\Mblog\\src\\main\\resources\\static\\" + fileName;
+
+        String filePath = "./src/main/resources/static/" + fileName;
         File dest = new File(filePath);
         try {
             InputStream Input = file.getInputStream();

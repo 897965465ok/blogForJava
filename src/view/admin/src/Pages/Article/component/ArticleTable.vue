@@ -1,20 +1,14 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, watchEffect } from 'vue'
-import { useStore } from '@/stores/article'
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, reactive, ref, watchEffect} from 'vue'
+import {useStore} from '@/stores/article'
+import {useRoute, useRouter} from 'vue-router';
 import * as blogApi from '@/api/BlogApi'
 
 const articleList = ref();
 const store = useStore();
-const { articles } = store;
+const {articles} = store;
 const columns = ref();
 const pageInfo = ref();
-
-
-
-/**
- * 仓库
- */
 
 /**
  * 路由对象
@@ -30,15 +24,13 @@ const router = useRouter();
  */
 const data = reactive({})
 
+
 onBeforeMount(async () => {
   pageInfo.value = await articles(1, 7)
   articleList.value = pageInfo.value.list;
-  columns.value = await blogApi.queryArticleTableHeader();
+  columns.value = await blogApi.queryArticleTableHeader()
 })
 
-onMounted(() => {
-  //console.log('3.-组件挂载到页面之后执行-------onMounted')
-})
 watchEffect(() => {
 })
 // 使用toRefs解构
@@ -63,7 +55,7 @@ async function jump(current: number) {
   <el-table :data="articleList" border @selection-change="handleSelectionChange">
     <el-table-column class="column" type="selection"></el-table-column>
     <el-table-column v-for=" ( item, index ) in columns" :key="index" :label="item" :prop="item"
-      :show-overflow-tooltip="true" align="center" fixed="right">
+                     :show-overflow-tooltip="true" align="center" fixed="right">
 
       <template v-slot:header="{ column, $index }">
         <div class="column">
@@ -81,12 +73,11 @@ async function jump(current: number) {
     </el-table-column>
   </el-table>
 
-  
-    <el-pagination  v-if="pageInfo"  @current-change="jump" v-model:page-size="pageInfo.pageSize" :total="pageInfo.total"
-      layout="total, prev, pager, next, jumper" >
+  <div   class="demo-pagination-block">
+    <el-pagination  v-if="pageInfo"  @current-change="jump" v-model:page-size="pageInfo.pageSize" :total="Number(pageInfo.total)"
+                   layout="total, prev, pager, next, jumper">
     </el-pagination>
-     
-  
+  </div>
 
 </template>
 
@@ -103,8 +94,6 @@ async function jump(current: number) {
   white-space: nowrap;
   display: block;
 }
-.demo-pagination-block{
-  height: 35px;
-  width: 100%;
-}
+
+
 </style>
