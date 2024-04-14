@@ -1,14 +1,14 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, toRefs, watchEffect } from 'vue';
-import { useStore } from '@/stores'
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
+import {useStore} from '@/stores'
+import {useRoute, useRouter} from 'vue-router';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import 'prismjs/themes/prism.css';
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-clojure.js';
-import Editor, { type EditorOptions } from '@toast-ui/editor';
+import Editor, {type EditorOptions} from '@toast-ui/editor';
 
 let options: EditorOptions
 

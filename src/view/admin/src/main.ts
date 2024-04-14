@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import './assets/main.css'
 import 'element-plus/dist/index.css'
+import {ElPagination} from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // import VueI18n from 'vue-i18n'
 import i18n from '@/i18n'
@@ -12,6 +13,8 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(ElPagination)
+
 app.mount('#app')
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

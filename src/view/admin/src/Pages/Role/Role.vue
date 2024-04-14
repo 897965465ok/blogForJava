@@ -1,25 +1,10 @@
 <script lang="ts" setup>
-import {
-  onBeforeMount,
-  onMounted,
-  reactive,
-  ref,
-  toRaw,
-  toRef,
-  toRefs,
-  unref,
-  watch,
-  watchEffect,
-  type Ref,
-  nextTick,
-} from "vue";
-import {storeToRefs} from "pinia";
+import {onBeforeMount, onMounted, reactive, ref, type Ref, toRaw,} from "vue";
 import {useStore} from "@/stores";
 import {useRoute, useRouter} from "vue-router";
 import TableVue from "./RoleTable.vue";
 import * as BlogApi from "@/api/BlogApi";
 import {ElMessage} from "element-plus";
-import {getPermsByRoleId} from "@/api/BlogApi";
 
 /**
  * 仓库

@@ -4,6 +4,7 @@ import {storeToRefs} from 'pinia';
 import HeaderVue from './component/Header.vue';
 import MainVue from './component/Main.vue';
 import SideVue from './component/Side.vue';
+
 const {sideSwitch} = storeToRefs(useStore());
 </script>
 <template>

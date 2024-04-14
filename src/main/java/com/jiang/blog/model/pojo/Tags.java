@@ -1,5 +1,4 @@
 package com.jiang.blog.model.pojo;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,20 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @TableName(value = "tags")
 public class Tags implements Serializable {
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
-
+    private static final long serialVersionUID = 1L;
+    @TableId(value = "id",type = IdType.ASSIGN_ID)
+    private Long id;
     @TableField(value = "created_at")
     private Date createdAt;
-
     @TableField(value = "updated_at")
     private Date updatedAt;
-
     @TableField(value = "deleted_at")
     private Date deletedAt;
-
     @TableField(value = "article_tag")
     private String articleTag;
-
-    private static final long serialVersionUID = 1L;
 }

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.jiang.blog.model.pojo.Article">
     <!--@mbg.generated-->
     <!--@Table article-->
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
     <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />

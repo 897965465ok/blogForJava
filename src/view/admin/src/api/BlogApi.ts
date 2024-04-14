@@ -1,10 +1,15 @@
 import {api} from "./index";
 import axios from "axios";
 import qs from "qs";
+
+
+
+
 export * from "./Article";
 export * from "./Menu";
 export * from "./Role";
 export * from "./User";
+export * from "./Tag";
 
 export const shouldJson = async (articleId: any, content: any) => {
     return await api.post(

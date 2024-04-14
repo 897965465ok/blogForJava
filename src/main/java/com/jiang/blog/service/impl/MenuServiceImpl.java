@@ -15,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -83,6 +84,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             query.eq(Menu::getParentId, menu.getMenuId());
             List<Map> children = generatorTreeMenu(menuMapper.selectList(query));
             Map<String, Object> complete = BeanUtil.beanToMap(menu);
+
             complete.put("children", children);
             return complete;
         }).collect(Collectors.toList());

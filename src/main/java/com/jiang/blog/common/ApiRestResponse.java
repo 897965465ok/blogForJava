@@ -15,7 +15,7 @@ public class ApiRestResponse<T> {
         this.result = result;
     }
 
-    // 这种叫做重载
+    // 重载
     public ApiRestResponse(Integer code, String message) {
         this.code = code;
         this.message = message;
@@ -39,12 +39,12 @@ public class ApiRestResponse<T> {
         return response;
     }
 
-    // 第二层
+    // 错误静态方法
     public static <T> ApiRestResponse<T> error(Integer status, String message) {
         return new ApiRestResponse(status, message);
     }
 
-    // 第一层
+    // 错误静态方法
     public static <T> ApiRestResponse<T> error(BlogExceptionEnum exceptionEnum) {
         return new ApiRestResponse(exceptionEnum.getCode(), exceptionEnum.getMes());
     }

@@ -1,13 +1,8 @@
 package com.jiang.blog.config;
 
 
-import cn.dev33.satoken.interceptor.SaInterceptor;
-import cn.dev33.satoken.router.SaHttpMethod;
-import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,17 +15,11 @@ public class BlogMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-/*         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/resources/");*/
-      /*  registry.addResourceHandler("/admin/**").addResourceLocations("classpath:/public/admin/");
-        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/public/admin/assets/");*/
- /*       registry.addResourceHandler("/**").addResourceLocations("classpath:/public/blog/");
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/public/blog/static/");*/
-
+       // registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
-    // CORS
- /*   @Override
+    // CORS 跨域
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowCredentials(true)
@@ -38,7 +27,10 @@ public class BlogMvcConfig implements WebMvcConfigurer {
                 .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
                 .allowedHeaders("*")
                 .exposedHeaders("*");
-    }*/
+
+    }
+
+
  /*   @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
@@ -53,7 +45,8 @@ public class BlogMvcConfig implements WebMvcConfigurer {
             *//*
             SaRouter.match(SaHttpMethod.PUT).match("/v1/article").check(r -> StpUtil.checkPermission("article:plus"));
             SaRouter.match(SaHttpMethod.PUT).match("/v1/article").check(r -> StpUtil.checkPermission("article:edit"));*//*
-            *//*菜单拦截*//*
+
+     *//*菜单拦截*//*
             SaRouter.match(SaHttpMethod.POST).match("/v1/createMenu").check(r -> StpUtil.checkPermission("menu:plus"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/deleteMenu").check(r -> StpUtil.checkPermission("menu:delete"));
             SaRouter.match(SaHttpMethod.POST).match("/v1/deleteManyMenu").check(r -> StpUtil.checkPermission("menu:delete"));

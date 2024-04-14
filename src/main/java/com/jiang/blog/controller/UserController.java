@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
-
 import com.jiang.blog.model.VO.UserAndRolesIdVO;
 import com.jiang.blog.model.VO.UserInfoVO;
 import com.jiang.blog.model.VO.UserTableHeader;
@@ -116,21 +115,6 @@ public class UserController {
         return ApiRestResponse.success(userlist);
     }
 
-
-    @ApiOperation("单文件上传")
-    @PostMapping("/updateFile")
-    public ApiRestResponse updateFile(@RequestParam(name = "jerry") MultipartFile file) {
-        String fileName = file.getOriginalFilename();
-        String filePath = "F:\\JAVA\\Mblog\\src\\main\\resources\\static\\" + fileName;
-        File dest = new File(filePath);
-        try {
-            InputStream Input = file.getInputStream();
-            Files.copy(Input, dest.toPath());
-        } catch (IOException e) {
-            return new ApiRestResponse(404, "文件存入失败", e);
-        }
-        return ApiRestResponse.success();
-    }
 
 
     @ApiOperation("根据用户查询出角色")

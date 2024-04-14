@@ -3,6 +3,8 @@ package com.jiang.blog.controller;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
+import com.jiang.blog.model.VO.ArticleTableHeader;
+import com.jiang.blog.model.VO.TagsTableHeader;
 import com.jiang.blog.model.pojo.Tags;
 import com.jiang.blog.service.ArticleService;
 import com.jiang.blog.service.TagsService;
@@ -10,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/v1")
@@ -29,7 +32,7 @@ public class TagsController {
 
     @ApiOperation("创建标签")
     @PostMapping("/tags")
-    public ApiRestResponse creatByTags(@RequestParam(name = "article_tag") String tags) {
+    public ApiRestResponse creatByTags(@RequestParam(value = "article_tag") String tags) {
         Integer result = tagsService.creatByTags(tags);
         if (result == 0) {
             return ApiRestResponse.error(BlogExceptionEnum.TAGS_EXISTS);
@@ -51,9 +54,11 @@ public class TagsController {
 
 
     @ApiOperation("删除标签")
-    @DeleteMapping("/tags")
-    public ApiRestResponse deleteTags(@RequestParam("id") Integer id) {
+    @PostMapping("/deleteTags")
+    public ApiRestResponse deleteTags(@RequestParam ArrayList<Long> id) {
+
         Boolean result = tagsService.deleteTags(id);
+
         if (result) {
             return ApiRestResponse.success();
         }
@@ -62,11 +67,20 @@ public class TagsController {
     }
 
     @ApiOperation("修改标签")
-    @PostMapping("/update")
-    public ApiRestResponse updateTags(@RequestParam("id") Integer id, @RequestParam("content") String content) {
-        Integer result = tagsService.updateTags(id, content);
-        return ApiRestResponse.success(result);
+    @PostMapping("/updateTags")
+    public ApiRestResponse updateTags(@RequestParam("id") Long id, @RequestParam("content") String content) {
 
+        Long result = tagsService.updateTags(id, content);
+
+        return ApiRestResponse.success(result);
     }
+
+
+    @ApiOperation("查询标签表格头")
+    @GetMapping("/queryTagsTableHeader")
+    public ApiRestResponse queryTagsTableHeader() {
+        return ApiRestResponse.success(tagsService.queryTagsTableHeader());
+    }
+
 
 }

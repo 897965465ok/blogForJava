@@ -1,55 +1,60 @@
-import { createRouter, createWebHistory,createWebHashHistory } from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import Index from "@/Pages/Index/Index.vue";
 import Login from "@/Pages/Login/Login.vue";
 import User from "@/Pages/User/User.vue";
 import Article from "@/Pages/Article/Article.vue";
 import Menu from "@/Pages/Menu/Menu.vue";
 import Role from "@/Pages/Role/Role.vue";
+import Tag from "@/Pages/Tag/Tag.vue";
+
 const router = createRouter({
-  //添加  createWebHashHistory  和vite.config 添加 base:'./'  解决首页白屏问题
-  //
-  history: createWebHashHistory (import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/login",
-      name: "login",
-      component: Login,
-    },
-    {
-      path: "/",
-      name: "Index",
-      component: Index,
-      redirect: "/menu",
-      children: [
+    //添加  createWebHashHistory  和vite.config 添加 base:'./'  解决首页白屏问题
+    //
+    history: createWebHashHistory(import.meta.env.BASE_URL),
+    routes: [
         {
-          path: "/article",
-          name: "Article",
-          component: Article,
+            path: "/login",
+            name: "login",
+            component: Login,
         },
         {
-          path: "/menu",
-          name: "Menu",
-          component: Menu,
+            path: "/",
+            name: "Index",
+            component: Index,
+            redirect: "/menu",
+            children: [
+                {
+                    path: "/article",
+                    name: "Article",
+                    component: Article,
+                },
+                {
+                    path: "/menu",
+                    name: "Menu",
+                    component: Menu,
+                },
+                {
+                    path: "/user",
+                    name: "User",
+                    component: User,
+                },
+                {
+                    path: "/role",
+                    name: "Role",
+                    component: Role,
+                },
+                {
+                    path: "/tag",
+                    name: "Tag",
+                    component: Tag,
+                },
+            ],
         },
-        {
-          path: "/user",
-          name: "User",
-          component: User,
-        },
-        {
-          path: "/role",
-          name: "Role",
-          component: Role,
-        },
-      ],
-    },
-  ],
+    ],
 });
 
 
-const ascynRouters = [
-
-]
+const ascynRouters = []
 
 
 /*
@@ -72,9 +77,9 @@ router.addRoute("Index",{
 // 判断是否登录
 router.beforeEach((to, from, next) => {
 
-  console.log(to,from)
+    console.log(to, from)
 
-  next();
+    next();
 });
 
 export default router;

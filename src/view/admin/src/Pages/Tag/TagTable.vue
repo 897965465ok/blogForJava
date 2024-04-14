@@ -1,20 +1,19 @@
 <script lang='ts' setup>
 import {onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
-import {useStore} from '@/stores/user'
+import {tagStore} from '@/stores/tag'
 import {useRoute, useRouter} from 'vue-router';
 import * as blogApi from "@/api/BlogApi";
 
 const userList = ref();
-const store = useStore();
+const store = tagStore();
 const pageInfo = ref();
 const userTableHeader = ref(null);
 onBeforeMount(async () => {
-  pageInfo.value = await store.queryManyUser(1, 7)
+  pageInfo.value = await store.queryManyTag(1, 7)
   console.log(pageInfo.value)
-  //TODO 做这个
   userList.value = pageInfo.value.result
   // console.log(userList.value)
-  userTableHeader.value = await blogApi.queryUserTableHeader()
+  userTableHeader.value = await blogApi.queryTagsTableHeader()
 })
 
 
@@ -53,7 +52,7 @@ function handleSelectionChange(selection: any) {
 
 
 async function jump(current: number) {
-  pageInfo.value = await store.queryManyUser(current * 1, 7)
+  pageInfo.value = await store.queryManyTag(current * 1, 7)
   userList.value = pageInfo.value.list;
 }
 
@@ -63,8 +62,8 @@ async function jump(current: number) {
   <div v-if="pageInfo">
     <el-table :data="userList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
-      <el-table-column v-for=" (item , index) in userTableHeader" :key="index" :label="item" :prop="item"
-        :show-overflow-tooltip="true" align="center" fixed="right">
+      <el-table-column v-for=" (item, index) in userTableHeader" :key="index" :label="item" :prop="item"
+                       :show-overflow-tooltip="true" align="center" fixed="right">
 
         <template v-slot:header="{ column, $index }">
           <div class="column">
@@ -80,10 +79,12 @@ async function jump(current: number) {
 
       </el-table-column>
     </el-table>
-    <div class="demo-pagination-block">
-      <el-pagination v-if="pageInfo" @current-change="jump" :page-size="pageInfo.result.pageSize"
-        :total=" Number(pageInfo.result.total) " layout="total, prev, pager, next, jumper" />
-    </div>
+
+    <!--    <div class="demo-pagination-block">
+          <el-pagination v-if="pageInfo" @current-change="jump" :page-size="pageInfo.result.pageSize"
+            :total="Number(pageInfo.result.total)" layout="total, prev, pager, next, jumper" />
+        </div>-->
+
   </div>
 </template>
 

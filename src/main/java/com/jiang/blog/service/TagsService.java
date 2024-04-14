@@ -1,8 +1,11 @@
 package com.jiang.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jiang.blog.model.VO.TagsTableHeader;
 import com.jiang.blog.model.pojo.Tags;
+import org.springframework.cache.annotation.CachePut;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface TagsService extends IService<Tags> {
@@ -10,7 +13,10 @@ public interface TagsService extends IService<Tags> {
 
     int creatByTags(String articleTag);
 
-    boolean deleteTags(Integer id);
+    boolean deleteTags(ArrayList<Long> id);
 
-    Integer updateTags(Integer id, String content);
+    Long updateTags(Long id, String content);
+
+    @CachePut(value = "TagsTableHeader")
+    TagsTableHeader queryTagsTableHeader();
 }

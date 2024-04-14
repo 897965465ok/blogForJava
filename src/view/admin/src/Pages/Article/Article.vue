@@ -1,15 +1,15 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRaw, toRef, toRefs, unref, watch, watchEffect, type Ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useStore } from '@/stores/article';
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, onMounted, reactive, ref, toRaw} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useStore} from '@/stores/article';
+import {useRoute, useRouter} from 'vue-router';
 import TableVue from './component/ArticleTable.vue';
 
 /**
  * 仓库
  */
 const store = useStore();
-const { treeMap } = storeToRefs(store);
+const {treeMap} = storeToRefs(store);
 
 const treeTwo = ref();
 
@@ -40,16 +40,13 @@ onMounted(() => {
 // let { } = { ...toRefs(data) }
 
 
-
 const ArticleList = ref([]);
 const dialogTableVisible = ref(false)
-
 
 
 function checkButton(selectorList: any) {
   ArticleList.value = selectorList
 }
-
 
 
 function deleteSelectorArticleList() {
@@ -89,6 +86,7 @@ const form: any = reactive({
 const keys: any[] = [];
 
 const strictly = ref(false)
+
 function GeneratorKeys(treeData: Array<Object>) {
   treeData.forEach((item: any) => {
     keys.push(item.menuId)
@@ -101,14 +99,14 @@ function GeneratorKeys(treeData: Array<Object>) {
 
 //点击展开
 const allOpen = (isCheck: boolean) => {
-  let RawArr = toRaw(reactive(treeMap.value))
+  let RawArr: any = toRaw(reactive(treeMap.value))
   GeneratorKeys(RawArr)
   if (isCheck) {
     keys.forEach(id => {
       let node = treeTwo.value.getNode(id)
       treeTwo.value.expandNode(node)
     })
-  }else{
+  } else {
     keys.forEach(id => {
       let node = treeTwo.value.getNode(id)
       treeTwo.value.collapseNode(node)
@@ -118,15 +116,15 @@ const allOpen = (isCheck: boolean) => {
 }
 // 全选/反选
 const allSelector = (isCheck: boolean) => {
-  let RawArr = toRaw(reactive(treeMap.value))
+  let RawArr: any = toRaw(reactive(treeMap.value))
   GeneratorKeys(RawArr)
   if (isCheck) {
     keys.forEach(id => {
-      treeTwo.value.setChecked(id,true)
+      treeTwo.value.setChecked(id, true)
     })
-  }else{
+  } else {
     keys.forEach(id => {
-      treeTwo.value.setChecked(id,false)
+      treeTwo.value.setChecked(id, false)
     })
   }
 
@@ -139,15 +137,10 @@ const linkage = (isCheck: boolean) => {
 }
 
 
-
-
 const onSubmit = () => {
   console.log(form)
 
 }
-
-
-
 
 
 const props = {
@@ -159,97 +152,93 @@ const props = {
 
 </script>
 <template>
-  <div>
+  <el-row>
     <el-button @click="dialogTableVisible = !dialogTableVisible">新增</el-button>
     <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
     <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
-  </div>
-  
+  </el-row>
+
   <TableVue @check="checkButton"></TableVue>
 
-  <el-dialog v-model="dialogTableVisible" destroy-on-close title="修改文章">
+  <el-dialog v-model="dialogTableVisible" destroy-on-close title="文章上传" width="35%">
+
     <template #default>
-      <el-form :model="form" label-width="100px">
+      <el-form :model="form">
         <div class="form-header">
-          <div class="header-upload">
-            <el-upload action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" drag multiple>
-              <el-icon>
+          <el-row class="header-upload">
+            <el-upload
+                style="width: 100%;"
+                drag
+                action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                multiple
+            >
+              <el-icon class="el-icon--upload">
                 <upload-filled/>
               </el-icon>
               <div class="el-upload__text">
-                <em>图片拖放</em><br>
-                <em>点击上传</em>
+                <em>拖入文件 点击上传</em>
               </div>
             </el-upload>
-          </div>
-          <div class="header-textarea">
-            <el-input v-model="form.paragraph" resize="none" type="textarea"/>
-          </div>
+
+          </el-row>
         </div>
 
-        <div class="form-body">
-          <div class="form-switch">
-            <el-form-item label="热门">
-              <el-switch v-model="form.hot"/>
-            </el-form-item>
-            <el-form-item label="侧边栏文章">
-              <el-switch v-model="form.sideArticle"/>
-            </el-form-item>
-            <el-form-item label="文章名">
-              <el-input v-model="form.name"/>
-            </el-form-item>
-            <el-form-item label="分类命">
-              <el-input v-model="form.tag"/>
-            </el-form-item>
-            <el-form-item label="原始路径">
-              <el-input v-model="form.articlePath"/>
-            </el-form-item>
-          </div>
-        </div>
+        <el-row class="form-body">
+          <el-form-item label="热门">
+            <el-switch v-model="form.hot"/>
+          </el-form-item>
+          <el-form-item label="侧边栏文章">
+            <el-switch v-model="form.sideArticle"/>
+          </el-form-item>
+          <el-form-item label="分类">
+            <el-select
+                v-model="form.tag"
+                placeholder="Select"
+                style="width: 70%"
+            >
+              <el-option
+                  key="1"
+                  label="ES6"
+                  value="ES6"
+              />
+            </el-select>
+          </el-form-item>
+        </el-row>
 
-        <!-- <el-form-item label="文章内容">
-          content:""
-        </el-form-item> -->
+        <el-row class="form-footer">
+          <el-form-item>
+            <el-button type="primary" @submit="onSubmit">上传</el-button>
+            <el-button @click="dialogTableVisible = !dialogTableVisible">取消</el-button>
+          </el-form-item>
+        </el-row>
 
-        <el-form-item>
-          <el-button type="primary" @submit="onSubmit">修改</el-button>
-          <el-button @click="dialogTableVisible = !dialogTableVisible">取消</el-button>
-        </el-form-item>
       </el-form>
     </template>
+
+
   </el-dialog>
+
+
 </template>
 
 
 <style lang='scss' scoped>
 .form-header {
-  display: flex;
   .header-upload {
-    flex: 1 1 30%;
     .el-upload-list {
       margin: 0;
     }
   }
-  .header-textarea {
-    flex: 1 1 60%;
-    margin-left: 15px;
-    .el-textarea {
-      height: 100%;
-    }
-    :deep(.el-textarea__inner) {
-      height: 100%;
-    }
-  }
+
 }
+
 :deep(.el-upload-list) {
   margin: 0;
 }
+
 .form-body {
   display: flex;
+  justify-content: space-between;
   margin-top: 15px;
-  .form-switch {
-    display: flex;
-  }
 }
-// .form-switch {}
 </style>

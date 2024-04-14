@@ -1,12 +1,12 @@
 <script lang='ts' setup>
-import { onBeforeMount, onMounted, reactive, ref, toRefs, watchEffect, provide, type Ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useStore } from '@/stores/menu';
-import { useRoute, useRouter } from 'vue-router';
+import {onBeforeMount, onMounted, provide, ref, toRefs, watchEffect} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useStore} from '@/stores/menu';
+import {useRoute, useRouter} from 'vue-router';
 import TableVue from './components/MenuTable.vue'
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
 import ChangeMenuVue from "@/Pages/Menu/components/ChangeMenu.vue";
-import { ElMessage } from 'element-plus';
+import {ElMessage} from 'element-plus';
 
 
 const store = useStore()
