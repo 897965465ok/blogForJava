@@ -10,4 +10,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<Article> queryArticlesByTags(@Param("tags") String tags);
 
     List<Article> queryArticles(@Param("offset") Integer offset, @Param("limit") Integer limit);
+
+   
 }
