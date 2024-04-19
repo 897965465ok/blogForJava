@@ -1,10 +1,14 @@
 package com.jiang.blog.common;
 
 import com.jiang.blog.exception.BlogExceptionEnum;
+import lombok.Data;
 
+
+@Data
 public class ApiRestResponse<T> {
     private static final int SUCCESS_CODE = 200;
     private static final String SUCCESS_MESSAGE = "SUCCESS";
+
     private Integer code;
     private String message;
     private T result;
@@ -39,7 +43,7 @@ public class ApiRestResponse<T> {
         return response;
     }
 
-    // 错误静态方法
+    //  有参数错误处理
     public static <T> ApiRestResponse<T> error(Integer status, String message) {
         return new ApiRestResponse(status, message);
     }
@@ -49,6 +53,7 @@ public class ApiRestResponse<T> {
         return new ApiRestResponse(exceptionEnum.getCode(), exceptionEnum.getMes());
     }
 
+
     public static int getSuccessCode() {
         return SUCCESS_CODE;
     }
@@ -57,27 +62,4 @@ public class ApiRestResponse<T> {
         return SUCCESS_MESSAGE;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getResult() {
-        return result;
-    }
-
-    public void setResult(T result) {
-        this.result = result;
-    }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/v1")
@@ -37,6 +38,21 @@ public class ArticleController {
         return ApiRestResponse.success(result);
     }
 
+    @ApiOperation("删除多文章")
+    @PostMapping("/deleteManyArticle")
+    public ApiRestResponse deleteManyArticle(@RequestParam(name = "id") ArrayList<Long> id) {
+        Boolean result = articleService.deleteManyArticle(id);
+
+        if (result) {
+            return ApiRestResponse.success("删除成功");
+
+        } else {
+            return ApiRestResponse.error(BlogExceptionEnum.DELETE_Article_FALL);
+        }
+
+    }
+
+
     @ApiOperation("查询一篇文章")
     @GetMapping("/queryOneArticle")
     public ApiRestResponse queryOneArticle(@RequestParam(name = "id") Integer id) {
@@ -54,10 +70,11 @@ public class ArticleController {
         return ApiRestResponse.success(articleTableHeader);
     }
 
-    //TODO 修改  增加
+    //TODO 修改
     @ApiOperation("新增文章")
     @PostMapping("/addOneArticle")
     public ApiRestResponse addOneArticle(@ModelAttribute ArticleAndFileVO articleAndFileVO) throws IOException {
+
         String fileUrl = articleService.addOneArticle(articleAndFileVO);
         return ApiRestResponse.success(fileUrl);
     }

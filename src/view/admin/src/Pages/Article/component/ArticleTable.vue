@@ -10,6 +10,7 @@ const {articles} = store;
 const columns = ref();
 const pageInfo = ref();
 
+
 /**
  * 路由对象
  */
@@ -73,8 +74,9 @@ async function jump(current: number) {
     </el-table-column>
   </el-table>
 
-  <div   class="demo-pagination-block">
-    <el-pagination  v-if="pageInfo"  @current-change="jump" v-model:page-size="pageInfo.pageSize" :total="Number(pageInfo.total)"
+  <div class="demo-pagination-block">
+    <el-pagination v-if="pageInfo" @current-change="jump" v-model:page-size="pageInfo.pageSize"
+                   :total="Number(pageInfo.total)"
                    layout="total, prev, pager, next, jumper">
     </el-pagination>
   </div>

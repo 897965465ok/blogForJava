@@ -10,7 +10,7 @@ const pageInfo = ref();
 const userTableHeader = ref(null);
 onBeforeMount(async () => {
   pageInfo.value = await store.queryManyTag(1, 7)
-  console.log(pageInfo.value)
+
   userList.value = pageInfo.value.result
   // console.log(userList.value)
   userTableHeader.value = await blogApi.queryTagsTableHeader()

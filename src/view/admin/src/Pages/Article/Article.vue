@@ -4,16 +4,29 @@ import {storeToRefs} from 'pinia';
 import {useStore} from '@/stores/article';
 import {useRoute, useRouter} from 'vue-router';
 import TableVue from './component/ArticleTable.vue';
+import {tagStore as useTagStore} from "@/stores/tag";
+import * as BlogApi from "@/api/BlogApi"
+import {ElMessage} from "element-plus";
+import type {UploadUserFile} from "element-plus/lib/components";
+
 
 /**
  * 仓库
  */
 const store = useStore();
 const {treeMap} = storeToRefs(store);
-
+const tagStore = useTagStore();
+const {queryManyTag} = tagStore
 const treeTwo = ref();
+const ArticleList = ref([]);
+const dialogTableVisible = ref(false)
+const select = ref<Array<string>>([]);
+const sign = ref<Number>(0);
+const tag = ref();
+const sideArticle = ref();
+const hot = ref();
 
-
+const fileRaw = ref();
 /**
  * 路由对象
  */
@@ -27,12 +40,14 @@ const router = useRouter();
  * 数据部分
  */
 
-onBeforeMount(() => {
-  //console.log('2.组件挂载页面之前执行----onBeforeMount')
-})
-onMounted(() => {
+//console.log('2.组件挂载页面之前执行----onBeforeMount')
+onBeforeMount(async () => {
 
-  // console.log(treeTwo)
+
+})
+onMounted(async () => {
+  let {result}: any = await queryManyTag(1, 7);
+  select.value.push(...result);
 
 })
 
@@ -40,8 +55,14 @@ onMounted(() => {
 // let { } = { ...toRefs(data) }
 
 
-const ArticleList = ref([]);
-const dialogTableVisible = ref(false)
+function openBox(number: Number) {
+
+  dialogTableVisible.value = true;
+  sign.value = number;
+
+}
+
+const openDeleteBox = ref<boolean>(false)
 
 
 function checkButton(selectorList: any) {
@@ -49,17 +70,31 @@ function checkButton(selectorList: any) {
 }
 
 
-function deleteSelectorArticleList() {
+async function deleteSelectorArticleList() {
+  let id = ArticleList.value.map((item: any) => item.id)
   // 删除选择中的文章
+  let {code, message} = await BlogApi.deleteArticle(id)
+
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: `删除成功`,
+      type: "success",
+    });
+  } else {
+    ElMessage.error({
+      message: "删除失败",
+      type: "error",
+    });
+  }
+
+
+  openDeleteBox.value = !openDeleteBox.value
 
 }
 
 function changeArticle() {
   // 修改选中的文章
   dialogTableVisible.value = true
-  Object.keys(form).forEach((item) => {
-    form[item] = ArticleList.value[0][item]
-  })
 
 }
 
@@ -67,21 +102,29 @@ function changeArticle() {
 async function creatArticle() {
   // 创建文章
   dialogTableVisible.value = true
-  // let result  =   await createArticle(form);
+  const form: FormData = new FormData();
+  form.append("tag", tag.value);
+  form.append("sideArticle", sideArticle.value);
+  form.append("hot", hot.value);
+  form.append("file", fileRaw.value);
+  let {code,message}: any = await BlogApi.createArticle(form);
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: "创建文章成功",
+      type: "success",
+    });
+  } else {
+    ElMessage.error({
+      message: "创建文章失败",
+      type: "error",
+    });
+  }
+  dialogTableVisible.value = false;
 }
 
 // default-expanded-keys
 // default-checked-keys
-const form: any = reactive({
-  "userName": "",
-  "nickName": "",
-  "email": "",
-  "phonenumber": "",
-  "sex": "0",
-  "password": 1,
-  "status": "0",
-  "roles": [],
-})
+
 
 const keys: any[] = [];
 
@@ -136,9 +179,26 @@ const linkage = (isCheck: boolean) => {
 
 }
 
+const changeFile = (file: UploadUserFile) => {
+  fileRaw.value = file.raw
+}
 
-const onSubmit = () => {
-  console.log(form)
+const FileRemove = () => {
+
+  fileRaw.value = null;
+}
+
+async function invoke() {
+  switch (sign.value) {
+    case 1: {
+      await creatArticle();
+      break
+    }
+    case 2 : {
+      await changeArticle();
+      break
+    }
+  }
 
 }
 
@@ -153,24 +213,26 @@ const props = {
 </script>
 <template>
   <el-row>
-    <el-button @click="dialogTableVisible = !dialogTableVisible">新增</el-button>
-    <el-button :disabled="(ArticleList.length < 1)" @click="deleteSelectorArticleList">删除</el-button>
-    <el-button :disabled="(ArticleList.length != 1)" @click="changeArticle">修改</el-button>
+    <el-button @click="openBox(1)">新增</el-button>
+    <el-button :disabled="(ArticleList.length != 1)" @click="openBox(3)">修改</el-button>
+    <el-button :disabled="(ArticleList.length < 1)" @click="openDeleteBox = !openDeleteBox">删除</el-button>
   </el-row>
-
   <TableVue @check="checkButton"></TableVue>
-
   <el-dialog v-model="dialogTableVisible" destroy-on-close title="文章上传" width="35%">
-
     <template #default>
       <el-form :model="form">
         <div class="form-header">
           <el-row class="header-upload">
             <el-upload
+                @change="changeFile"
+                @remove="FileRemove"
+                ref="uploadRef"
+                :limit="1"
                 style="width: 100%;"
                 drag
                 action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
                 multiple
+                :auto-upload="false"
             >
               <el-icon class="el-icon--upload">
                 <upload-filled/>
@@ -185,21 +247,22 @@ const props = {
 
         <el-row class="form-body">
           <el-form-item label="热门">
-            <el-switch v-model="form.hot"/>
+            <el-switch v-model="hot"/>
           </el-form-item>
           <el-form-item label="侧边栏文章">
-            <el-switch v-model="form.sideArticle"/>
+            <el-switch v-model="sideArticle"/>
           </el-form-item>
           <el-form-item label="分类">
             <el-select
-                v-model="form.tag"
-                placeholder="Select"
+                v-model="tag"
+                placeholder="ES6"
                 style="width: 70%"
             >
               <el-option
-                  key="1"
-                  label="ES6"
-                  value="ES6"
+                  v-for="(item,index) in select"
+                  :key="item.id"
+                  :label="item.articleTag"
+                  :value="item.articleTag"
               />
             </el-select>
           </el-form-item>
@@ -207,7 +270,7 @@ const props = {
 
         <el-row class="form-footer">
           <el-form-item>
-            <el-button type="primary" @submit="onSubmit">上传</el-button>
+            <el-button :disabled=" fileRaw == null ? true:false" type="primary" @click="invoke">确定</el-button>
             <el-button @click="dialogTableVisible = !dialogTableVisible">取消</el-button>
           </el-form-item>
         </el-row>
@@ -216,6 +279,16 @@ const props = {
     </template>
 
 
+  </el-dialog>
+  <!-- 删除遮罩层 -->
+  <el-dialog v-model="openDeleteBox" title="确认信息" width="30%" align-center>
+    <span>是否删除这些标签?</span>
+    <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="deleteSelectorArticleList"> 确定 </el-button>
+          <el-button @click="openDeleteBox = false">取消</el-button>
+        </span>
+    </template>
   </el-dialog>
 
 

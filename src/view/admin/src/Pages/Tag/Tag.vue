@@ -5,7 +5,6 @@ import {useRoute, useRouter} from "vue-router";
 import * as blogApi from "@/api/BlogApi";
 import TableVue from "./TagTable.vue";
 import {ElMessage} from "element-plus";
-import {createTag, deleteTag, updateTags} from "@/api/BlogApi";
 
 /**
  * 仓库
@@ -62,6 +61,7 @@ async function sureDeleteTagList() {
 // 创建标签函数
 async function createTag() {
   let {code, message} = await blogApi.createTag(tagName);
+
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: "创建标签成功",
@@ -73,6 +73,7 @@ async function createTag() {
       type: "error",
     });
   }
+
 }
 
 
@@ -82,7 +83,7 @@ async function invoke() {
   } else if (sign.value == 2) {
     await changeTags()
   }
-
+  dialogTableVisible.value = false;
 }
 
 // 修改选中的标签
@@ -141,7 +142,7 @@ function openBox(number: Number) {
 
 
       <el-form-item>
-        <el-button :loading="isLoading" type="primary" @click="invoke">提交</el-button>
+        <el-button type="primary" @click="invoke">提交</el-button>
         <el-button @click="dialogTableVisible = false">取消</el-button>
       </el-form-item>
 

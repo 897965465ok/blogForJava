@@ -12,7 +12,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -54,9 +53,7 @@ public class TagsServiceImpl  extends ServiceImpl<TagsMapper, Tags> implements T
         if (tags == null) {
             throw new BlogException(BlogExceptionEnum.TAGS_NOT_EXISTS);
         } else {
-            tags.setUpdatedAt(new Date());
             tags.setArticleTag(content);
-
             return (long) tagsMapper.updateById(tags);
         }
     }

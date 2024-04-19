@@ -15,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +55,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Integer deleteOneArticle(Integer id) {
         return articleMapper.deleteById(id.longValue());
+    }
+
+    @Override
+    public  boolean deleteManyArticle(ArrayList<Long> id ) {
+        return  this.removeByIds(id);
     }
 
     @Override
@@ -95,7 +102,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public String addOneArticle(ArticleAndFileVO articleAndFileVO) {
         Article target = new Article();
         BeanUtils.copyProperties(articleAndFileVO, target);
-        String fileUrl  = minioServiceClient.putObject(articleAndFileVO.getFile());
+        MultipartFile file = articleAndFileVO.getFile();
+        String fileUrl  = minioServiceClient.putObject(file);
+        target.setName(file.getOriginalFilename());
         target.setArticlePath(fileUrl);
         this.saveOrUpdate(target);
         return fileUrl;

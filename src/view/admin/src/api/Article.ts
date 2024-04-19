@@ -2,18 +2,25 @@ import {api} from "@/api/index";
 import qs from "qs";
 
 export const createArticle = async (from: any) => {
-    let response = await api.post("v1/createArticle", from);
-    return response;
+    let response = await api.post("v1/addOneArticle", from, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    });
+    return response.data;
 };
 export const getArticle = async (offset: any, limit: any) => {
-    let { data } = await api.get("v1/queryManyArticle", {
-        params: { offset: offset, limit: limit },
+    let {data} = await api.get("v1/queryManyArticle", {
+        params: {offset: offset, limit: limit},
     });
     return data;
 };
 
 export const deleteArticle = async (id: any) => {
-    let { data } = await api.delete("v1/deleteArticle", { params: { id } });
+    let {data} = await api.post("v1/deleteManyArticle", null, {
+        params: {id: id.join(',')}
+    });
+
     return data;
 };
 
@@ -48,8 +55,8 @@ export const comment = async (
 };
 
 export const getComments = async (articleId: any) => {
-    let { data: comment } = await api.get("v1/comment", {
-        params: { articleId },
+    let {data: comment} = await api.get("v1/comment", {
+        params: {articleId},
     });
     // 如果有评论
     if (Array.isArray(comment.result)) {

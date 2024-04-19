@@ -7,6 +7,7 @@ import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.pojo.Article;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public interface ArticleService  extends IService<Article> {
     PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit);
@@ -14,6 +15,8 @@ public interface ArticleService  extends IService<Article> {
     PageInfo queryManyArticle(Integer offset, Integer limit);
 
     Integer deleteOneArticle(Integer id);
+
+    boolean deleteManyArticle(ArrayList<Long> id);
 
     Article queryOneArticle(Integer id);
 

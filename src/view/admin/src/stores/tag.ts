@@ -15,8 +15,5 @@ export const tagStore = defineStore("tagStore", {
       this.TagPages = await BlogApi.queryManyTag(offset, limit);
       return this.TagPages;
     },
-
-
-    
   },
 });

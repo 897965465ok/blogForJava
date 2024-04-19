@@ -1,9 +1,8 @@
 import {api} from "@/api/index";
 import type {Ref} from "vue";
-import qs from "qs";
 
 
-export const queryManyTag = async () => {
+export const queryManyTag = async (offset: number, limit: number) => {
     let response = await api.get("v1/tags");
 
     return response.data;
