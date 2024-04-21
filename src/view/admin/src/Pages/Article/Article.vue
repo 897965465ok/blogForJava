@@ -8,6 +8,7 @@ import {tagStore as useTagStore} from "@/stores/tag";
 import * as BlogApi from "@/api/BlogApi"
 import {ElMessage} from "element-plus";
 import type {UploadUserFile} from "element-plus/lib/components";
+import Markdown from "@/Pages/Article/component/Markdown.vue";
 
 
 /**
@@ -19,14 +20,17 @@ const tagStore = useTagStore();
 const {queryManyTag} = tagStore
 const treeTwo = ref();
 const ArticleList = ref([]);
-const dialogTableVisible = ref(false)
 const select = ref<Array<string>>([]);
 const sign = ref<Number>(0);
 const tag = ref();
 const sideArticle = ref();
 const hot = ref();
-
 const fileRaw = ref();
+const openCreateBox = ref(false)
+const openMarkdownBox = ref<Boolean>(false);
+const openDeleteBox = ref<boolean>(false)
+const changeId = ref<Array<number>>();
+const MarkdownRef = ref();
 /**
  * 路由对象
  */
@@ -56,13 +60,19 @@ onMounted(async () => {
 
 
 function openBox(number: Number) {
+  switch (number) {
+    case 1: {
+      openCreateBox.value = true;
+      break
+    }
+    case 2: {
+      openMarkdownBox.value = true
+      break
+    }
+  }
 
-  dialogTableVisible.value = true;
   sign.value = number;
-
 }
-
-const openDeleteBox = ref<boolean>(false)
 
 
 function checkButton(selectorList: any) {
@@ -92,22 +102,36 @@ async function deleteSelectorArticleList() {
 
 }
 
-function changeArticle() {
-  // 修改选中的文章
-  dialogTableVisible.value = true
+async function changeArticle() {
+  let {code, message}: any = await MarkdownRef.value.changeArticle();
+  console.log(code, message)
 
+  if (code == 200 && message == "SUCCESS") {
+    ElMessage.success({
+      message: `修改成功`,
+      type: "success",
+    });
+  } else {
+    ElMessage.error({
+      message: "修改失败",
+      type: "error",
+    });
+  }
+
+  // 修改选中的文章
+  openMarkdownBox.value = false
 }
 
 
 async function creatArticle() {
   // 创建文章
-  dialogTableVisible.value = true
+  openCreateBox.value = true
   const form: FormData = new FormData();
   form.append("tag", tag.value);
   form.append("sideArticle", sideArticle.value);
   form.append("hot", hot.value);
   form.append("file", fileRaw.value);
-  let {code,message}: any = await BlogApi.createArticle(form);
+  let {code, message}: any = await BlogApi.createArticle(form);
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: "创建文章成功",
@@ -119,7 +143,7 @@ async function creatArticle() {
       type: "error",
     });
   }
-  dialogTableVisible.value = false;
+  openCreateBox.value = false;
 }
 
 // default-expanded-keys
@@ -203,6 +227,11 @@ async function invoke() {
 }
 
 
+const getMarkdown = () => {
+  let id: any = ArticleList.value.map((item: any) => item.id)
+  MarkdownRef.value.getOneMarkdown(id);
+}
+
 const props = {
   value: 'menuId', //   表头 id
   label: 'menuName', // 表头 内容
@@ -214,11 +243,15 @@ const props = {
 <template>
   <el-row>
     <el-button @click="openBox(1)">新增</el-button>
-    <el-button :disabled="(ArticleList.length != 1)" @click="openBox(3)">修改</el-button>
+
+    <el-button :disabled="(ArticleList.length != 1)" @click="openBox(2)">修改</el-button>
+
     <el-button :disabled="(ArticleList.length < 1)" @click="openDeleteBox = !openDeleteBox">删除</el-button>
+
   </el-row>
   <TableVue @check="checkButton"></TableVue>
-  <el-dialog v-model="dialogTableVisible" destroy-on-close title="文章上传" width="35%">
+
+  <el-dialog v-model="openCreateBox" destroy-on-close title="文章上传" width="35%">
     <template #default>
       <el-form :model="form">
         <div class="form-header">
@@ -271,7 +304,7 @@ const props = {
         <el-row class="form-footer">
           <el-form-item>
             <el-button :disabled=" fileRaw == null ? true:false" type="primary" @click="invoke">确定</el-button>
-            <el-button @click="dialogTableVisible = !dialogTableVisible">取消</el-button>
+            <el-button @click="openCreateBox = !openCreateBox">取消</el-button>
           </el-form-item>
         </el-row>
 
@@ -280,6 +313,7 @@ const props = {
 
 
   </el-dialog>
+
   <!-- 删除遮罩层 -->
   <el-dialog v-model="openDeleteBox" title="确认信息" width="30%" align-center>
     <span>是否删除这些标签?</span>
@@ -288,6 +322,14 @@ const props = {
           <el-button type="primary" @click="deleteSelectorArticleList"> 确定 </el-button>
           <el-button @click="openDeleteBox = false">取消</el-button>
         </span>
+    </template>
+  </el-dialog>
+
+  <el-dialog v-model="openMarkdownBox" title="修改文章" :fullscreen="true" @opened="getMarkdown">
+    <Markdown ref="MarkdownRef"></Markdown>
+    <template #footer class=" top-10 ">
+      <el-button type="primary" @click="invoke">保存</el-button>
+      <el-button @click="openMarkdownBox = !openMarkdownBox">取消</el-button>
     </template>
   </el-dialog>
 

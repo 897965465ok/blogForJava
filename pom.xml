@@ -200,7 +200,7 @@
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
-            <version>7.0.2</version>
+            <version>7.1.4</version>
         </dependency>
         <!-- minio bean报错问题 修改版本 -->
         <dependency>

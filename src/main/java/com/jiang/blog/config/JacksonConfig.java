@@ -19,3 +19,4 @@ public class JacksonConfig {
                 .serializerByType(Long.TYPE, ToStringSerializer.instance);
     }
 }
+

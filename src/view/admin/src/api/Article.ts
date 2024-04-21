@@ -1,14 +1,7 @@
 import {api} from "@/api/index";
 import qs from "qs";
 
-export const createArticle = async (from: any) => {
-    let response = await api.post("v1/addOneArticle", from, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    });
-    return response.data;
-};
+
 export const getArticle = async (offset: any, limit: any) => {
     let {data} = await api.get("v1/queryManyArticle", {
         params: {offset: offset, limit: limit},
@@ -80,3 +73,34 @@ export const like = async (uuid: any) => {
         },
     });
 };
+
+export const queryOneArticle = async (id: Array<number>) => {
+    let {data} = await api.get("v1/queryOneArticle", {
+        params: {id: id.join(",")},
+    });
+    return data;
+}
+
+export const createArticle = async (from: any) => {
+    let response = await api.post("v1/addOneArticle", from, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    });
+    return response.data;
+};
+
+
+export const updateOneArticle = async (article: any, file: File) => {
+    const formData = new FormData();
+    formData.append('article', JSON.stringify(article));
+    formData.append('file', file);
+// 使用 Axios 发送请求
+    let response  =   await api.post('/v1/updateOneArticle', formData,{
+        headers:{
+            "Content-Type": "multipart/form-data"
+        }
+    })
+    return response.data
+};
+

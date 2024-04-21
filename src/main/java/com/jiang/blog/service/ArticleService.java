@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.jiang.blog.model.VO.ArticleAndFileVO;
 import com.jiang.blog.model.VO.ArticleTableHeader;
 import com.jiang.blog.model.pojo.Article;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public interface ArticleService  extends IService<Article> {
 
     boolean deleteManyArticle(ArrayList<Long> id);
 
-    Article queryOneArticle(Integer id);
+    Article queryOneArticle(Long id);
 
     void favor(Integer id);
 
@@ -31,4 +32,7 @@ public interface ArticleService  extends IService<Article> {
 
 
     String addOneArticle(ArticleAndFileVO articleAndFileVO) throws IOException;
+
+
+    String updateOneArticle(Article article, MultipartFile file);
 }

@@ -51,6 +51,7 @@ public class MinioServiceClient implements InitializingBean {
         Assert.hasText(secretKey, "Minio secretKey为空");
         try {
             this.minioClient = new MinioClient(this.serverUrl, this.accessKey, this.secretKey);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +73,8 @@ public class MinioServiceClient implements InitializingBean {
                 // 上传文件的名称
                 String originalFileName = multipartFile.getOriginalFilename();
                 // PutObjectOptions，上传配置(文件大小，内存中文件分片大小)
-                PutObjectOptions putObjectOptions = new PutObjectOptions(multipartFile.getSize(), PutObjectOptions.MIN_MULTIPART_SIZE);
+                //  PutObjectOptions putObjectOptions = new PutObjectOptions(multipartFile.getSize(), PutObjectOptions.MIN_MULTIPART_SIZE);
+                PutObjectOptions putObjectOptions = new PutObjectOptions(multipartFile.getSize(), -1L);
                 // 文件的ContentType
                 putObjectOptions.setContentType(multipartFile.getContentType());
 
@@ -90,7 +92,7 @@ public class MinioServiceClient implements InitializingBean {
                 fileMap.put("fullUrl", serverUrl + "/" + bucket + "/" + fileName);*/
 
                 // 返回访问路径
-                return  serverUrl + "/" + bucket + "/" + fileName;
+                return serverUrl + "/" + bucket + "/" + fileName;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -246,18 +248,30 @@ public class MinioServiceClient implements InitializingBean {
      */
     public List<String> listObjectNames(String bucketName) {
         List<String> listObjectNames = new ArrayList<>();
+
         boolean flag = bucketExists(bucketName);
+
         if (flag) {
             Iterable<Result<Item>> myObjects = listObjects(bucketName);
+
             for (Result<Item> result : myObjects) {
+
                 Item item = null;
+
                 try {
+
                     item = result.get();
+
                 } catch (Exception e) {
+
                     throw new RuntimeException(e);
+
                 }
-                listObjectNames.add(item.objectName());
+
+                    listObjectNames.add(UriUtils.decode(item.objectName(), StandardCharsets.UTF_8.name()));
+
             }
+
         }
         return listObjectNames;
     }
@@ -265,18 +279,17 @@ public class MinioServiceClient implements InitializingBean {
     /**
      * 删除一个对象
      *
-     * @param bucketName 存储桶名称
      * @param objectName 存储桶里的对象名称
      * @throws Exception
      */
-    public boolean removeObject(String bucketName, String objectName) {
-        boolean flag = bucketExists(bucketName);
+    public boolean removeObject(String objectName) {
+        boolean flag = bucketExists(this.bucket);
         if (flag) {
-            List<String> objectList = listObjectNames(bucketName);
+            List<String> objectList = listObjectNames(this.bucket);
             for (String s : objectList) {
                 if (s.equals(objectName)) {
                     try {
-                        minioClient.removeObject(bucketName, objectName);
+                        minioClient.removeObject(this.bucket, objectName);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

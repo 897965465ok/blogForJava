@@ -58,12 +58,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public  boolean deleteManyArticle(ArrayList<Long> id ) {
-        return  this.removeByIds(id);
+    public boolean deleteManyArticle(ArrayList<Long> id) {
+        return this.removeByIds(id);
     }
 
     @Override
-    public Article queryOneArticle(Integer id) {
+    public Article queryOneArticle(Long id) {
         return articleMapper.selectById(id.longValue());
     }
 
@@ -103,7 +103,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article target = new Article();
         BeanUtils.copyProperties(articleAndFileVO, target);
         MultipartFile file = articleAndFileVO.getFile();
-        String fileUrl  = minioServiceClient.putObject(file);
+        String fileUrl = minioServiceClient.putObject(file);
         target.setName(file.getOriginalFilename());
         target.setArticlePath(fileUrl);
         this.saveOrUpdate(target);
@@ -111,5 +111,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     }
 
+    @Override
+    public String updateOneArticle(Article article, MultipartFile file) {
+
+            minioServiceClient.removeObject(article.getName());
+            String fileUrl = minioServiceClient.putObject(file);
+            article.setArticlePath(fileUrl);
+            this.saveOrUpdate(article);
+
+        return "成功";
+    }
 
 }

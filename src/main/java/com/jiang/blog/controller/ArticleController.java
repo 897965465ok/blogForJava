@@ -1,5 +1,6 @@
 package com.jiang.blog.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
@@ -10,6 +11,7 @@ import com.jiang.blog.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ArticleController {
 
     @ApiOperation("查询一篇文章")
     @GetMapping("/queryOneArticle")
-    public ApiRestResponse queryOneArticle(@RequestParam(name = "id") Integer id) {
+    public ApiRestResponse queryOneArticle(@RequestParam(name = "id") Long id) {
         Article article = articleService.queryOneArticle(id);
         if (article == null) {
             return ApiRestResponse.error(BlogExceptionEnum.ARTICLE_NOT_EXISTS);
@@ -70,7 +72,7 @@ public class ArticleController {
         return ApiRestResponse.success(articleTableHeader);
     }
 
-    //TODO 修改
+
     @ApiOperation("新增文章")
     @PostMapping("/addOneArticle")
     public ApiRestResponse addOneArticle(@ModelAttribute ArticleAndFileVO articleAndFileVO) throws IOException {
@@ -79,4 +81,12 @@ public class ArticleController {
         return ApiRestResponse.success(fileUrl);
     }
 
+
+    @ApiOperation("修改文章")
+    @PostMapping("/updateOneArticle")
+    public ApiRestResponse updateOneArticle(@RequestParam("article") String articleJson, @RequestPart("file") MultipartFile file) throws IOException {
+        Article article = JSONUtil.toBean(articleJson, Article.class);
+        String result = articleService.updateOneArticle(article, file);
+        return ApiRestResponse.success();
+    }
 }

@@ -15,7 +15,7 @@ public class BlogMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-       // registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+       registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
     // CORS 跨域
