@@ -21,8 +21,8 @@ import java.util.Arrays;
  打印日志到控制台
 
  */
-@Component // 注册到Spring容器，必须加入这个注解
-@Aspect // 该注解标示该类为切面类，切面是由通知和切点组成的
+//@Component // 注册到Spring容器，必须加入这个注解
+// @Aspect // 该注解标示该类为切面类，切面是由通知和切点组成的
 public class LogAspect {
     private final Logger log = LoggerFactory.getLogger(LogAspect.class);
 

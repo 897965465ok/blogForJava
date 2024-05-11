@@ -13,7 +13,6 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @EnableCaching
 public class BlogApplication {
     public static void main(String[] args) {
-
         SpringApplication.run(BlogApplication.class, args);
     }
 

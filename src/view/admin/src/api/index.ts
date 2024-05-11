@@ -1,11 +1,13 @@
 import axios from 'axios'
+// @ts-ignore
+import Cookies from "js-cookie";
+
 
 const api = axios.create({
     timeout: 10000,
     headers: {
         "Content-type": "application/json"
     },
-
 })
 
 // 环境的切换
@@ -52,13 +54,11 @@ api.interceptors.response.use((config) => {
         }
     },
     (error) => {
-    
-       return Promise.reject(error);
-    
+        return Promise.reject(error);
     })
 
 api.interceptors.request.use((config: any) => {
-    config.headers.token = window.localStorage.getItem("token");    //将token放到请求头发送给服务器
+    config.headers.token = Cookies.get("token");
     return config;
 }, (error) => {
     return Promise.reject(error);

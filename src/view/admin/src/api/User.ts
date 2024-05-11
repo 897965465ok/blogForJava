@@ -1,4 +1,9 @@
 import {api} from "@/api/index";
+import qs from "qs";
+
+
+// @ts-ignore
+import Cookies from "js-cookie";
 
 
 export const queryUserTableHeader = async () => {
@@ -27,4 +32,13 @@ export const queryManyUser = async (offset: number, limit: number) => {
         params: { offset: offset, limit: limit },
     });
     return response.data;
+};
+
+export const userLogin = async (account:string, password:string, email:string) => {
+    return  await api.post(
+        '/v1/login',
+        qs.stringify({account, password, email}),
+        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+    );
+
 };

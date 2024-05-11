@@ -108,7 +108,7 @@
             <version>5.8.5</version>
         </dependency>
 
-        <!--生成注释-->
+        <!--生成 get set-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -172,25 +172,28 @@
             <version>3.3.1</version>
         </dependency>
 
-        <!--sa-token 安全框架-->
+
+        <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
-            <version>1.34.0</version>
+            <version>1.37.0</version>
         </dependency>
 
         <!-- Sa-Token 整合 jwt -->
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-jwt</artifactId>
-            <version>1.34.0</version>
+            <version>1.37.0</version>
         </dependency>
+
 
         <!-- Sa-Token 整合 redis -->
         <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-dao-redis</artifactId>
-            <version>1.34.0</version>
+            <artifactId>sa-token-redis</artifactId>
+            <version>1.37.0</version>
         </dependency>
 
 

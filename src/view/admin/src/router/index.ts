@@ -6,6 +6,8 @@ import Article from "@/Pages/Article/Article.vue";
 import Menu from "@/Pages/Menu/Menu.vue";
 import Role from "@/Pages/Role/Role.vue";
 import Tag from "@/Pages/Tag/Tag.vue";
+// @ts-ignore
+import Cookies from 'js-cookie';
 
 const router = createRouter({
     //添加  createWebHashHistory  和vite.config 添加 base:'./'  解决首页白屏问题
@@ -16,6 +18,7 @@ const router = createRouter({
             path: "/login",
             name: "login",
             component: Login,
+            meta: {NoRequiresAuth: true},
         },
         {
             path: "/",
@@ -76,10 +79,20 @@ router.addRoute("Index",{
 
 // 判断是否登录
 router.beforeEach((to, from, next) => {
+    // 不拦截
+    if (to.meta.NoRequiresAuth) {
+        //在放行的情况下 查看cookis 是否存在 如果存在说明已经的的登陆过了
+        if (typeof Cookies.get("token") === "undefined") {
+            // 不存在登录拿token
+            next()
+        } else {
+            // 跳转到首页
+            next("/home")
+        }
+    } else {
+        next()
+    }
 
-    console.log(to, from)
-
-    next();
 });
 
 export default router;
