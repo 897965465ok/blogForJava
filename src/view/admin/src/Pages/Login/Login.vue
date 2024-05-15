@@ -60,7 +60,7 @@ const onSubmit = (formName) => {
         localStorage.setItem('token', data.result.tokenValue);
         let expires = new Date(new Date() * 1 + data.result.tokenTimeout * 1000);
         Cookies.set('token', data.result.tokenValue, {expires: expires})
-        console.log("登陆",  Cookies.get("token"))
+       //  console.log("登陆",  Cookies.get("token"))
         await router.push("/menu")
       }
 

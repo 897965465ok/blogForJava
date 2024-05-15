@@ -13,7 +13,7 @@ export const queryUserTableHeader = async () => {
 
 
 export const deleteManyUser = async (userList: any) => {
-    let { data } = await api.post("v1/deleteManyUser", userList);
+    let {data} = await api.post("v1/deleteManyUser", userList);
     return data;
 };
 
@@ -29,16 +29,24 @@ export const userUpdate = async (userForm: any) => {
 
 export const queryManyUser = async (offset: number, limit: number) => {
     let response = await api.get("v1/queryManyUser", {
-        params: { offset: offset, limit: limit },
+        params: {offset: offset, limit: limit},
     });
     return response.data;
 };
 
-export const userLogin = async (account:string, password:string, email:string) => {
-    return  await api.post(
+export const userLogin = async (account: string, password: string, email: string) => {
+    return await api.post(
         '/v1/login',
         qs.stringify({account, password, email}),
         {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
     );
+};
 
+export const userLogout = async () => {
+     let tokenInfo =   await api.post(
+        '/v1/logout',
+        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+    );
+
+     return tokenInfo.data
 };

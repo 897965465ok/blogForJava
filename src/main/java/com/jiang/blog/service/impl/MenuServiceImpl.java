@@ -84,7 +84,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             query.eq(Menu::getParentId, menu.getMenuId());
             List<Map> children = generatorTreeMenu(menuMapper.selectList(query));
             Map<String, Object> complete = BeanUtil.beanToMap(menu);
-
             complete.put("children", children);
             return complete;
         }).collect(Collectors.toList());

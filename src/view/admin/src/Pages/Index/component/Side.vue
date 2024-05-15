@@ -59,6 +59,7 @@ const handleClose = (key: string, keyPath: string[]) => {
         </el-icon>
         <span>{{ item.menuName }}</span>
       </template>
+
       <el-menu-item :route="{ path: child.path }" v-for="(child, childIndex) in  item.children" :key="childIndex"
         :index="(`${index}+${childIndex}`)">
         <template #title>
@@ -68,6 +69,7 @@ const handleClose = (key: string, keyPath: string[]) => {
           <span>{{ child.menuName }}</span>
         </template>
       </el-menu-item>
+
     </el-sub-menu>
   </el-menu>
 </template>

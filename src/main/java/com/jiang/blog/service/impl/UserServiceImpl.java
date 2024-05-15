@@ -81,14 +81,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional
     public int deleteManyUser(ArrayList<String> ids) {
-            ids.stream().
-                    forEach((id) ->{
-                        LambdaQueryWrapper<UserRole> query = new LambdaQueryWrapper();
-                        query.eq(UserRole::getUserId, id);
-                        userRoleMapper.delete(query);
-                    });
-            return userMapper.deleteBatchIds(ids);
+        ids.stream().
+                forEach((id) -> {
+                    LambdaQueryWrapper<UserRole> query = new LambdaQueryWrapper();
+                    query.eq(UserRole::getUserId, id);
+                    userRoleMapper.delete(query);
+                });
+        return userMapper.deleteBatchIds(ids);
     }
+
 
     @Override
     public int userUpdate(User user) {
@@ -132,6 +133,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return null;
 
     }
+
+
+
+
+    @Override
+    public SaTokenInfo userLogout() {
+        if (StpUtil.isLogin()) {
+            SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+            StpUtil.logout(tokenInfo.loginId);
+            return StpUtil.getTokenInfo();
+        } else {
+            throw new BlogException(BlogExceptionEnum.USER_NOT_LOGIN);
+        }
+    }
+
 
     @Override
     public User selectByUserName(String account) {

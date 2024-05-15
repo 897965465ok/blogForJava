@@ -10,8 +10,8 @@ public enum BlogExceptionEnum {
     CREATED_FALL(1007, "创建失败"),
     USER_EXISTS(1008, "用户已存在"),
     USER_NOT_EXISTS(1009, "密码或者账号不存在"),
-    USER_NOT_LOGIN(10010, "用户未登录"),
-    REQUEST_PARAM_ERROR(10012, "参数错误"),
+    USER_NOT_LOGIN(20010, "用户未登录"),
+    REQUEST_PARAM_ERROR(20012, "参数错误"),
     SYSTEM_ERROR(20000, "系统异常");
     // 异常码
     Integer code;

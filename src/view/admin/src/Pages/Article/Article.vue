@@ -241,14 +241,12 @@ const props = {
 
 </script>
 <template>
-  <el-row>
-    <el-button @click="openBox(1)">新增</el-button>
-
+  <el-row class=" mt-4 mb-4  ">
+    <el-button  v-promise  @click="openBox(1)">新增</el-button>
     <el-button :disabled="(ArticleList.length != 1)" @click="openBox(2)">修改</el-button>
-
     <el-button :disabled="(ArticleList.length < 1)" @click="openDeleteBox = !openDeleteBox">删除</el-button>
-
   </el-row>
+
   <TableVue @check="checkButton"></TableVue>
 
   <el-dialog v-model="openCreateBox" destroy-on-close title="文章上传" width="35%">

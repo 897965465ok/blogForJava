@@ -55,6 +55,18 @@ public class UserController {
 
     }
 
+    @PostMapping("/logout")
+    @ApiOperation("用户登出")
+    public ApiRestResponse userLogout() {
+        SaTokenInfo userinfo = userService.userLogout();
+        if (Objects.isNull(userinfo.loginId)) {
+            return ApiRestResponse.success(userinfo);
+        } else {
+            return ApiRestResponse.error(400, "注销失败");
+        }
+
+    }
+
 
     @PostMapping("/userUpdate")
     @ApiOperation("修改用户")
@@ -111,7 +123,6 @@ public class UserController {
     }
 
 
-
     @ApiOperation("根据用户查询出角色")
     @PostMapping("/queryRolesByUserId")
     public ApiRestResponse queryRolesByUserId(@NotEmpty(message = "账号不能为空") @RequestParam String account,
@@ -130,7 +141,7 @@ public class UserController {
     @PostMapping("/getInfo")
     @SaCheckLogin
     public ApiRestResponse getInfo() {
-       UserInfoVO userInfo = userService.getInfo();
+        UserInfoVO userInfo = userService.getInfo();
         return ApiRestResponse.success(userInfo);
     }
 

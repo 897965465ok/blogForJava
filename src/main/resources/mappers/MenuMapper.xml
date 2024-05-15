@@ -54,7 +54,7 @@
         <!--先用用户角色连接表查出所有角色-->
         LEFT JOIN `sys_role` ON sys_user_role.`role_id` = sys_role.`role_id`
 
-        <!--在用用户角色连接表查出资源ID  -->
+        <!--在用用户角色连接表查出资源ID   -->
         LEFT JOIN `sys_role_menu` ON sys_user_role.`role_id` = sys_role_menu.`role_id`
 
         <!--在用ID查出  资源-->

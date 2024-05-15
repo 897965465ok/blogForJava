@@ -30,6 +30,8 @@ public interface UserService  extends IService<User> {
 
     int deleteManyUser(ArrayList<String> ids);
 
+    SaTokenInfo userLogout();
+
     User selectByUserName(String account);
 
     UserInfoVO getInfo();

@@ -3,6 +3,8 @@ import {onBeforeMount, onMounted, reactive, toRefs, watchEffect} from 'vue';
 import {useStore} from '@/stores'
 import {useRoute, useRouter} from 'vue-router';
 import jerry from '@/assets/jerry.png';
+import *  as blogApi from "@/api/BlogApi";
+import Cookies from "js-cookie";
 
 /**
  * 仓库
@@ -38,15 +40,32 @@ watchEffect(() => {
 defineExpose({
   ...toRefs(user)
 })
+
+
+const userLogout = async () => {
+  let tokenInfo = await blogApi.userLogout();
+  if (typeof tokenInfo.result.LoginId === "undefined") {
+    Cookies.remove("token")
+    await router.push("/")
+  }
+}
+
+
 </script>
 
 <template>
   <div class="header-avatar">
     <el-dropdown>
-      <el-avatar :src="user.avatar" fit="fill" shape="square" />
+      <el-avatar :src="user.avatar" fit="fill" shape="square"/>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item> 退出</el-dropdown-item>
+
+          <el-dropdown-item>
+            <router-link class=" no-underline " to="/home">首页</router-link>
+          </el-dropdown-item>
+          <el-dropdown-item @click="userLogout()">
+            退出
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
