@@ -6,13 +6,11 @@ import * as blogApi from '@/api/BlogApi';
 
 const menuList = ref();
 const store = useStore();
-const pageInfo = ref();
-const columns = ref();
-
+const MenuTableHeader = ref();
 onBeforeMount(async () => {
-  pageInfo.value = await store.queryManyMenu(1, 9999)
-  menuList.value = pageInfo.value.result.list
-  columns.value = await blogApi.queryMenuTableHeader();
+  menuList.value = await generateTree()
+  MenuTableHeader.value = await blogApi.queryMenuTableHeader();
+
 })
 
 
@@ -44,49 +42,43 @@ watchEffect(() => {
 
 const eimits = defineEmits(['check'])
 
+
+const generate = (result: any): any => {
+  if (Array.isArray(result)) {
+    return result.map((item: any) => {
+      return {
+        ...item,
+        children: generate(item.children),
+      };
+    });
+  } else {
+    return [];
+  }
+}
+
+const generateTree = async () => {
+  let {result} = await blogApi.getRouter();
+  return generate(result);
+}
+
 function handleSelectionChange(selection: any) {
   eimits('check', selection)
 
 }
 
 
-async function jump(current: number) {
-  pageInfo.value = await store.queryManyMenu(current * 1, 10)
-  menuList.value = pageInfo.value.list;
-}
-
-
 </script>
 <template>
-  <div v-if="pageInfo">
-    <el-table :data="menuList" border @selection-change="handleSelectionChange">
+  <div v-if="menuList">
+    <el-table row-key="menuId" :data="menuList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
-
-      <el-table-column v-for="(item,index) in columns" :key="index" :label="item" :prop="item"
-                       :show-overflow-tooltip="true"
-                       align="center" fixed="right">
-        <template v-slot:header="{ column, $index }">
-          <div class="column">
-            {{ column.property }}
-          </div>
-        </template>
-
-        <template v-slot:default="{ row, column }">
-          <div class="column">
-
-            {{ row[column.rawColumnKey] }}
-
-          </div>
-        </template>
-      </el-table-column>
-
+      <el-table-column prop="menuId" label="菜单编号"></el-table-column>
+      <el-table-column prop="menuName" label="菜单名称"></el-table-column>
+      <el-table-column prop="orderNum" label="显示顺序"></el-table-column>
+      <el-table-column prop="perms" label="权限标识"></el-table-column>
+      <el-table-column prop="status" label="菜单状态"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间"></el-table-column>
     </el-table>
-
-    <div class="demo-pagination-block">
-      <el-pagination v-if="pageInfo" @current-change="jump" :page-size="pageInfo.result.pageSize"
-                     :total="Number(pageInfo.result.total)" layout="total, prev, pager, next, jumper"/>
-    </div>
-
   </div>
 </template>
 

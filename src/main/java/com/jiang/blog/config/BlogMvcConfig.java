@@ -46,7 +46,7 @@ public class BlogMvcConfig implements WebMvcConfigurer {
         // 注册 Sa-Token 拦截器，打开注解式鉴权功能
         registry.addInterceptor(new SaInterceptor(handle -> {
             // 文章拦截
-            SaRouter.match(SaHttpMethod.GET).match("/v1/queryManyArticle").check(r -> StpUtil.checkPermission("article:list"));
+            SaRouter.match(SaHttpMethod.GET).match("/v1/queryManyArticle").check(r -> StpUtil.checkPermission("article:query"));
             SaRouter.match(SaHttpMethod.DELETE).match("/v1/deleteArticle").check(r -> StpUtil.checkPermission("article:delete"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/queryOneArticle").check(r -> StpUtil.checkPermission("article:query"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/queryArticleTableHeader").check(r -> StpUtil.checkPermission("article:query"));

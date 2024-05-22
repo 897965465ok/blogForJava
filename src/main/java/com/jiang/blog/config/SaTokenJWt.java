@@ -49,7 +49,7 @@ public class SaTokenJWt implements StpInterface {
     public SaTokenConfig getSaTokenConfigPrimary() {
         SaTokenConfig config = new SaTokenConfig();
         config.setTokenName("token");             // token名称 (同时也是cookie名称)
-        config.setTimeout(60*10);       // token有效期，单位s 默认30天
+        config.setTimeout(60 * 60);       // token有效期，单位s 默认30天
         config.setActiveTimeout(-1);              // token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
         config.setIsConcurrent(true);               // 是否允许同一账号并发登录 (为true时允许一起登录, 为false时新登录挤掉旧登录)
         config.setIsShare(true);                    // 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
@@ -70,12 +70,12 @@ public class SaTokenJWt implements StpInterface {
                 // 放行
                 .addExclude("/favicon.ico")
                 // 全局认证函数
-              /*  .setAuth(obj -> {})
-                // 异常处理函数：每次认证函数发生异常时执行此函数
-                .setError(e -> {
-                    System.out.println("---------- 进入Sa-Token异常处理 -----------");
-                    return SaResult.error(e.getMessage());
-                })*/
+                /*  .setAuth(obj -> {})
+                  // 异常处理函数：每次认证函数发生异常时执行此函数
+                  .setError(e -> {
+                      System.out.println("---------- 进入Sa-Token异常处理 -----------");
+                      return SaResult.error(e.getMessage());
+                  })*/
 
                 // 前置函数：在每次认证函数之前执行
                 .setBeforeAuth(obj -> {

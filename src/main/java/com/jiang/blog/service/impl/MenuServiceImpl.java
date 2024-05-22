@@ -80,12 +80,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     private List<Map> generatorTreeMenu(List<Menu> menus) {
         return menus.stream().map((Menu menu) -> {
+
             LambdaQueryWrapper<Menu> query = new LambdaQueryWrapper();
+
             query.eq(Menu::getParentId, menu.getMenuId());
+
             List<Map> children = generatorTreeMenu(menuMapper.selectList(query));
+
             Map<String, Object> complete = BeanUtil.beanToMap(menu);
+
             complete.put("children", children);
             return complete;
+
         }).collect(Collectors.toList());
     }
 

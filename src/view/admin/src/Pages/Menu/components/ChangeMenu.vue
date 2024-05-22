@@ -54,6 +54,7 @@ onBeforeMount(() => {
 });
 onMounted(async () => {
   data.value = await store.generateTree();
+
 });
 watchEffect(() => {
 });
