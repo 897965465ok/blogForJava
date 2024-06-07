@@ -1,5 +1,6 @@
 package com.jiang.blog.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -71,28 +72,55 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     @CachePut(value = "getRouter")
     public List getRouter() {
-        // 根据用户生成路由器
-        LambdaQueryWrapper<Menu> query = new LambdaQueryWrapper();
-        query.eq(Menu::getMenuType, "M");
-        List<Menu> menus = menuMapper.selectList(query);
-        return generatorTreeMenu(menus);
+
+        List<Menu> origin = filterMenu();
+
+        List<Menu> filterMenus = origin.
+                stream().
+                filter((Menu menu) -> menu.getMenuType().equals("M")).
+                collect(Collectors.toList());
+
+        List<Map> menus = generatorTree(filterMenus, origin);
+
+        return menus;
     }
 
-    private List<Map> generatorTreeMenu(List<Menu> menus) {
+
+    private List<Map> generatorTree(List<Menu> menus, List<Menu> origin) {
         return menus.stream().map((Menu menu) -> {
-
-            LambdaQueryWrapper<Menu> query = new LambdaQueryWrapper();
-
-            query.eq(Menu::getParentId, menu.getMenuId());
-
-            List<Map> children = generatorTreeMenu(menuMapper.selectList(query));
-
+            // 拿到子菜单
+            List<Menu> builtMenu = origin.stream().
+                    filter(item -> item.getParentId().
+                            equals(menu.getMenuId())).
+                    collect(Collectors.toList());
+            // 拿到子菜单的子菜单
+            List<Map> children = generatorTree(builtMenu, origin);
             Map<String, Object> complete = BeanUtil.beanToMap(menu);
-
             complete.put("children", children);
             return complete;
-
         }).collect(Collectors.toList());
+
+    }
+
+    private List<Menu> filterMenu() {
+        List<Menu> menus;
+        boolean containsAdmin = StpUtil.getRoleList()
+                .stream()
+                .anyMatch(s -> s.contains("admin"));
+        if (containsAdmin) {
+            LambdaQueryWrapper<Menu> query = new LambdaQueryWrapper();
+            menus = menuMapper.selectList(query);
+        } else {
+            // 根据用户生成路由器
+            List<String> permissions = StpUtil.getPermissionList();
+            List<String> perms = permissions.stream()
+                    .filter(item -> item.contains("list"))
+                    .map(permission -> permission.split(":")[0])
+                    .collect(Collectors.toList());
+            menus = menuMapper.getMenusByPerms(perms);
+        }
+        return menus;
+
     }
 
 

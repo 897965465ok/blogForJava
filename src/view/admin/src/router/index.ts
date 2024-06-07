@@ -9,6 +9,7 @@ import Tag from "@/Pages/Tag/Tag.vue";
 import Home from "@/Pages/Home/Home.vue";
 // @ts-ignore
 import Cookies from 'js-cookie';
+
 const router = createRouter({
     //添加  createWebHashHistory  和vite.config 添加 base:'./'  解决首页白屏问题
     //

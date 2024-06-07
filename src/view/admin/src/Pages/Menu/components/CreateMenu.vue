@@ -5,7 +5,7 @@ import {useRoute, useRouter} from "vue-router";
 import * as BlogApi from "@/api/BlogApi";
 import {ElMessage} from "element-plus";
 
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 
 
 const visible: any = inject("visible");
@@ -49,6 +49,7 @@ const SelectType = {
   M: {
     status: [{ required: true, message: "选择状态", trigger: "blur" }],
     orderNum: [{ required: true, message: "请输入菜单顺序", trigger: "blur" }],
+    perms: [{ required: true, message: "权限字符", trigger: "blur" }],
     menuName: [{ required: true, message: "请输入菜单名", trigger: "blur" }],
   },
   C: {
@@ -191,6 +192,9 @@ function submit() {
             <el-row class="grid gap-x-10  ">
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
+              </el-form-item>
+              <el-form-item label="权限字符" prop="perms">
+                <el-input v-model="form.perms" />
               </el-form-item>
             </el-row>
 

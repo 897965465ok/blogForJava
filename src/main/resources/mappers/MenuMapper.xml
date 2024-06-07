@@ -88,4 +88,14 @@
           and m.status = 0
         order by m.parent_id, m.order_num
     </select>
+    <select id="getMenusByPerms" resultType="com.jiang.blog.model.pojo.Menu">
+        SELECT
+        <include refid="Base_Column_List"/>
+
+        FROM sys_menu
+        WHERE
+        <foreach item="perm" index="index" collection="perms" separator="OR">
+            perms LIKE CONCAT('%', #{perm}, '%')
+        </foreach>
+    </select>
 </mapper>
