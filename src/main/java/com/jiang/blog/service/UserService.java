@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CachePut;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService  extends IService<User> {
 
@@ -19,7 +20,7 @@ public interface UserService  extends IService<User> {
 
     Long register(UserAndRolesIdVO userAndRolesIdVO);
 
-    SaTokenInfo userLogin(String account, String password);
+    Map<String,Object> userLogin(String account, String password);
 
     @CachePut(value = "queryPermissionByUserId")
     List<Role> queryPermissionByUserId(User user);

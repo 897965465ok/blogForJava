@@ -1,106 +1,103 @@
-import {api} from "@/api/index";
+import { api } from "@/api/index";
 import qs from "qs";
 
-
 export const getArticle = async (offset: any, limit: any) => {
-    let {data} = await api.get("v1/queryManyArticle", {
-        params: {offset: offset, limit: limit},
-    });
-    return data;
+  let { data } = await api.get("v1/queryManyArticle", {
+    params: { offset: offset, limit: limit },
+  });
+  return data;
 };
 
 export const deleteArticle = async (id: any) => {
-    let {data} = await api.post("v1/deleteManyArticle", null, {
-        params: {id: id.join(',')}
-    });
+  let { data } = await api.post("v1/deleteManyArticle", null, {
+    params: { id: id.join(",") },
+  });
 
-    return data;
+  return data;
 };
 
 export const readArticler = async (uuid: any) => {
-    return await api.get("v1/watchnumber", {
-        params: {
-            uuid,
-        },
-    });
+  return await api.get("v1/watchnumber", {
+    params: {
+      uuid,
+    },
+  });
 };
 export const queryArticleTableHeader = async () => {
-    let response = await api.get("v1/queryArticleTableHeader");
-    return response.data.result;
+  let response = await api.get("v1/queryArticleTableHeader");
+  return response.data.result;
 };
 
 export const comment = async (
-    articleId: any,
-    content: any,
-    replyArticle: any,
-    userName: any
+  articleId: any,
+  content: any,
+  replyArticle: any,
+  userName: any
 ) => {
-    console.log(articleId, content, replyArticle, userName);
-    return await api.post(
-        "v1/comment",
-        qs.stringify({
-            articleId,
-            content,
-            replyArticle,
-            userName,
-        })
-    );
+  console.log(articleId, content, replyArticle, userName);
+  return await api.post(
+    "v1/comment",
+    qs.stringify({
+      articleId,
+      content,
+      replyArticle,
+      userName,
+    })
+  );
 };
 
 export const getComments = async (articleId: any) => {
-    let {data: comment} = await api.get("v1/comment", {
-        params: {articleId},
-    });
-    // 如果有评论
-    if (Array.isArray(comment.result)) {
-        return comment.result.map((father: { Replys: any[]; UUID: any }) => {
-            if (Array.isArray(father.Replys)) {
-                father.Replys.map((item: { leave: any }) => {
-                    item.leave = father.UUID;
-                    return item;
-                });
-            }
-            return father;
+  let { data: comment } = await api.get("v1/comment", {
+    params: { articleId },
+  });
+  // 如果有评论
+  if (Array.isArray(comment.result)) {
+    return comment.result.map((father: { Replys: any[]; UUID: any }) => {
+      if (Array.isArray(father.Replys)) {
+        father.Replys.map((item: { leave: any }) => {
+          item.leave = father.UUID;
+          return item;
         });
-    } else {
-        return [];
-    }
+      }
+      return father;
+    });
+  } else {
+    return [];
+  }
 };
 export const like = async (uuid: any) => {
-    return await api.get("/v1/like", {
-        params: {
-            uuid,
-        },
-    });
+  return await api.get("/v1/like", {
+    params: {
+      uuid,
+    },
+  });
 };
 
 export const queryOneArticle = async (id: Array<number>) => {
-    let {data} = await api.get("v1/queryOneArticle", {
-        params: {id: id.join(",")},
-    });
-    return data;
-}
+  let { data } = await api.get("v1/queryOneArticle", {
+    params: { id: id.join(",") },
+  });
+  return data;
+};
 
 export const createArticle = async (from: any) => {
-    let response = await api.post("v1/addOneArticle", from, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    });
-    return response.data;
+  let response = await api.post("v1/addOneArticle", from, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
 };
-
 
 export const updateOneArticle = async (article: any, file: File) => {
-    const formData = new FormData();
-    formData.append('article', JSON.stringify(article));
-    formData.append('file', file);
-// 使用 Axios 发送请求
-    let response  =   await api.post('/v1/updateOneArticle', formData,{
-        headers:{
-            "Content-Type": "multipart/form-data"
-        }
-    })
-    return response.data
+  const formData = new FormData();
+  formData.append("article", JSON.stringify(article));
+  formData.append("file", file);
+  // 使用 Axios 发送请求
+  let response = await api.post("/v1/updateOneArticle", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
 };
-

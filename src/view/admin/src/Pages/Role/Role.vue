@@ -5,6 +5,7 @@ import {useRoute, useRouter} from "vue-router";
 import TableVue from "./RoleTable.vue";
 import * as BlogApi from "@/api/BlogApi";
 import {ElMessage} from "element-plus";
+import {useAuth} from "@/utils/useAuth";
 
 /**
  * 仓库
@@ -202,9 +203,10 @@ async function dispatchFunction() {
 </script>
 <template>
   <div class="button-wrapper after:h-1">
-    <el-button @click="openBox(0)">新增</el-button>
-    <el-button :disabled="RoleList.length != 1" @click="openBox(1)">修改</el-button>
-    <el-button :disabled="RoleList.length < 1" @click="isDelete = true">删除</el-button>
+
+    <el-button v-if='useAuth("menu:plus")'  @click="openBox(0)">新增</el-button>
+    <el-button v-if='useAuth("menu:edit")'  :disabled="RoleList.length != 1" @click="openBox(1)">修改</el-button>
+    <el-button v-if='useAuth("menu:delete")' :disabled="RoleList.length < 1" @click="isDelete = true">删除</el-button>
   </div>
   <TableVue @check="checkButton"></TableVue>
   <el-dialog v-model="isDelete" title="删除角色" width="30%" align-center>

@@ -8,9 +8,12 @@ export const useStore = defineStore("index", {
         return {
             sideSwitch: false,
             treeMap: {},
+            userInfo: {}
         };
     },
-    getters: {},
+    getters: {
+        getUserInfo: state => state.userInfo
+    },
     actions: {
         async getRouter() {
             let {result} = await BlogApi.getRouter();
@@ -20,6 +23,14 @@ export const useStore = defineStore("index", {
         setSideSwitch() {
             this.sideSwitch = !this.sideSwitch;
         },
+        async setUserInfo(content: any) {
+            this.userInfo = content;
+        },
+        auth(pemers: String) {
+            // @ts-ignore
+            return this.getUserInfo.permissions.includes(pemers);
+        },
 
     },
+    persist: true,
 });

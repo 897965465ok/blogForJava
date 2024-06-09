@@ -29,9 +29,10 @@ import {ref} from 'vue';
 import qs from 'qs';
 import * as blogApi from '@/api/BlogApi'
 import {useRouter} from 'vue-router';
-
 import Cookies from "js-cookie";
+import {useStore} from "@/stores/index";
 
+const use_Store = useStore();
 const router = useRouter();
 const form = ref({
   username: '',
@@ -57,10 +58,11 @@ const onSubmit = (formName) => {
       const {username: account, password, email} = form.value;
       let {data} = await blogApi.userLogin(account, password, email)
       if (data.code == 200) {
-        localStorage.setItem('token', data.result.tokenValue);
         let expires = new Date(new Date() * 1 + data.result.tokenTimeout * 1000);
         Cookies.set('token', data.result.tokenValue, {expires: expires})
-        //  console.log("登陆",  Cookies.get("token"))
+        await use_Store.setUserInfo(data.result);
+        localStorage.setItem("permissions", data.result.permissions)
+        localStorage.setItem("roles",data.result.roles)
         await router.push("/menu")
       }
 

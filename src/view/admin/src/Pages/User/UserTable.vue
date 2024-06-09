@@ -11,7 +11,6 @@ const userTableHeader = ref(null);
 onBeforeMount(async () => {
   pageInfo.value = await store.queryManyUser(1, 7)
   console.log(pageInfo.value)
-  //TODO 做这个
   userList.value = pageInfo.value.result
   // console.log(userList.value)
   userTableHeader.value = await blogApi.queryUserTableHeader()

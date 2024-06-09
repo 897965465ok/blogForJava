@@ -4,8 +4,9 @@ import {storeToRefs} from 'pinia';
 import HeaderVue from './component/Header.vue';
 import MainVue from './component/Main.vue';
 import SideVue from './component/Side.vue';
+const indexStore = useStore()
+const {sideSwitch} = storeToRefs(indexStore);
 
-const {sideSwitch} = storeToRefs(useStore());
 </script>
 <template>
   <el-container :class="[sideSwitch ? 'switch-side' : '', 'app-wrapper']">

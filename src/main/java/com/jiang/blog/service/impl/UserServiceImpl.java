@@ -2,6 +2,7 @@ package com.jiang.blog.service.impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -93,6 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int userUpdate(User user) {
+        user.setPassword(Crypt.encrypt(user.getPassword()));
         int result = userMapper.updateById(user);
         return result;
     }
@@ -120,21 +123,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public SaTokenInfo userLogin(String account, String password) {
-
+    public Map<String, Object> userLogin(String account, String password) {
         User user = userMapper.selectByUserName(account);
         if (!Objects.isNull(user) && password.equals(Crypt.decrypt(user.getPassword()))) {
-
             StpUtil.login(user.getUserId());
-
+            List<String> permissions = StpUtil.getPermissionList();
+            List<String> roles = StpUtil.getRoleList();
+            Map<String, Object> userInfo = BeanUtil.beanToMap(StpUtil.getTokenInfo());
+            userInfo.put("permissions", permissions);
+            userInfo.put("roles", roles);
+            userInfo.put("user", user);
             // 第2步，获取 Token  相关参数
-            return StpUtil.getTokenInfo();
+            return userInfo;
         }
         return null;
 
     }
-
-
 
 
     @Override

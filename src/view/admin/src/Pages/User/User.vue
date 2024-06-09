@@ -5,6 +5,7 @@ import {useRoute, useRouter} from "vue-router";
 import * as blogApi from "@/api/BlogApi";
 import TableVue from "./UserTable.vue";
 import {ElMessage} from "element-plus";
+import {useAuth} from "@/utils/useAuth";
 
 /**
  * 仓库
@@ -59,7 +60,7 @@ async function sureDeleteUserList() {
 
 // 创建用户函数
 async function createUser() {
-  let {code, message} = await blogApi.createUser({user:form,rolesId:form.roles});
+  let {code, message} = await blogApi.createUser({user: form, rolesId: form.roles});
   if (code == 200 && message == "SUCCESS") {
     ElMessage.success({
       message: "创建用户成功",
@@ -156,12 +157,14 @@ function openBox(number: Number) {
 </script>
 <template>
   <div class="button-wrapper">
-    <el-button @click="openBox(1)">新增</el-button>
-    <el-button :disabled="userList.length != 1" @click="openBox(2)"
+
+
+    <el-button v-if='useAuth("user:plus")' @click="openBox(1)">新增</el-button>
+    <el-button v-if='useAuth("user:edit")' :disabled="userList.length != 1" @click="openBox(2)"
     >修改
     </el-button
     >
-    <el-button :disabled="userList.length < 1" @click="openDeleteBox = true"
+    <el-button v-if='useAuth("user:delete")' :disabled="userList.length < 1" @click="openDeleteBox = true"
     >删除
     </el-button
     >

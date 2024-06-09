@@ -5,6 +5,7 @@ import {useRoute, useRouter} from "vue-router";
 import * as blogApi from "@/api/BlogApi";
 import TableVue from "./TagTable.vue";
 import {ElMessage} from "element-plus";
+import {useAuth} from "@/utils/useAuth";
 
 /**
  * 仓库
@@ -118,13 +119,14 @@ function openBox(number: Number) {
 </script>
 <template>
   <div class="button-wrapper">
-    <el-button @click="openBox(1)">新增</el-button>
 
-    <el-button :disabled="userList.length != 1" @click="openBox(2)"
+    <el-button v-if='useAuth("tags:plus")' @click="openBox(1)">新增</el-button>
+
+    <el-button v-if='useAuth(  "tags:edit")' :disabled="userList.length != 1" @click="openBox(2)"
     >修改
     </el-button>
 
-    <el-button :disabled="userList.length < 1" @click="openDeleteBox = true"
+    <el-button v-if='useAuth("tags:delete")' :disabled="userList.length < 1" @click="openDeleteBox = true"
     >删除
     </el-button
 

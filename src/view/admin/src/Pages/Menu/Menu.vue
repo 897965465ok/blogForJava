@@ -7,6 +7,7 @@ import TableVue from './components/MenuTable.vue'
 import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
 import ChangeMenuVue from "@/Pages/Menu/components/ChangeMenu.vue";
 import {ElMessage} from 'element-plus';
+import {useAuth} from "@/utils/useAuth";
 
 
 const store = useStore()
@@ -81,9 +82,11 @@ async function changeMenu() {
 </script>
 <template>
   <el-row class="button-wrapper">
-    <el-button @click="visible = !visible">新增</el-button>
-    <el-button :disabled="(menuList.length < 1)" @click="isDelete = !isDelete">删除</el-button>
-    <el-button :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button>
+
+    <el-button  v-if='useAuth("menu:plus")'  @click="visible = !visible">新增</el-button>
+    <el-button v-if='useAuth("menu:edit")'  :disabled="(menuList.length != 1)" @click="changeMenu">修改</el-button>
+    <el-button v-if='useAuth("menu:delete")' :disabled="(menuList.length < 1)" @click="isDelete = !isDelete">删除</el-button>
+
   </el-row>
 
   <TableVue @check="checkButton"></TableVue>

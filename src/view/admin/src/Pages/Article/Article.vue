@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, ref, toRaw} from 'vue';
+import {onBeforeMount, onMounted, reactive, ref, toRaw, inject} from 'vue';
 import {storeToRefs} from 'pinia';
 import {useStore} from '@/stores/article';
 import {useRoute, useRouter} from 'vue-router';
@@ -9,6 +9,7 @@ import * as BlogApi from "@/api/BlogApi"
 import {ElMessage} from "element-plus";
 import type {UploadUserFile} from "element-plus/lib/components";
 import Markdown from "@/Pages/Article/component/Markdown.vue";
+import {useAuth} from "@/utils/useAuth";
 
 
 /**
@@ -45,11 +46,9 @@ const router = useRouter();
  */
 
 //console.log('2.组件挂载页面之前执行----onBeforeMount')
-onBeforeMount(async () => {
 
-
-})
 onMounted(async () => {
+
   let {result}: any = await queryManyTag(1, 7);
   select.value.push(...result);
 
@@ -241,10 +240,11 @@ const props = {
 
 </script>
 <template>
+
   <el-row class=" mt-4 mb-4  ">
-    <el-button  v-promise  @click="openBox(1)">新增</el-button>
-    <el-button :disabled="(ArticleList.length != 1)" @click="openBox(2)">修改</el-button>
-    <el-button :disabled="(ArticleList.length < 1)" @click="openDeleteBox = !openDeleteBox">删除</el-button>
+    <el-button v-if="useAuth('article:plus')" @click="openBox(1)">新增</el-button>
+    <el-button v-if="useAuth('article:edit')" :disabled="(ArticleList.length != 1)" @click="openBox(2)">修改</el-button>
+    <el-button v-if="useAuth('article:delete') " :disabled="(ArticleList.length < 1)" @click="openDeleteBox = !openDeleteBox">删除</el-button>
   </el-row>
 
   <TableVue @check="checkButton"></TableVue>
@@ -316,10 +316,10 @@ const props = {
   <el-dialog v-model="openDeleteBox" title="确认信息" width="30%" align-center>
     <span>是否删除这些标签?</span>
     <template #footer>
-        <span class="dialog-footer">
-          <el-button type="primary" @click="deleteSelectorArticleList"> 确定 </el-button>
-          <el-button @click="openDeleteBox = false">取消</el-button>
-        </span>
+          <span class="dialog-footer">
+            <el-button type="primary" @click="deleteSelectorArticleList"> 确定 </el-button>
+            <el-button @click="openDeleteBox = false">取消</el-button>
+          </span>
     </template>
   </el-dialog>
 

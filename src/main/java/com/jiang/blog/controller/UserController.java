@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RequestMapping("/v1")
@@ -46,7 +47,7 @@ public class UserController {
     public ApiRestResponse userLogin(
             @NotEmpty(message = "账号不能为空") @RequestParam String account,
             @NotEmpty(message = "密码不能为空") @RequestParam String password) {
-        SaTokenInfo userinfo = userService.userLogin(account, password);
+        Map<String, Object> userinfo = userService.userLogin(account, password);
         if (!Objects.isNull(userinfo)) {
             return ApiRestResponse.success(userinfo);
         } else {
