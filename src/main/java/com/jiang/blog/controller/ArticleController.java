@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1")
@@ -88,5 +89,12 @@ public class ArticleController {
         Article article = JSONUtil.toBean(articleJson, Article.class);
         String result = articleService.updateOneArticle(article, file);
         return ApiRestResponse.success();
+    }
+
+    @ApiOperation("批量导入文章")
+    @PostMapping("/batchAddArticles")
+    public ApiRestResponse batchAddArticles(@RequestParam("files") List<MultipartFile> files) throws IOException {
+        Integer count = articleService.batchAddArticles(files);
+        return ApiRestResponse.success(count);
     }
 }

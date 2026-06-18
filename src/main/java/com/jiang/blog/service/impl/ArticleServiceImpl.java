@@ -11,16 +11,22 @@ import com.jiang.blog.model.dao.ArticleMapper;
 import com.jiang.blog.model.pojo.Article;
 import com.jiang.blog.service.ArticleService;
 import com.jiang.blog.utils.MinioServiceClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
     @Autowired
@@ -53,13 +59,30 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional
     public Integer deleteOneArticle(Integer id) {
+        Article article = articleMapper.selectById(id.longValue());
+        if (article != null && article.getName() != null) {
+            minioServiceClient.removeObject(article.getName());
+        }
         return articleMapper.deleteById(id.longValue());
     }
 
     @Override
-    public boolean deleteManyArticle(ArrayList<Long> id) {
-        return this.removeByIds(id);
+    @Transactional
+    public boolean deleteManyArticle(ArrayList<Long> ids) {
+        // 先查出所有文章，获取文件名
+        List<Article> articles = articleMapper.selectBatchIds(ids);
+        for (Article article : articles) {
+            if (article != null && article.getName() != null) {
+                try {
+                    minioServiceClient.removeObject(article.getName());
+                } catch (Exception e) {
+                    log.warn("删除 Minio 文件失败: {}", article.getName(), e);
+                }
+            }
+        }
+        return this.removeByIds(ids);
     }
 
     @Override
@@ -106,20 +129,75 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         String fileUrl = minioServiceClient.putObject(file);
         target.setName(file.getOriginalFilename());
         target.setArticlePath(fileUrl);
-        this.saveOrUpdate(target);
+        target.setCreatedAt(new Date());
+        target.setUpdatedAt(new Date());
+        this.save(target);
         return fileUrl;
 
     }
 
     @Override
     public String updateOneArticle(Article article, MultipartFile file) {
-
-            minioServiceClient.removeObject(article.getName());
-            String fileUrl = minioServiceClient.putObject(file);
-            article.setArticlePath(fileUrl);
-            this.saveOrUpdate(article);
-
+        // 从 Minio 删除旧文件
+        minioServiceClient.removeObject(article.getName());
+        // 上传新内容到 Minio
+        String fileUrl = minioServiceClient.putObject(file);
+        article.setArticlePath(fileUrl);
+        article.setName(file.getOriginalFilename());
+        article.setUpdatedAt(new Date());
+        this.updateById(article);
         return "成功";
     }
 
+    @Override
+    @Transactional
+    public Integer batchAddArticles(List<MultipartFile> files) {
+        int count = 0;
+        for (MultipartFile file : files) {
+            try {
+                String originalName = file.getOriginalFilename();
+                if (originalName == null || !originalName.endsWith(".md")) continue;
+
+                // 从路径中提取文件夹名作为 tag
+                String tag = "";
+                String fileName = originalName;
+                if (originalName.contains("/")) {
+                    String[] parts = originalName.split("/");
+                    if (parts.length >= 2) {
+                        tag = parts[0];
+                        fileName = parts[parts.length - 1];
+                    }
+                }
+
+                // 读取 markdown 内容
+                StringBuilder content = new StringBuilder();
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        content.append(line).append("\n");
+                    }
+                }
+
+                // 上传到 Minio
+                String fileUrl = minioServiceClient.putObject(file);
+                if (fileUrl == null) continue;
+
+                // 创建文章记录
+                Article article = new Article();
+                article.setName(fileName);
+                article.setArticlePath(fileUrl);
+                article.setTag(tag);
+                String title = fileName.replaceAll("\\.md$", "");
+                article.setContent(content.toString());
+                article.setCreatedAt(new Date());
+                article.setUpdatedAt(new Date());
+                this.save(article);
+                count++;
+            } catch (Exception e) {
+                log.error("批量导入文章失败: {}", file.getOriginalFilename(), e);
+            }
+        }
+        return count;
+    }
 }

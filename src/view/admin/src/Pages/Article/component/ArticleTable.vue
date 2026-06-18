@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import {onBeforeMount, reactive, ref, watchEffect} from 'vue'
+import {onBeforeMount, onBeforeUnmount, onMounted, reactive, ref, watchEffect} from 'vue'
 import {useStore} from '@/stores/article'
 import {useRoute, useRouter} from 'vue-router';
 import * as blogApi from '@/api/BlogApi'
@@ -25,11 +25,25 @@ const router = useRouter();
  */
 const data = reactive({})
 
-
-onBeforeMount(async () => {
+// 加载数据的函数
+async function loadData() {
   pageInfo.value = await articles(1, 7)
   articleList.value = pageInfo.value.list;
   columns.value = await blogApi.queryArticleTableHeader()
+}
+
+
+onBeforeMount(async () => {
+  await loadData()
+})
+
+// 监听文章刷新事件
+onMounted(() => {
+  window.addEventListener('article-refresh', loadData)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('article-refresh', loadData)
 })
 
 watchEffect(() => {
@@ -44,6 +58,28 @@ function handleSelectionChange(selection: any) {
 
 }
 
+// 格式化日期
+function formatDate(val: any): string {
+  if (!val) return '-'
+  const d = new Date(val)
+  if (isNaN(d.getTime())) return val
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
+// 格式化单元格（自动识别日期字段和布尔/开关字段）
+function formatCell(row: any, column: any): string {
+  const val = row[column.property]
+  const prop = column.property
+  // 日期字段
+  if (prop.endsWith('At') || prop.endsWith('time') || prop === 'createdAt' || prop === 'updatedAt' || prop === 'deletedAt') {
+    return formatDate(val)
+  }
+  // 空值
+  if (val === null || val === undefined) return '-'
+  return String(val)
+}
+
 
 async function jump(current: number) {
   pageInfo.value = await articles(current * 1, 7)
@@ -55,19 +91,17 @@ async function jump(current: number) {
 <template>
   <el-table :data="articleList" border @selection-change="handleSelectionChange">
     <el-table-column class="column" type="selection"></el-table-column>
-    <el-table-column v-for=" ( item, index ) in columns" :key="index" :label="item" :prop="item"
-                     :show-overflow-tooltip="true" align="center" fixed="right">
+    <el-table-column v-for="col in columns" :key="col.prop" :label="col.label" :prop="col.prop"
+                     :show-overflow-tooltip="true" align="center">
 
-      <template v-slot:header="{ column, $index }">
+      <template v-slot:header="{ column }">
         <div class="column">
-          {{ column.property }}
+          {{ column.label }}
         </div>
       </template>
       <template v-slot:default="{ row, column }">
         <div class="column">
-
-          {{ row[column.rawColumnKey] }}
-
+          {{ formatCell(row, column) }}
         </div>
       </template>
 

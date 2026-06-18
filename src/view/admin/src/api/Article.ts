@@ -25,7 +25,12 @@ export const readArticler = async (uuid: any) => {
 };
 export const queryArticleTableHeader = async () => {
   let response = await api.get("v1/queryArticleTableHeader");
-  return response.data.result;
+  const headerMap = response.data.result;
+  // 将对象 { id: "文章编号", ... } 转为数组 [{ prop: "id", label: "文章编号" }, ...]
+  return Object.entries(headerMap || {}).map(([key, value]) => ({
+    prop: key,
+    label: value,
+  }));
 };
 
 export const comment = async (
@@ -97,6 +102,36 @@ export const updateOneArticle = async (article: any, file: File) => {
   let response = await api.post("/v1/updateOneArticle", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};
+
+export const batchAddArticles = async (files: File[], onProgress?: (pct: number) => void) => {
+  const formData = new FormData();
+  files.forEach(file => formData.append("files", file));
+  let response = await api.post("/v1/batchAddArticles", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+    timeout: 120000,
+    onUploadProgress: (e) => {
+      if (e.total && onProgress) {
+        onProgress(Math.round((e.loaded / e.total) * 100))
+      }
+    },
+  });
+  return response.data;
+};
+
+export const uploadSingleArticle = async (tag: string, file: File, onProgress?: (pct: number) => void) => {
+  const form = new FormData();
+  form.append("tag", tag);
+  form.append("file", file);
+  let response = await api.post("v1/addOneArticle", form, {
+    headers: { "Content-Type": "multipart/form-data" },
+    onUploadProgress: (e) => {
+      if (e.total && onProgress) {
+        onProgress(Math.round((e.loaded / e.total) * 100))
+      }
     },
   });
   return response.data;

@@ -1,0 +1,49 @@
+server.port=8888
+spring.datasource.dynamic.primary=master
+spring.datasource.dynamic.strict=false
+spring.datasource.dynamic.datasource.master.url=jdbc:mysql://192.168.1.208:3306/blog
+spring.datasource.dynamic.datasource.master.username=root
+spring.datasource.dynamic.datasource.master.password=897965465
+#spring.datasource.dynamic.datasource.salve.url=jdbc:mysql://146.56.206.160:3306/data
+#spring.datasource.dynamic.datasource.salve.username=ENC(8jmBIVHB3NOR2s+Th6SSGQ==)
+#spring.datasource.dynamic.datasource.salve.password=ENC(DdW0GCQpG/EjP0o87yHB5mLwumVuo+wl)
+file.upload.dir=./FileUpdate
+file.upload.ip=192.168.1.208
+spring.redis.host=192.168.1.208
+spring.redis.port=6379
+#spring.redis.password=897965465
+jwt.secret=897965465
+jwt.expiration=86400           
+mybatis-plus.mapper-locations=classpath*:mappers/*.xml, classpath*:mappers/ExtendMapper/*.xml
+spring.main.allow-circular-references=true
+spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+spring.redis.timeout=60s
+spring.redis.lettuce.pool.max-active=8
+spring.redis.lettuce.pool.max-wait=1000
+spring.redis.lettuce.pool.max-idle=30
+spring.redis.lettuce.pool.min-idle=10
+spring.cache.type=redis
+spring.cache.redis.time-to-live=300s
+spring.cache.redis.cache-null-values=false
+# ????
+# ??????
+spring.servlet.multipart.enabled=true
+# ???????????????????,?????????
+#???? 0 ?,???????????????,???????????
+spring.servlet.multipart.file-size-threshold=0
+# ????????????????????
+#?????,Spring Boot ????????????
+# spring.servlet.multipart.location = F:\JAVA\Mblog\src\main\resources\static
+# ??????
+spring.servlet.multipart.max-file-size=200MB
+# ??????
+spring.servlet.multipart.max-request-size=1024MB
+#
+spring.servlet.multipart.resolve-lazily=false
+spring.jpa.show-sql=true
+spring.mvc.static-path-pattern=/**
+minio.endpoint=http://192.168.1.208:9000
+minio.accessKey=897965465ok
+minio.secretKey=897965465ok
+minio.bucket=blog
+minio.host=9000

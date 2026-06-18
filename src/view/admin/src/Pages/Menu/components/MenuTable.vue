@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, reactive, ref, watchEffect} from 'vue'
+import {onBeforeMount, onMounted, reactive, ref, watchEffect, onBeforeUnmount} from 'vue'
 import {useStore} from '@/stores/menu'
 import {useRoute, useRouter} from 'vue-router';
 import * as blogApi from '@/api/BlogApi';
@@ -7,10 +7,22 @@ import * as blogApi from '@/api/BlogApi';
 const menuList = ref();
 const store = useStore();
 const MenuTableHeader = ref();
-onBeforeMount(async () => {
+
+async function loadData() {
   menuList.value = await generateTree()
   MenuTableHeader.value = await blogApi.queryMenuTableHeader();
+}
 
+onBeforeMount(async () => {
+  await loadData()
+})
+
+onMounted(() => {
+  window.addEventListener('menu-refresh', loadData)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('menu-refresh', loadData)
 })
 
 

@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "reasonix": {
+      "command": "python",
+      "args": [
+        "G:\\JAVA\\Mblog\\reasonix-mcp\\server.py"
+      ],
+      "env": {},
+      "disabled": false,
+      "alwaysAllow": [
+        "read_file",
+        "write_file",
+        "edit_file",
+        "grep",
+        "glob",
+        "ls",
+        "bash",
+        "get_project_info"
+      ]
+    }
+  }
+}

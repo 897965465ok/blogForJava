@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ArticleService  extends IService<Article> {
     PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit);
@@ -35,4 +36,6 @@ public interface ArticleService  extends IService<Article> {
 
 
     String updateOneArticle(Article article, MultipartFile file);
+
+    Integer batchAddArticles(List<MultipartFile> files) throws IOException;
 }

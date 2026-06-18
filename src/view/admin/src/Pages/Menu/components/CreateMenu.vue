@@ -155,6 +155,7 @@ function submit() {
           type: 'success',
         })
         visible.value = !visible.value
+        window.dispatchEvent(new CustomEvent('menu-refresh'))
       } else {
         ElMessage.error({
           message: '添加失败',

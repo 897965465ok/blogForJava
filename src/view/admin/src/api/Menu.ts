@@ -25,3 +25,8 @@ export const deleteManyMenu = async (Menus: any) => {
     let response = await api.post("v1/deleteManyMenu", Menus);
     return response.data;
 };
+
+export const updateMenu = async (menu: Menu) => {
+    let response = await api.post("v1/updateMenu", menu);
+    return response.data;
+};

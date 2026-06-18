@@ -79,10 +79,14 @@ public class MenuController {
 
 
     @ApiOperation("修改一个菜单")
-    @GetMapping("/updateMenuById")
-    public ApiRestResponse updateMenuById(Integer id) {
-        menuService.queryOneMenu(id);
-        return ApiRestResponse.success();
+    @PostMapping("/updateMenu")
+    public ApiRestResponse updateMenu(@RequestBody Menu menu) {
+        Integer result = menuService.updateOneMenu(menu);
+        if (result > 0) {
+            return ApiRestResponse.success(result);
+        } else {
+            return ApiRestResponse.error(400, "修改菜单失败");
+        }
     }
 
 

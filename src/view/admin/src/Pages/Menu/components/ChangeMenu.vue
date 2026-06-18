@@ -17,7 +17,7 @@ const user = reactive({
 });
 const ruleFormRef = ref();
 const popoverRef = ref()
- 
+const isEdit = ref(false)
 
 
 
@@ -45,6 +45,39 @@ const form = reactive<Menu>({
   fatherName: "",
 });
 
+// 初始化表单数据（由父组件调用）
+function initForm(menuData: any, fatherName: string) {
+  isEdit.value = true
+  Object.keys(form).forEach(key => {
+    if (key in menuData) {
+      (form as any)[key] = menuData[key]
+    }
+  })
+  form.fatherName = fatherName
+  changeTable(form.menuType)
+}
+
+// 重置表单
+function resetForm() {
+  isEdit.value = false
+  form.menuId = ""
+  form.menuName = ""
+  form.parentId = "0"
+  form.orderNum = "1"
+  form.path = ""
+  form.component = ""
+  form.query = ""
+  form.isFrame = "0"
+  form.isCache = "0"
+  form.menuType = "M"
+  form.visible = "1"
+  form.status = "1"
+  form.perms = ""
+  form.icon = "Search"
+  form.fatherName = ""
+  rules.value = SelectType["M"]
+}
+
 
 
 const onClickOutside = () => {
@@ -60,7 +93,7 @@ watchEffect(() => {
 });
 // 使用toRefs解构
 // let { } = { ...toRefs(data) }
-defineExpose({ ...toRefs(form) });
+defineExpose({ ...toRefs(form), initForm, resetForm });
 
 function selectIcon($event: any) {
 
@@ -115,7 +148,6 @@ const rules = ref<any>(SelectType["M"]);
 
 
 
-
 // 选择节点
 function nodeClick(node: any) {
   if (form.menuType != "M") {
@@ -149,38 +181,54 @@ function changeTable(paneName: string) {
   }
 }
 
-// 校验和创建菜单
-function submit() {
-  ruleFormRef.value.validate(async (valid: any) => {
-    if (valid) {
-      isLoading.value = true
-      let { code, message } = await BlogApi.createMenu(form);
-      if (code == 200 && message == "SUCCESS") {
-        ElMessage.success({
-          message: '添加成功',
-          type: 'success',
-        })
-        visible.value = !visible.value
-      } else {
-        ElMessage.error({
-          message: '添加失败',
-          type: 'error',
-        })
-      }
-      isLoading.value = false
+// 校验和创建/修改菜单
+async function submit() {
+  if (!ruleFormRef.value) {
+    ElMessage.error('表单未初始化')
+    return
+  }
+  try {
+    const valid = await ruleFormRef.value.validate().catch(() => false)
+    if (!valid) {
+      ElMessage.warning({ message: '请填写所有内容', type: 'warning' })
+      return
+    }
+  } catch {
+    ElMessage.error('表单校验失败')
+    return
+  }
+
+  isLoading.value = true
+  try {
+    let res
+    if (isEdit.value) {
+      res = await BlogApi.updateMenu(form);
     } else {
-      ElMessage.warning({
-        message: '请填写所有内容',
+      res = await BlogApi.createMenu(form);
+    }
+    let { code, message } = res
+    if (code == 200 && message == "SUCCESS") {
+      ElMessage.success({
+        message: isEdit.value ? '修改成功' : '添加成功',
+        type: 'success',
+      })
+      visible.value = !visible.value
+      window.dispatchEvent(new CustomEvent('menu-refresh'))
+    } else {
+      ElMessage.error({
+        message: isEdit.value ? '修改失败' : '添加失败',
         type: 'error',
       })
-      return false;
     }
-  });
-
+  } catch (e: any) {
+    ElMessage.error('操作失败: ' + (e?.message || '未知错误'))
+    console.error('菜单操作失败', e)
+  }
+  isLoading.value = false
 }
 </script>
 <template>
-  <el-dialog v-model="visible" title="修改菜单" width="40%">
+  <el-dialog v-model="visible" :title="isEdit ? '修改菜单' : '添加菜单'" width="40%">
     <el-row>
       <el-form class="grid flex-col w-full" :model="form" ref="ruleFormRef" :rules="rules">
         <el-tabs v-model="form.menuType" @tab-change="changeTable">
@@ -255,9 +303,6 @@ function submit() {
           <!-- 创建菜单UI -->
           <el-tab-pane label="菜单" name="C" :disabled="form.menuType != 'C'">
             <el-row class="grid gap-x-10">
-              <!-- <el-form-item label="菜单图标">
-                                                                                                <el-input v-model="form.icon" />
-                                                                                              </el-form-item> -->
               <el-form-item label="菜单名称" prop="menuName">
                 <el-input v-model="form.menuName" />
               </el-form-item>

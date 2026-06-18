@@ -9,12 +9,21 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticleAndFileVO  {
+public class ArticleAndFileVO {
 
   @Nullable
   private String name  ;
   private String tag ;
   private String hot ;
   private String sideArticle ;
+  @Nullable
+  private String paragraph;
+  @Nullable
+  private String picture;
+  @Nullable
+  private String cover;
+  private Integer whatchNumber = 0;
+  private Integer like = 0;
+  private Long rec = 0L;
   public MultipartFile file;
 }

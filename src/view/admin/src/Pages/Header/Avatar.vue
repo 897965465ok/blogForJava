@@ -43,11 +43,12 @@ defineExpose({
 
 
 const userLogout = async () => {
-  let tokenInfo = await blogApi.userLogout();
-  if (typeof tokenInfo.result.LoginId === "undefined") {
-    Cookies.remove("token")
-    await router.push("/")
-  }
+  await blogApi.userLogout();
+  Cookies.remove("token")
+  localStorage.removeItem("index")
+  localStorage.removeItem("permissions")
+  localStorage.removeItem("roles")
+  await router.push("/login")
 }
 
 

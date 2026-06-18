@@ -1,0 +1,68 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://192.168.1.208:3306/blog
+          username: root
+          password: 897965465
+        # salve:
+        #   url: jdbc:mysql://146.56.206.160:3306/data
+        #   username: ENC(8jmBIVHB3NOR2s+Th6SSGQ==)
+        #   password: ENC(DdW0GCQpG/EjP0o87yHB5mLwumVuo+wl)
+  redis:
+    host: 192.168.1.208
+    port: 6379
+    # password: 897965465
+    timeout: 60s
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: 1000
+        max-idle: 30
+        min-idle: 10
+  cache:
+    type: redis
+    redis:
+      time-to-live: 300s
+      cache-null-values: false
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    static-path-pattern: /**
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      # location: F:\JAVA\Mblog\src\main\resources\static
+      max-file-size: 200MB
+      max-request-size: 1024MB
+      resolve-lazily: false
+  jpa:
+    show-sql: true
+
+jwt:
+  secret: 897965465
+  expiration: 86400
+
+file:
+  upload:
+    dir: ./FileUpdate
+
+mybatis-plus:
+  mapper-locations:
+    - classpath*:mappers/*.xml
+    - classpath*:mappers/ExtendMapper/*.xml
+
+minio:
+  endpoint: http://192.168.1.208:9000
+  accessKey: 897965465ok
+  secretKey: 897965465ok
+  bucket: blog
+  host: 9000
