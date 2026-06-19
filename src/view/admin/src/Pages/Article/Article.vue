@@ -27,6 +27,18 @@ const tag = ref();
 const sideArticle = ref();
 const hot = ref();
 const fileRaw = ref();
+const articleForm = reactive({
+  name: '',
+  tag: '',
+  paragraph: '',
+  picture: '',
+  cover: '',
+  whatchNumber: 0,
+  like: 0,
+  hot: '0',
+  rec: '0',
+  sideArticle: '0',
+})
 const openCreateBox = ref(false)
 const openMarkdownBox = ref<Boolean>(false);
 const openDeleteBox = ref<boolean>(false)
@@ -128,9 +140,16 @@ async function creatArticle() {
   // 创建文章
   openCreateBox.value = true
   const form: FormData = new FormData();
-  form.append("tag", tag.value);
-  form.append("sideArticle", sideArticle.value);
-  form.append("hot", hot.value);
+  form.append("name", articleForm.name);
+  form.append("tag", articleForm.tag);
+  form.append("paragraph", articleForm.paragraph);
+  form.append("picture", articleForm.picture);
+  form.append("cover", articleForm.cover);
+  form.append("whatchNumber", String(articleForm.whatchNumber || 0));
+  form.append("like", String(articleForm.like || 0));
+  form.append("hot", articleForm.hot);
+  form.append("rec", articleForm.rec);
+  form.append("sideArticle", articleForm.sideArticle);
   form.append("file", fileRaw.value);
   let {code, message}: any = await BlogApi.createArticle(form);
   if (code == 200 && message == "SUCCESS") {
@@ -138,6 +157,7 @@ async function creatArticle() {
       message: "创建文章成功",
       type: "success",
     });
+    window.dispatchEvent(new CustomEvent('article-refresh'))
   } else {
     ElMessage.error({
       message: "创建文章失败",
@@ -368,67 +388,43 @@ const props = {
 
   <TableVue @check="checkButton"></TableVue>
 
-  <el-dialog v-model="openCreateBox" destroy-on-close title="文章上传" width="35%">
+  <el-dialog v-model="openCreateBox" destroy-on-close title="创建文章" width="55%">
     <template #default>
-      <el-form :model="form">
-        <div class="form-header">
-          <el-row class="header-upload">
-            <el-upload
-                @change="changeFile"
-                @remove="FileRemove"
-                ref="uploadRef"
-                :limit="1"
-                style="width: 100%;"
-                drag
-                action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                multiple
-                :auto-upload="false"
-            >
-              <el-icon class="el-icon--upload">
-                <upload-filled/>
-              </el-icon>
-              <div class="el-upload__text">
-                <em>拖入文件 点击上传</em>
-              </div>
-            </el-upload>
-
-          </el-row>
-        </div>
-
-        <el-row class="form-body">
-          <el-form-item label="热门">
-            <el-switch v-model="hot"/>
-          </el-form-item>
-          <el-form-item label="侧边栏文章">
-            <el-switch v-model="sideArticle"/>
-          </el-form-item>
-          <el-form-item label="分类">
-            <el-select
-                v-model="tag"
-                placeholder="ES6"
-                style="width: 70%"
-            >
-              <el-option
-                  v-for="(item,index) in select"
-                  :key="item.id"
-                  :label="item.articleTag"
-                  :value="item.articleTag"
-              />
-            </el-select>
+      <el-form :model="articleForm" label-width="100px">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item label="名字"><el-input v-model="articleForm.name" placeholder="文章标题"/></el-form-item>
+            <el-form-item label="文章分类">
+              <el-select v-model="articleForm.tag" placeholder="选择分类" style="width:100%">
+                <el-option v-for="item in select" :key="item.id" :label="item.articleTag" :value="item.articleTag"/>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="文章段落"><el-input v-model="articleForm.paragraph" type="textarea" :rows="3" placeholder="文章简介"/></el-form-item>
+            <el-form-item label="图片链接"><el-input v-model="articleForm.picture" placeholder="https://..."/></el-form-item>
+            <el-form-item label="封面链接"><el-input v-model="articleForm.cover" placeholder="https://..."/></el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="上传文件">
+              <el-upload @change="changeFile" @remove="FileRemove" ref="uploadRef" :limit="1" style="width:100%;" drag action="" multiple :auto-upload="false">
+                <el-icon class="el-icon--upload"><upload-filled/></el-icon>
+                <div class="el-upload__text"><em>拖入文件 点击上传</em></div>
+              </el-upload>
+            </el-form-item>
+            <el-form-item label="查看次数"><el-input-number v-model="articleForm.whatchNumber" :min="0" style="width:100%"/></el-form-item>
+            <el-form-item label="赞"><el-input-number v-model="articleForm.like" :min="0" style="width:100%"/></el-form-item>
+            <el-form-item label="热门"><el-switch v-model="articleForm.hot" active-value="1" inactive-value="0"/></el-form-item>
+            <el-form-item label="推荐"><el-switch v-model="articleForm.rec" active-value="1" inactive-value="0"/></el-form-item>
+            <el-form-item label="侧边栏"><el-switch v-model="articleForm.sideArticle" active-value="1" inactive-value="0"/></el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item style="margin-top:12px;">
+            <el-button :disabled="!fileRaw" type="primary" @click="invoke">确定</el-button>
+            <el-button @click="openCreateBox = false">取消</el-button>
           </el-form-item>
         </el-row>
-
-        <el-row class="form-footer">
-          <el-form-item>
-            <el-button :disabled=" fileRaw == null ? true:false" type="primary" @click="invoke">确定</el-button>
-            <el-button @click="openCreateBox = !openCreateBox">取消</el-button>
-          </el-form-item>
-        </el-row>
-
       </el-form>
     </template>
-
-
   </el-dialog>
 
   <!-- 删除遮罩层 -->

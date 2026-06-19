@@ -144,34 +144,56 @@ function changeTable(paneName: string) {
 }
 
 // 校验和创建菜单
-function submit() {
-  ruleFormRef.value.validate(async (valid: any) => {
-    if (valid) {
-      isLoading.value = true
-      let { code, message } = await BlogApi.createMenu(form);
-      if (code == 200 && message == "SUCCESS") {
-        ElMessage.success({
-          message: '添加成功',
-          type: 'success',
-        })
-        visible.value = !visible.value
-        window.dispatchEvent(new CustomEvent('menu-refresh'))
-      } else {
-        ElMessage.error({
-          message: '添加失败',
-          type: 'error',
-        })
-      }
-      isLoading.value = false
-    } else {
-      ElMessage.warning({
-        message: '请填写所有内容',
-        type: 'error',
-      })
-      return false;
+async function submit() {
+  if (!ruleFormRef.value) {
+    ElMessage.error('表单未初始化')
+    return
+  }
+  try {
+    const valid = await ruleFormRef.value.validate().catch(() => false)
+    if (!valid) {
+      ElMessage.warning({ message: '请填写所有内容', type: 'warning' })
+      return
     }
-  });
+  } catch {
+    ElMessage.error('表单校验失败')
+    return
+  }
 
+  isLoading.value = true
+  try {
+    let { code, message } = await BlogApi.createMenu(form);
+    if (code == 200 && message == "SUCCESS") {
+      ElMessage.success({ message: '添加成功', type: 'success' })
+      visible.value = !visible.value
+      window.dispatchEvent(new CustomEvent('menu-refresh'))
+      resetForm()
+    } else {
+      ElMessage.error({ message: '添加失败', type: 'error' })
+    }
+  } catch (e: any) {
+    ElMessage.error('操作失败: ' + (e?.message || '未知错误'))
+    console.error('创建菜单失败', e)
+  }
+  isLoading.value = false
+}
+
+function resetForm() {
+  form.menuName = ""
+  form.parentId = "0"
+  form.orderNum = "1"
+  form.path = ""
+  form.component = ""
+  form.query = ""
+  form.isFrame = "0"
+  form.isCache = "0"
+  form.menuType = "M"
+  form.visible = "1"
+  form.status = "1"
+  form.perms = ""
+  form.icon = "Search"
+  form.fatherName = ""
+  rules.value = SelectType["M"]
 }
 </script>
 <template>

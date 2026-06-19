@@ -8,6 +8,7 @@ import CreateMenu from "@/Pages/Menu/components/CreateMenu.vue";
 import ChangeMenuVue from "@/Pages/Menu/components/ChangeMenu.vue";
 import {ElMessage} from 'element-plus';
 import {useAuth} from "@/utils/useAuth";
+import * as BlogApi from "@/api/BlogApi";
 
 
 const store = useStore()
@@ -54,6 +55,7 @@ async function deleteSelectByMenuList() {
       message: '删除成功',
       type: 'success',
     })
+    window.dispatchEvent(new CustomEvent('menu-refresh'))
   } else {
     ElMessage.error({
       message: '删除失败',
@@ -64,18 +66,29 @@ async function deleteSelectByMenuList() {
   isLoading.value = !isLoading.value
 }
 async function changeMenu() {
-  let [first] = toRefs(menuList.value)
-  let firstNode = (first as any)
+  let selected = menuList.value[0]
+  if (!selected) return
 
-  let list = menuPages.value.result.list
+  // 从 MenuTable 的数据中找父菜单名称
+  let fatherName = ""
+  if (selected.parentId && selected.parentId != "0") {
+    // 通过 getRouter 获取完整菜单树来查找父节点
+    let {result: treeData} = await BlogApi.getRouter()
+    const findMenu = (items: any[], id: any): any => {
+      for (const item of items) {
+        if (item.menuId == id) return item
+        if (item.children) {
+          const found = findMenu(item.children, id)
+          if (found) return found
+        }
+      }
+      return null
+    }
+    let father = findMenu(treeData, selected.parentId)
+    if (father) fatherName = father.menuName
+  }
 
-  Object.keys(firstNode.value).forEach((key: any) => {
-    ChangeMenu.value[key] = firstNode.value[key]
-  })
-
-  let fatherName = list.find((item: any) => item.menuId == firstNode.value.parentId)
-  ChangeMenu.value["fatherName"] = fatherName.menuName
-
+  ChangeMenu.value.initForm(selected, fatherName)
   showChangeVue.value = !showChangeVue.value
 }
 
