@@ -57,21 +57,13 @@ async function jump(current: number) {
     <el-table :data="roleList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
 
-      <el-table-column v-for="(item,index) in RoleTableHeader" :key="index" :label="item" :prop="item"
-                       :show-overflow-tooltip="true"
-                       align="center" fixed="right">
-        <template v-slot:header="{ column, $index }">
-          <div class="column">
-            {{ column.property }}
-          </div>
+      <el-table-column v-for="(value, key) in RoleTableHeader" :key="key" :label="value" :prop="key"
+                       :show-overflow-tooltip="true" align="center">
+        <template v-slot:header="{ column }">
+          <div class="column">{{ column.label }}</div>
         </template>
-
         <template v-slot:default="{ row, column }">
-          <div class="column">
-
-            {{ row[column.rawColumnKey] }}
-
-          </div>
+          <div class="column">{{ row[column.property] }}</div>
         </template>
       </el-table-column>
 

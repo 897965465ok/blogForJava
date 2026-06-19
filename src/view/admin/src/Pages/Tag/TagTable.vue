@@ -62,19 +62,14 @@ async function jump(current: number) {
   <div v-if="pageInfo">
     <el-table :data="userList" border @selection-change="handleSelectionChange">
       <el-table-column class="column" type="selection"></el-table-column>
-      <el-table-column v-for=" (item, index) in userTableHeader" :key="index" :label="item" :prop="item"
-                       :show-overflow-tooltip="true" align="center" fixed="right">
+      <el-table-column v-for="(value, key) in userTableHeader" :key="key" :label="value" :prop="key"
+                       :show-overflow-tooltip="true" align="center">
 
-        <template v-slot:header="{ column, $index }">
-          <div class="column">
-            {{ column.property }}
-          </div>
+        <template v-slot:header="{ column }">
+          <div class="column">{{ column.label }}</div>
         </template>
         <template v-slot:default="{ row, column }">
-
-          <div class="column">
-            {{ row[column.rawColumnKey] }}
-          </div>
+          <div class="column">{{ row[column.property] }}</div>
         </template>
 
       </el-table-column>

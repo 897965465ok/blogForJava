@@ -50,8 +50,8 @@ public class BlogMvcConfig implements WebMvcConfigurer {
             SaRouter.match(SaHttpMethod.DELETE).match("/v1/deleteArticle").check(r -> StpUtil.checkPermission("article:delete"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/queryOneArticle").check(r -> StpUtil.checkPermission("article:query"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/queryArticleTableHeader").check(r -> StpUtil.checkPermission("article:query"));
-            SaRouter.match(SaHttpMethod.PUT).match("/v1/article").check(r -> StpUtil.checkPermission("article:plus"));
-            SaRouter.match(SaHttpMethod.PUT).match("/v1/article").check(r -> StpUtil.checkPermission("article:edit"));
+            SaRouter.match(SaHttpMethod.POST).match("/v1/addOneArticle").check(r -> StpUtil.checkPermission("article:plus"));
+            SaRouter.match(SaHttpMethod.POST).match("/v1/updateOneArticle").check(r -> StpUtil.checkPermission("article:edit"));
 
             // 菜单拦截
             SaRouter.match(SaHttpMethod.POST).match("/v1/createMenu").check(r -> StpUtil.checkPermission("menu:plus"));
@@ -61,6 +61,7 @@ public class BlogMvcConfig implements WebMvcConfigurer {
             SaRouter.match(SaHttpMethod.GET).match("/v1/queryMenuTableHeader").check(r -> StpUtil.checkPermission("menu:query"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/menu").check(r -> StpUtil.checkPermission("menu:query"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/updateMenuById").check(r -> StpUtil.checkPermission("menu:edit"));
+            SaRouter.match(SaHttpMethod.POST).match("/v1/updateMenu").check(r -> StpUtil.checkPermission("menu:edit"));
             SaRouter.match(SaHttpMethod.GET).match("/v1/getRouter").check(r -> StpUtil.checkPermission("menu:query"));
 
             // 角色拦截

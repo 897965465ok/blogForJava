@@ -2,6 +2,7 @@ package com.jiang.blog.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.SaTokenInfo;
+import com.github.pagehelper.PageInfo;
 import com.jiang.blog.common.ApiRestResponse;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.VO.UserAndRolesIdVO;
@@ -119,7 +120,7 @@ public class UserController {
     @ApiOperation("获取所有用户")
     @GetMapping("/queryManyUser")
     public ApiRestResponse queryManyUser(Integer offset, Integer limit) {
-        List userlist = userService.queryManyUser(offset, limit);
+        PageInfo userlist = userService.queryManyUser(offset, limit);
         return ApiRestResponse.success(userlist);
     }
 

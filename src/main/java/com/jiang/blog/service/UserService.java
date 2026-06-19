@@ -9,6 +9,7 @@ import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.User;
 import org.springframework.cache.annotation.CachePut;
 
+import com.github.pagehelper.PageInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public interface UserService  extends IService<User> {
 
     UserTableHeader queryUserTableHeader();
 
-    List queryManyUser(Integer offset, Integer limit);
+    PageInfo queryManyUser(Integer offset, Integer limit);
 
     int deleteManyUser(ArrayList<String> ids);
 

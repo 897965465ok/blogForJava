@@ -428,7 +428,7 @@ const props = {
   </el-dialog>
 
   <!-- 删除遮罩层 -->
-  <el-dialog v-model="openDeleteBox" title="确认信息" width="30%" align-center>
+  <el-dialog v-model="openDeleteBox" title="确认信息" width="30%" align-center destroy-on-close>
     <span>是否删除这些文章?</span>
     <template #footer>
           <span class="dialog-footer">
@@ -438,7 +438,7 @@ const props = {
     </template>
   </el-dialog>
 
-  <el-dialog v-model="openMarkdownBox" title="修改文章" :fullscreen="true" @opened="getMarkdown">
+  <el-dialog v-model="openMarkdownBox" title="修改文章" :fullscreen="true" destroy-on-close @opened="getMarkdown">
     <Markdown ref="MarkdownRef"></Markdown>
     <template #footer class=" top-10 ">
       <el-button type="primary" @click="invoke">保存</el-button>

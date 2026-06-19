@@ -6,6 +6,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiang.blog.exception.BlogException;
 import com.jiang.blog.exception.BlogExceptionEnum;
 import com.jiang.blog.model.VO.UserAndRolesIdVO;
@@ -72,11 +73,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @CachePut(value = "queryManyUser")
-    public List queryManyUser(Integer offset, Integer limit) {
+    public PageInfo queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
         List<User> userList = userMapper.queryManyUser();
-        return userList;
+        return new PageInfo<>(userList);
     }
 
 
@@ -146,7 +147,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (StpUtil.isLogin()) {
             SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
             StpUtil.logout(tokenInfo.loginId);
-            return StpUtil.getTokenInfo();
+            return tokenInfo;
         } else {
             throw new BlogException(BlogExceptionEnum.USER_NOT_LOGIN);
         }

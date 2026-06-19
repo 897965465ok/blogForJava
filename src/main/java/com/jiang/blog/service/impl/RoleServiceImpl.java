@@ -115,24 +115,18 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     @Transactional
     public Long deleteManyRole(ArrayList<Role> roles) {
-        LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
         List<Long> ids = roles.
                 stream().
                 map(role -> role.getRoleId()).
                 collect(Collectors.toList());
         long count = ids.stream().
                 map((Long id) -> {
+                    LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
                     query.eq(RoleMenu::getRoleId, id);
                     long length = roleMenuMapper.delete(query);
-                    if (length <= 0) {
-                        throw new RuntimeException("删除菜单错误");
-                    }
                     return length;
                 }).count();
         long result = roleMapper.deleteBatchIds(ids);
-        if (result <= 0) {
-            throw new RuntimeException("删除角色错误");
-        }
         return count + result;
 
     }
