@@ -37,7 +37,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     MenuMapper menuMapper;
 
     @Override
-    @CachePut(value = "getPermsByRoleId") // 修改时用这个
+    @Cacheable(value = "getPermsByRoleId") // 修改时用这个
     public List getPermsByRoleId(Role role) {
         LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
         query.eq(RoleMenu::getRoleId, role.getRoleId());
@@ -54,7 +54,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
 
     @Override
-    @CachePut(value = "queryManyRole") // 修改时用这个
+    @Cacheable(value = "queryManyRole") // 修改时用这个
     public PageInfo queryManyRole(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
@@ -70,7 +70,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
 
     @Override
-    @CachePut(value = "queryRoleTableHeader")
+    @Cacheable(value = "queryRoleTableHeader")
     public RoleTableHeader queryRoleTableHeader() {
         return new RoleTableHeader();
     }

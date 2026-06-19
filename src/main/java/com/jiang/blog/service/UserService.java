@@ -23,7 +23,7 @@ public interface UserService  extends IService<User> {
 
     Map<String,Object> userLogin(String account, String password);
 
-    @CachePut(value = "queryPermissionByUserId")
+    @Cacheable(value = "queryPermissionByUserId")
     List<Role> queryPermissionByUserId(User user);
 
     UserTableHeader queryUserTableHeader();

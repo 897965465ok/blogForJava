@@ -20,7 +20,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
     static {
-        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        ParserConfig.getGlobalInstance().setAutoTypeSupport(false);
     }
 
     private Class<T> clazz;
@@ -35,7 +35,7 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (t == null) {
             return new byte[0];
         }
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
+        return JSON.toJSONString(t, SerializerFeature.DisableCircularReferenceDetect).getBytes(DEFAULT_CHARSET);
     }
 
     @Override

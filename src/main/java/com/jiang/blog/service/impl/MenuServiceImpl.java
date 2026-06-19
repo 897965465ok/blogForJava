@@ -39,7 +39,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
 
     @Override
-    @CachePut(value = "queryManyMenu")
+    @Cacheable(value = "queryManyMenu")
     public PageInfo queryManyMenu(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "menu_id");
@@ -52,14 +52,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    @CachePut(value = "queryMenuTableHeader")
+    @Cacheable(value = "queryMenuTableHeader")
     public MenuTableHeader queryMenuTableHeader() {
         return new MenuTableHeader();
     }
 
 
     @Override
-    @CachePut(value = "queryOneMenu")
+    @Cacheable(value = "queryOneMenu")
     public Menu queryOneMenu(Integer id) {
         return menuMapper.selectById(id);
     }
@@ -70,7 +70,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    @CachePut(value = "getRouter")
+    @Cacheable(value = "getRouter")
     public List getRouter() {
 
         List<Menu> origin = filterMenu();
@@ -125,7 +125,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
 
     @Override
-    public boolean deleteMenuByOne(String id) {
+    public boolean deleteMenuByOne(Long id) {
         return this.removeById(id);
     }
 

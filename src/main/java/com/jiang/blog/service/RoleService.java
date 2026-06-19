@@ -15,7 +15,7 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
 
-    @CachePut(value = "getPermsByRoleId") // 修改时用这个
+    @Cacheable(value = "getPermsByRoleId") // 修改时用这个
     List getPermsByRoleId(Role role);
 
     PageInfo queryManyRole(Integer offset, Integer limit);

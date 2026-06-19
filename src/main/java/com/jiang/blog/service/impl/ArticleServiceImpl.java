@@ -38,7 +38,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     // 根据标签查询
-    @CachePut(value = "queryArticlesByTags")
+    @Cacheable(value = "queryArticlesByTags")
     public PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit) {
         PageHelper.startPage(offset, limit);
         List<Article> articles = articleMapper.queryArticlesByTags(tags);
@@ -48,7 +48,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     // 查询文章
     @Override
-    @CachePut(value = "queryManyArticle")
+    @Cacheable(value = "queryManyArticle")
     public PageInfo queryManyArticle(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "id");
@@ -116,7 +116,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    @CachePut(value = "ArticleTableHeader")
+    @Cacheable(value = "ArticleTableHeader")
     public ArticleTableHeader ArticleTableHeader() {
         return new ArticleTableHeader();
     }

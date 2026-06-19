@@ -17,6 +17,6 @@ public interface TagsService extends IService<Tags> {
 
     Long updateTags(Long id, String content);
 
-    @CachePut(value = "TagsTableHeader")
+    @Cacheable(value = "TagsTableHeader")
     TagsTableHeader queryTagsTableHeader();
 }

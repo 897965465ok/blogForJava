@@ -21,7 +21,7 @@ public class TagsServiceImpl  extends ServiceImpl<TagsMapper, Tags> implements T
     TagsMapper tagsMapper;
 
     @Override
-    @CachePut(value = "queryByTags")
+    @Cacheable(value = "queryByTags")
     public List<Tags> queryByTags() {
         List<Tags> tagsList;
         tagsList = tagsMapper.queryByTagsAll();
@@ -58,7 +58,7 @@ public class TagsServiceImpl  extends ServiceImpl<TagsMapper, Tags> implements T
         }
     }
     @Override
-    @CachePut(value = "TagsTableHeader")
+    @Cacheable(value = "TagsTableHeader")
     public TagsTableHeader queryTagsTableHeader() {
         return new TagsTableHeader();
     }

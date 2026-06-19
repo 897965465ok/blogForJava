@@ -18,7 +18,7 @@ public class PictureServiceImpl  extends ServiceImpl<PictureUrlMapper,PictureUrl
     PictureUrlMapper pictureUrlMapper;
 
     @Override
-    @CachePut(value = "queryManyPicture")
+    @Cacheable(value = "queryManyPicture")
     public PageInfo queryManyPicture(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "id");

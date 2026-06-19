@@ -34,7 +34,7 @@ public class MenuController {
 
     @ApiOperation("删除一个菜单")
     @GetMapping("/deleteMenu")
-    public ApiRestResponse deleteMenuById(String id) {
+    public ApiRestResponse deleteMenuById(@RequestParam Long id) {
         if (menuService.deleteMenuByOne(id)) {
             return ApiRestResponse.success();
         } else {

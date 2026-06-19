@@ -47,14 +47,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    @CachePut(value = "queryRolesByUserId")
+    @Cacheable(value = "queryRolesByUserId")
     public List<Role> queryRolesByUserId(User user) {
         return userMapper.queryRolesByUserId(user.getUserId());
 
     }
 
     @Override
-    @CachePut(value = "queryPermissionByUserId")
+    @Cacheable(value = "queryPermissionByUserId")
     public List<Role> queryPermissionByUserId(User user) {
         // 获取所有角色
         // 通过所有角色 查询菜单ID
@@ -65,14 +65,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    @CachePut(value = "queryUserTableHeader")
+    @Cacheable(value = "queryUserTableHeader")
     public UserTableHeader queryUserTableHeader() {
         return new UserTableHeader();
     }
 
 
     @Override
-    @CachePut(value = "queryManyUser")
+    @Cacheable(value = "queryManyUser")
     public PageInfo queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);

@@ -22,7 +22,7 @@ public interface MenuService extends IService<Menu> {
 
     List getRouter();
 
-    boolean deleteMenuByOne(String id);
+    boolean deleteMenuByOne(Long id);
 
     boolean createMenu(Menu menu);
 }
