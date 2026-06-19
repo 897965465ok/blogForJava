@@ -7,7 +7,7 @@ import com.jiang.blog.model.VO.UserInfoVO;
 import com.jiang.blog.model.VO.UserTableHeader;
 import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.User;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
 import java.util.ArrayList;

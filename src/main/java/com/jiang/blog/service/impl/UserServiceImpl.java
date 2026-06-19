@@ -22,7 +22,7 @@ import com.jiang.blog.service.UserService;
 import com.jiang.blog.utils.Crypt;
 import com.jiang.blog.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
