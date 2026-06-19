@@ -8,7 +8,7 @@ import com.jiang.blog.model.dao.TagsMapper;
 import com.jiang.blog.model.pojo.Tags;
 import com.jiang.blog.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

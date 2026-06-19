@@ -7,7 +7,7 @@ import com.jiang.blog.model.dao.PictureUrlMapper;
 import com.jiang.blog.model.pojo.PictureUrl;
 import com.jiang.blog.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
