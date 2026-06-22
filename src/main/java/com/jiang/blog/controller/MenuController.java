@@ -73,8 +73,8 @@ public class MenuController {
     @GetMapping("/menu")
 
     public ApiRestResponse queryOneMenu(Integer id) {
-        menuService.queryOneMenu(id);
-        return ApiRestResponse.success();
+        Menu menu = menuService.queryOneMenu(id);
+        return ApiRestResponse.success(menu);
     }
 
 

@@ -17,7 +17,7 @@ import java.util.Date;
 @TableName(value = "picture_url")
 public class PictureUrl implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Integer id;
+    private Long id;
 
     @TableField(value = "is_banner")
     private Integer isBanner;

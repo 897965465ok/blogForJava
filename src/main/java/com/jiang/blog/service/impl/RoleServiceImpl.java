@@ -14,7 +14,7 @@ import com.jiang.blog.model.pojo.Role;
 import com.jiang.blog.model.pojo.RoleMenu;
 import com.jiang.blog.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,7 +54,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
 
     @Override
-    @Cacheable(value = "queryManyRole") // 修改时用这个
     public PageInfo queryManyRole(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
@@ -98,7 +97,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         boolean result = this.saveOrUpdate(role);
         query.eq(RoleMenu::getRoleId, role.getRoleId());
         int count = roleMenuMapper.delete(query);
-        if (result && count > 0) {
+        if (result) {
             Arrays.stream(menus).forEach((menu -> {
                 RoleMenu roleMenu = new RoleMenu();
                 roleMenu.setMenuId(menu.getMenuId());
@@ -120,12 +119,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
                 map(role -> role.getRoleId()).
                 collect(Collectors.toList());
         long count = ids.stream().
-                map((Long id) -> {
+                mapToLong((Long id) -> {
                     LambdaQueryWrapper<RoleMenu> query = new LambdaQueryWrapper();
                     query.eq(RoleMenu::getRoleId, id);
                     long length = roleMenuMapper.delete(query);
                     return length;
-                }).count();
+                }).sum();
         long result = roleMapper.deleteBatchIds(ids);
         return count + result;
 

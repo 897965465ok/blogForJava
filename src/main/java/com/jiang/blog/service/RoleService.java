@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.jiang.blog.model.VO.RoleTableHeader;
 import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.model.pojo.Role;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.ArrayList;
 import java.util.List;

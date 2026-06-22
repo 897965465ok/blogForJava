@@ -62,9 +62,9 @@
 
         WHERE user_id = #{userid}
 
-          AND sys_role.`status` = 1
+          AND sys_role.`status` = '0'
 
-          AND sys_menu.`status` = 1
+          AND sys_menu.`status` = '0'
     </select>
 
     <select id="selectMenuTreeAll" resultMap="BaseResultMap">

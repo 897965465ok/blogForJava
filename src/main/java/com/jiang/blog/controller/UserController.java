@@ -83,7 +83,7 @@ public class UserController {
 
     @ApiOperation("批量删除用户")
     @PostMapping("/deleteManyUser")
-    public ApiRestResponse deleteManyUser(@RequestBody ArrayList<String> ids) {
+    public ApiRestResponse deleteManyUser(@RequestBody ArrayList<Long> ids) {
         int result = userService.deleteManyUser(ids);
         if (result > 0) {
             return ApiRestResponse.success(result);
@@ -127,8 +127,7 @@ public class UserController {
 
     @ApiOperation("根据用户查询出角色")
     @PostMapping("/queryRolesByUserId")
-    public ApiRestResponse queryRolesByUserId(@NotEmpty(message = "账号不能为空") @RequestParam String account,
-                                              @NotEmpty(message = "密码不能为空") @RequestParam String password) {
+    public ApiRestResponse queryRolesByUserId(@NotEmpty(message = "账号不能为空") @RequestParam String account) {
         User user = userService.selectByUserName(account);
         if (!Objects.isNull(user)) {
             List<Role> roles = userService.queryRolesByUserId(user);
