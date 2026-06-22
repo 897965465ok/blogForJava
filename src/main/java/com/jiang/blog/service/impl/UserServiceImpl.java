@@ -22,7 +22,7 @@ import com.jiang.blog.service.UserService;
 import com.jiang.blog.utils.Crypt;
 import com.jiang.blog.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,7 +72,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    @Cacheable(value = "queryManyUser")
     public PageInfo queryManyUser(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit);
@@ -83,10 +82,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional
-    public int deleteManyUser(ArrayList<String> ids) {
+    public int deleteManyUser(ArrayList<Long> ids) {
         ids.stream().
                 forEach((id) -> {
-                    LambdaQueryWrapper<UserRole> query = new LambdaQueryWrapper();
+                    LambdaQueryWrapper<UserRole> query = new LambdaQueryWrapper<UserRole>();
                     query.eq(UserRole::getUserId, id);
                     userRoleMapper.delete(query);
                 });

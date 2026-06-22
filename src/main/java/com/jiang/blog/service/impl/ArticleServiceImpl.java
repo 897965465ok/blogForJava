@@ -14,7 +14,7 @@ import com.jiang.blog.utils.MinioServiceClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,7 +38,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     // 根据标签查询
-    @Cacheable(value = "queryArticlesByTags")
     public PageInfo queryArticlesByTags(String tags, Integer offset, Integer limit) {
         PageHelper.startPage(offset, limit);
         List<Article> articles = articleMapper.queryArticlesByTags(tags);
@@ -48,7 +47,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     // 查询文章
     @Override
-    @Cacheable(value = "queryManyArticle")
     public PageInfo queryManyArticle(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "id");
@@ -92,6 +90,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 
     @Override
+    @Transactional
     public void favor(Integer id) {
         Article article = articleMapper.selectById(id.longValue());
         if (null == article) {
@@ -104,6 +103,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional
     public void visit(Integer id) {
         Article article = articleMapper.selectById(id.longValue());
         if (null == article) {

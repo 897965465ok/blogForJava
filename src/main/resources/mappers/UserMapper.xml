@@ -49,7 +49,7 @@
 
     <select id="userExists" parameterType="java.lang.String" resultType="integer">
         SELECT EXISTS
-                   (SELECT 1 FROM sys_user WHERE email = #{userName,jdbcType=VARCHAR})
+                   (SELECT 1 FROM sys_user WHERE user_name = #{userName,jdbcType=VARCHAR})
     </select>
 
     <select id="selectByUserName" parameterType="string" resultType="com.jiang.blog.model.pojo.User">
@@ -72,7 +72,7 @@
         select distinct
         <include refid="com.jiang.blog.model.dao.RoleMapper.Base_Column_List"/>
         from sys_role
-        where role_id = (select role_id from sys_user_role where sys_user_role.user_id = #{account,jdbcType=BIGINT})
+        where role_id in (select role_id from sys_user_role where sys_user_role.user_id = #{account,jdbcType=BIGINT})
     </select>
 
     <select id="queryPermissionByUserId" resultType="java.lang.String">

@@ -13,7 +13,7 @@ import com.jiang.blog.model.dao.UserRoleMapper;
 import com.jiang.blog.model.pojo.Menu;
 import com.jiang.blog.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +39,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
 
     @Override
-    @Cacheable(value = "queryManyMenu")
     public PageInfo queryManyMenu(Integer offset, Integer limit) {
         // DESC表示降序
         PageHelper.startPage(offset, limit, "menu_id");
