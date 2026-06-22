@@ -22,16 +22,16 @@ const router = createRouter({
             meta: {NoRequiresAuth: true},
         },
         {
-            path: "/home",
-            name: "Home",
-            component: Home,
-        },
-        {
             path: "/",
             name: "Index",
             component: Index,
-            // redirect: "/menu",
+            redirect: "/home",
             children: [
+                {
+                    path: "/home",
+                    name: "Home",
+                    component: Home,
+                },
                 {
                     path: "/article",
                     name: "Article",
